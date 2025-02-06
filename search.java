@@ -65,7 +65,7 @@ public class search {
                 System.out.println("Phone     : " + s.stuPhoneNumber);
                 System.out.println("Email     : " + s.stuEmail);
                 for(borrow b : borrowList) {
-                    if(b.studentID == s.stuID) {
+                    if(s.stuID == b.studentID) {
                         System.out.println("Book name : " + b.bookName);
                         System.out.println("Borrow Date: " + b.borrowDate);
                         System.out.println("Return Date: " + b.returnDate);
