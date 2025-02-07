@@ -1,12 +1,13 @@
 public class Librarain {
+    static int totalLibrarain = 0;
     int id;
     String name;
     String address;
     String phoneNumber;
     String email;
     private String password;
-    public Librarain(int id, String name, String address, String phoneNumber, String email, String password) {
-        this.id = id;
+    public Librarain(String name, String address, String phoneNumber, String email, String password) {
+        this.id = ++totalLibrarain;
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;

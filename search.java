@@ -57,6 +57,7 @@ public class search {
 
 //search student 
     public void searchStudentByID(ArrayList<student> studentList,int studentID, ArrayList<borrow> borrowList) {
+        int checked = 0;
         for(student s : studentList) {
             if(s.stuID == studentID) {
                 System.out.println("ID        : " + s.stuID);
@@ -71,9 +72,37 @@ public class search {
                         System.out.println("Return Date: " + b.returnDate);
                     }
                 }
-            }else{
-                System.out.println("Student not found");
+                checked = 1;
+                return;
             }
         }
+        if(checked == 0) {
+            System.out.println("Student not found");
+        }
+    }
+
+//search librarain
+    public void searchLibrarainByID(ArrayList<Librarain> librarainList, int librarainID, ArrayList<borrow> borrowList) {
+        for(Librarain l : librarainList) {
+            if(l.id == librarainID) {
+                System.out.println("ID        : " + l.id);
+                System.out.println("Name      : " + l.name);
+                System.out.println("Address   : " + l.address);
+                System.out.println("Phone     : " + l.phoneNumber);
+                System.out.println("Email     : " + l.email);
+                for(borrow b : borrowList) {
+                    if(l.id == b.librarainID) {
+                        System.out.println("Record librarain activity : ");
+                        System.out.println("Student ID : " + b.studentID);
+                        System.out.println("Book name : " + b.bookName);
+                        System.out.println("Borrow Date: " + b.borrowDate);
+                        System.out.println("Return Date: " + b.returnDate);
+                    }
+                }
+            }else{
+                System.out.println("Librarain not found");
+            }
+        }
+        
     }
 }
