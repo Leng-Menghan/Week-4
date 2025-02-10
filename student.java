@@ -24,7 +24,7 @@ public class student{
     }
 
 //check password
-    public String getPassword(String password) {
+    public String checkPassword(String password) {
         if(this.password.equals(password)){
             return password;
         }else{
@@ -32,6 +32,10 @@ public class student{
         }
     }
 
+//get password
+    public String getPassword() {
+        return password;
+    }
 //change password
     public void setNewPassword(String newPassword, String oldPassword) {
         if(this.password.equals(oldPassword)){
