@@ -1,8 +1,8 @@
-public class library {
+public class Library {
     String name;
     String address;
 
-    public library(String name, String address) {
+    public Library(String name, String address) {
         this.name = name;
         this.address = address;
     }

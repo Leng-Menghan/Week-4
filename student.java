@@ -1,4 +1,4 @@
-public class student{
+public class Student{
     static int toalStudent=0;
     int stuID;
     String stuName;
@@ -8,7 +8,7 @@ public class student{
     private String password;
 
 //Register
-    public student(String stuName, String stuAddress, String stuPhoneNumber, String stuEmail, String password) {
+    public Student(String stuName, String stuAddress, String stuPhoneNumber, String stuEmail, String password) {
         this.stuID = ++toalStudent;
         this.stuName = stuName;
         this.stuAddress = stuAddress;
@@ -18,7 +18,7 @@ public class student{
     }
 
 //login
-    public student(String stuEmail, String password) {
+    public Student(String stuEmail, String password) {
         this.stuEmail = stuEmail;
         this.password = password;
     }
@@ -36,6 +36,7 @@ public class student{
     public String getPassword() {
         return password;
     }
+    
 //change password
     public void setNewPassword(String newPassword, String oldPassword) {
         if(this.password.equals(oldPassword)){

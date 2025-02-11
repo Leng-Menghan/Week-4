@@ -1,8 +1,8 @@
-public class admin {
+public class Admin {
     String adminEmail;
     String adminPassword;
 
-    public admin() {
+    public Admin() {
         this.adminEmail = "admin";
         this.adminPassword = "123";
     }

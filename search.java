@@ -1,8 +1,8 @@
-public class search {
+public class Search {
 //search Book
     // search book by name
-    public void searchBookByName(String bookName) {
-        for(book b : Database.bookList) {
+    public static void searchBookByName(String bookName) {
+        for(Book b : Database.bookList) {
             if(b.bookname.equals(bookName)) {
                 System.out.println("Book found");
                 System.out.println("Book ID   : " + b.bookid);
@@ -19,10 +19,10 @@ public class search {
         System.out.println("Book not found");
     }
     // search book by author
-    public void searchBookByAuthor(String authorName) {
+    public static void searchBookByAuthor(String authorName) {
         System.out.println("Books of author : " + authorName);
         int checked = 0;
-        for(book b : Database.bookList) {
+        for(Book b : Database.bookList) {
             if(b.author.equals(authorName)) {
                 System.out.println("(ID : " + b.bookid +") : " + b.bookname + " quantity: " + b.quantity);
                 checked = 1;
@@ -33,10 +33,10 @@ public class search {
         }
     }
     // search book by category
-    public void searchBookByCategory(String category) {
+    public static void searchBookByCategory(String category) {
         System.out.println("Books of category : " + category);
         int checked = 0;
-        for(book b : Database.bookList) {
+        for(Book b : Database.bookList) {
             if(b.category.equals(category)) {
                 System.out.println("(ID : " + b.bookid +") : " + b.bookname + " quantity: " + b.quantity);
                 checked = 1;
@@ -47,8 +47,8 @@ public class search {
         }
     }
     // search book by ISBN
-    public void searchBookByISBN(int ISBN) {
-        for(book b : Database.bookList) {
+    public static void searchBookByISBN(int ISBN) {
+        for(Book b : Database.bookList) {
             if(b.isbn == ISBN) {
                 System.out.println("ISBN      : " + b.isbn);
                 System.out.println("Book name : " + b.bookname);
@@ -64,8 +64,8 @@ public class search {
     }
 
 //search student 
-    public void searchStudentByID(int studentID) {
-        for(student s : Database.studentList) {
+    public static void searchStudentByID(int studentID) {
+        for(Student s : Database.studentList) {
             if(s.stuID == studentID) {
                 System.out.println("ID        : " + s.stuID);
                 System.out.println("Name      : " + s.stuName);
@@ -75,14 +75,14 @@ public class search {
                 System.out.println("Password  : " + s.getPassword());
                 System.out.println("\nRecord student activity : ");
                 int checked = 0;
-                for(borrow b : Database.borrowList) {
+                for(Borrow b : Database.borrowList) {
                     if(s.stuID == b.studentID) {
                         System.out.println("Book ID : " + b.bookID + " Name : " + b.bookName);
                         System.out.println("Borrow Date: " + b.borrowDate +" -> "+ b.returnDate + " Approved by Librarain ID : " + b.librarainID + " Name : " + b.librarainName);
                         checked = 1;
                         int check = 0;
-                            for(returned r : Database.returnedList) {
-                                if(b.bookID == r.bookID) {
+                            for(Returned r : Database.returnedList) {
+                                if(b.bookID == r.bookID && b.studentID == r.studentID) {
                                     System.out.println("Returned Date: " + r.returnedDate + " Recorded byLibrarain ID : " + r.librarainID + " Name : " + r.librarainName + "\n");
                                     check = 1;
                                 }
@@ -103,7 +103,7 @@ public class search {
     }
 
 //search librarain
-    public void searchLibrarainByID(int librarainID) {
+    public static void searchLibrarainByID(int librarainID) {
         for(Librarain l : Database.librarainList) {
             if(l.id == librarainID) {
                 System.out.println("ID        : " + l.id);
@@ -113,15 +113,15 @@ public class search {
                 System.out.println("Email     : " + l.email +"\n");
                 System.out.println("Record librarain activity : ");
                 int checked = 0;
-                for(borrow b : Database.borrowList) {
+                for(Borrow b : Database.borrowList) {
                     if(l.id == b.librarainID) {
                         System.out.println("Student ID : " + b.studentID + " Name : " + b.studentName);
                         System.out.println("Book ID : " + b.bookID + " Name : " + b.bookName);
                         System.out.println("Borrow Date: " + b.borrowDate +" -> "+ b.returnDate);
                         checked = 1;
                         int check = 0;
-                            for(returned r : Database.returnedList) {
-                                if(b.bookID == r.bookID) {
+                            for(Returned r : Database.returnedList) {
+                                if(b.bookID == r.bookID && b.studentID == r.studentID) {
                                     System.out.println("Returned Date: " + r.returnedDate + "\n");
                                     check = 1;
                                 }

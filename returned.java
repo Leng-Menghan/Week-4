@@ -1,4 +1,4 @@
-public class returned {
+public class Returned {
     int bookID;
     String bookName; 
     int studentID;
@@ -6,15 +6,27 @@ public class returned {
     int librarainID;
     String librarainName;
     String returnedDate;
-    public returned(int bookID, String bookName, int studentID, String studentName, int librarainID, String librarainName, String returnedDate) {
+    public Returned(int bookID, int studentID, int librarainID, String returnedDate) {
         this.bookID = bookID;
-        this.bookName = bookName;
         this.studentID = studentID;
-        this.studentName = studentName;
         this.librarainID = librarainID;
-        this.librarainName = librarainName;
         this.returnedDate = returnedDate;
-        for(book b : Database.bookList) {
+        for(Book b : Database.bookList){
+            if(bookID == b.bookid){
+                this.bookName = b.bookname;
+            }
+        }
+        for(Student s : Database.studentList){
+            if(studentID == s.stuID){
+                this.studentName = s.stuName;
+            }
+        }
+        for(Librarain l : Database.librarainList){
+            if(librarainID == l.id){
+                this.librarainName = l.name;
+            }
+        }
+        for(Book b : Database.bookList) {
             if(b.bookid == bookID) {
                 b.quantity++;
             }
