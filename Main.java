@@ -25,13 +25,11 @@ public class Main {
 //Add Borrow
     Borrow borrow1 = new Borrow(3, 2 ,1, "2023-01-01", "2023-01-15");
     Database.TmpBorrow.add(borrow1);
-    Invoice.DisplayInvoice();
-    
     Borrow borrow2 = new Borrow(1, 1,1, "2023-01-01", "2023-01-15");
     Database.TmpBorrow.add(borrow2);
-    Invoice.DisplayInvoice();
-    //Display.displayBorrow();
-    
+    Display.DisplayInvoice();
+    Display.displayBorrow();
+    Display.displayReturn();
     //Display.displayBorrow();
     //Invoice.DisplayInvoice();
 //Add Return
