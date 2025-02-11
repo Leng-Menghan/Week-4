@@ -5,6 +5,7 @@ public class Search {
         for(Book b : Database.bookList) {
             if(b.bookname.equals(bookName)) {
                 System.out.println("Book found");
+                System.out.println("----------------------------------------------------");
                 System.out.println("Book ID   : " + b.bookid);
                 System.out.println("ISBN      : " + b.isbn);
                 System.out.println("Book name : " + b.bookname);
@@ -13,6 +14,7 @@ public class Search {
                 System.out.println("Price     : " + b.price);
                 System.out.println("Quantity  : " + b.quantity);
                 System.out.println("Publisher : " + b.publisher);
+                System.out.println("----------------------------------------------------\n");
                 return;
             }
         }
@@ -21,6 +23,7 @@ public class Search {
     // search book by author
     public static void searchBookByAuthor(String authorName) {
         System.out.println("Books of author : " + authorName);
+        System.out.println("----------------------------------------------------");
         int checked = 0;
         for(Book b : Database.bookList) {
             if(b.author.equals(authorName)) {
@@ -31,6 +34,7 @@ public class Search {
         if(checked == 0) {
             System.out.println("Book not found");
         }
+        System.out.println("----------------------------------------------------\n");
     }
     // search book by category
     public static void searchBookByCategory(String category) {

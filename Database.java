@@ -6,4 +6,5 @@ public class Database {
     public static ArrayList<Borrow> borrowList = new ArrayList<Borrow>();
     public static ArrayList<Returned> returnedList = new ArrayList<Returned>();
     public static ArrayList<Librarain> librarainList = new ArrayList<Librarain>();
+    public static ArrayList<Borrow> TmpBorrow = new ArrayList<Borrow>();
 }

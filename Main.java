@@ -24,23 +24,28 @@ public class Main {
 
 //Add Borrow
     Borrow borrow1 = new Borrow(3, 2 ,1, "2023-01-01", "2023-01-15");
-    Database.borrowList.add(borrow1);
-
+    Database.TmpBorrow.add(borrow1);
+    Invoice.DisplayInvoice();
+    
     Borrow borrow2 = new Borrow(1, 1,1, "2023-01-01", "2023-01-15");
-    Database.borrowList.add(borrow2);
+    Database.TmpBorrow.add(borrow2);
+    Invoice.DisplayInvoice();
+    //Display.displayBorrow();
+    
+    //Display.displayBorrow();
+    //Invoice.DisplayInvoice();
 //Add Return
     // returned returned1 = new returned(3, 2, 1,  "2023-01-15");
     // Database.returnedList.add(returned1);
     // returned returned2 = new returned(1, 1, 1, "2023-01-18");
     // Database.returnedList.add(returned2);
     
-    //search search1 = new search();
-    //search1.searchBookByName("The Great Gatsby");
-    //search1.searchBookByAuthor("F. Scott Fitzgerald");
-    //search1.searchBookByISBN(789012);
-    //search1.searchBookByCategory("Non-Fiction");
-    //search1.searchStudentByID(2);
-    //search1.searchLibrarainByID(1);
+    //Search.searchBookByName("The Great Gatsby");
+    //Search.searchBookByAuthor("F. Scott Fitzgerald");
+    //search.searchBookByISBN(789012);
+    //search.searchBookByCategory("Non-Fiction");
+    //search.searchStudentByID(2);
+    //search.searchLibrarainByID(1);
 
 
 // Display Book : ID and Qty after borrow and return
@@ -50,7 +55,7 @@ public class Main {
     //Display.displayStudent();
     //Display.displayBook();
     //Display.displayLibrarain();
-     Display.displayBorrow();
+    //Display.displayBorrow();
     // Display.displayReturn();
     }
 }
