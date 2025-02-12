@@ -35,7 +35,7 @@ public class Display {
             System.out.println("Name      : " + b.bookname);
             System.out.println("Author    : " + b.author);
             System.out.println("Category  : " + b.category);
-            System.out.println("Price     : " + b.price);
+            System.out.println("Price     : " + b.price + " $");
             System.out.println("Quantity  : " + b.quantity);
             System.out.println("Publisher : " + b.publisher);
             System.out.println("___________________________________________________\n");
@@ -140,16 +140,23 @@ public class Display {
         System.out.println("#              Invoice of borrowing               #");
         System.out.println("|                                                 |");
         System.out.println("#-------------------------------------------------#");
+        System.out.println("\nStudent ID   : " + Database.TmpBorrow.get(0).studentID);
+        System.out.println("Name         : " + Database.TmpBorrow.get(0).studentName);
+        System.out.println("Librarian ID : " + Database.TmpBorrow.get(0).librarianID);
+        System.out.println("Name         : " + Database.TmpBorrow.get(0).librarianName);
+        System.out.println("Borrow Date  : " + Database.TmpBorrow.get(0).borrowDate + " -> " + Database.TmpBorrow.get(0).returnDate);
         System.out.println("---------------------------------------------------");
+        System.out.println("Borrowed Books : ");
+        int count = 0;
         for(Borrow b : Database.TmpBorrow){
-            System.out.println("Book ID      : " + b.bookID + " Book name : " + b.bookName);
-            System.out.println("Student ID   : " + b.studentID + " Student Name : " + b.studentName);
-            System.out.println("Librarian ID : " + b.librarianID + " Librarian Name : " + b.librarianName);
-            System.out.println("Borrow Date  : " + b.borrowDate + " -> " + b.returnDate);
-            System.out.println("---------------------------------------------------");
+            count++;
+            System.out.println("(ID: " + b.bookID + ") - " + b.bookName);
             payment+=b.payForBorrow;
+            
         }
+        System.out.println("---------------------------------------------------");
         System.out.println("             Total payment : " + payment +" $" );
+        System.out.println("                   books : " + count);
         System.out.println("---------------------------------------------------\n");
         Database.borrowList.addAll(Database.TmpBorrow);
         Database.TmpBorrow.clear();

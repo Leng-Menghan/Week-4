@@ -7,6 +7,7 @@ public class Main {
     Book book3 = new Book(789012, "Non-Fiction", "To Kill", "F. Scott Fitzgerald", 13, 3, "Penguin");
     Database.bookList.add(book1);
     Database.bookList.add(book2);
+
     Database.bookList.add(book3);
 //Add student
     Student student1 = new Student("John Doe", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
@@ -22,7 +23,7 @@ public class Main {
     Borrow borrow2 = new Borrow(1, 1,1, "2023-01-01", "2023-01-15");
     Database.TmpBorrow.add(borrow1);
     Database.TmpBorrow.add(borrow2);
-    Display.DisplayInvoice();
+    //Display.DisplayInvoice();
 
 // //Add return
     Returned returned1 = new Returned(3, 1 ,1,"2023-01-17");
@@ -31,7 +32,7 @@ public class Main {
     //Database.returnedList.add(returned2);
     
     //Search
-    //Display.displayBook();
+    Display.displayBook();
     // Display.displayLibrarain();
     // Display.displayStudent();
     // Display.displayBorrow();
