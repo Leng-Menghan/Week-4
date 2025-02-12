@@ -1,7 +1,7 @@
-public class Search {
-//search Book
-    // search book by name
-    public static void searchBookByName(String bookName) {
+public class Search implements BookSearchable, StudentSearchable, LibrarianSearchable {
+
+    // Search book by name
+    public void searchBookByName(String bookName) {
         for(Book b : Database.bookList) {
             if(b.bookname.equals(bookName)) {
                 System.out.println("Book found");
@@ -11,7 +11,7 @@ public class Search {
                 System.out.println("Book name : " + b.bookname);
                 System.out.println("Author    : " + b.author);
                 System.out.println("Category  : " + b.category);
-                System.out.println("Price     : " + b.price);
+                System.out.println("Price     : " + b.price + " $");
                 System.out.println("Quantity  : " + b.quantity);
                 System.out.println("Publisher : " + b.publisher);
                 System.out.println("----------------------------------------------------\n");
@@ -20,8 +20,9 @@ public class Search {
         }
         System.out.println("Book not found");
     }
-    // search book by author
-    public static void searchBookByAuthor(String authorName) {
+
+    // Search book by author
+    public void searchBookByAuthor(String authorName) {
         System.out.println("Books of author : " + authorName);
         System.out.println("----------------------------------------------------");
         int checked = 0;
@@ -36,8 +37,9 @@ public class Search {
         }
         System.out.println("----------------------------------------------------\n");
     }
-    // search book by category
-    public static void searchBookByCategory(String category) {
+
+    // Search book by category
+    public void searchBookByCategory(String category) {
         System.out.println("Books of category : " + category);
         int checked = 0;
         for(Book b : Database.bookList) {
@@ -50,8 +52,9 @@ public class Search {
             System.out.println("Book not found");
         }
     }
-    // search book by ISBN
-    public static void searchBookByISBN(int ISBN) {
+
+    // Search book by ISBN
+    public void searchBookByISBN(int ISBN) {
         for(Book b : Database.bookList) {
             if(b.isbn == ISBN) {
                 System.out.println("ISBN      : " + b.isbn);
@@ -67,30 +70,30 @@ public class Search {
         System.out.println("Book not found");
     }
 
-//search student 
-    public static void searchStudentByID(int studentID) {
+    // Search student by ID
+    public void searchStudentByID(int studentID) {
         for(Student s : Database.studentList) {
-            if(s.stuID == studentID) {
-                System.out.println("ID        : " + s.stuID);
-                System.out.println("Name      : " + s.stuName);
-                System.out.println("Address   : " + s.stuAddress);
-                System.out.println("Phone     : " + s.stuPhoneNumber);
-                System.out.println("Email     : " + s.stuEmail);
+            if(s.ID == studentID) {
+                System.out.println("ID        : " + s.ID);
+                System.out.println("Name      : " + s.Name);
+                System.out.println("Address   : " + s.Address);
+                System.out.println("Phone     : " + s.PhoneNumber);
+                System.out.println("Email     : " + s.Email);
                 System.out.println("Password  : " + s.getPassword());
                 System.out.println("\nRecord student activity : ");
                 int checked = 0;
                 for(Borrow b : Database.borrowList) {
-                    if(s.stuID == b.studentID) {
+                    if(s.ID == b.studentID) {
                         System.out.println("Book ID : " + b.bookID + " Name : " + b.bookName);
-                        System.out.println("Borrow Date: " + b.borrowDate +" -> "+ b.returnDate + " Approved by Librarain ID : " + b.librarainID + " Name : " + b.librarainName);
+                        System.out.println("Borrow Date: " + b.borrowDate +" -> "+ b.returnDate + " Approved by Librarian ID : " + b.librarianID + " Name : " + b.librarianName);
                         checked = 1;
                         int check = 0;
-                            for(Returned r : Database.returnedList) {
-                                if(b.bookID == r.bookID && b.studentID == r.studentID) {
-                                    System.out.println("Returned Date: " + r.returnedDate + " Recorded byLibrarain ID : " + r.librarainID + " Name : " + r.librarainName + "\n");
-                                    check = 1;
-                                }
+                        for(Returned r : Database.returnedList) {
+                            if(b.bookID == r.bookID && b.studentID == r.studentID) {
+                                System.out.println("Returned Date: " + r.returnedDate + " Recorded by Librarian ID : " + r.librarianID + " Name : " + r.librarianName + "\n");
+                                check = 1;
                             }
+                        }
                         if(check == 0) {
                             System.out.println("Not returned\n");
                         }
@@ -103,33 +106,32 @@ public class Search {
             }
         }
         System.out.println("Student not found");
-        
     }
 
-//search librarain
-    public static void searchLibrarainByID(int librarainID) {
-        for(Librarain l : Database.librarainList) {
-            if(l.id == librarainID) {
-                System.out.println("ID        : " + l.id);
-                System.out.println("Name      : " + l.name);
-                System.out.println("Address   : " + l.address);
-                System.out.println("Phone     : " + l.phoneNumber);
-                System.out.println("Email     : " + l.email +"\n");
-                System.out.println("Record librarain activity : ");
+    // Search librarian by ID
+    public void searchLibrarianByID(int librarianID) {
+        for(Librarian l : Database.librarianList) {
+            if(l.ID == librarianID) {
+                System.out.println("ID        : " + l.ID);
+                System.out.println("Name      : " + l.Name);
+                System.out.println("Address   : " + l.Address);
+                System.out.println("Phone     : " + l.PhoneNumber);
+                System.out.println("Email     : " + l.Email +"\n");
+                System.out.println("Record librarian activity : ");
                 int checked = 0;
                 for(Borrow b : Database.borrowList) {
-                    if(l.id == b.librarainID) {
+                    if(l.ID == b.librarianID) {
                         System.out.println("Student ID : " + b.studentID + " Name : " + b.studentName);
                         System.out.println("Book ID : " + b.bookID + " Name : " + b.bookName);
                         System.out.println("Borrow Date: " + b.borrowDate +" -> "+ b.returnDate);
                         checked = 1;
                         int check = 0;
-                            for(Returned r : Database.returnedList) {
-                                if(b.bookID == r.bookID && b.studentID == r.studentID) {
-                                    System.out.println("Returned Date: " + r.returnedDate + "\n");
-                                    check = 1;
-                                }
+                        for(Returned r : Database.returnedList) {
+                            if(b.bookID == r.bookID && b.studentID == r.studentID) {
+                                System.out.println("Returned Date: " + r.returnedDate + "\n");
+                                check = 1;
                             }
+                        }
                         if(check == 0) {
                             System.out.println("Not returned\n");
                         }
@@ -142,6 +144,6 @@ public class Search {
                 return;
             }
         }
-        System.out.println("Librarain not found");
+        System.out.println("Librarian not found");
     }
 }

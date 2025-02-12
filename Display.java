@@ -6,16 +6,18 @@ public class Display {
         System.out.println("|                                                 |");
         System.out.println("#-------------------------------------------------#");
         System.out.println("___________________________________________________\n");
+        int count = 0;
         for(Student s : Database.studentList){
-            System.out.println("ID       : " + s.stuID);
-            System.out.println("Name     : " + s.stuName);
-            System.out.println("Address  : " + s.stuAddress);
-            System.out.println("Phone    : " + s.stuPhoneNumber);
-            System.out.println("Email    : " + s.stuEmail);
+            System.out.println("ID       : " + s.ID);
+            System.out.println("Name     : " + s.Name);
+            System.out.println("Address  : " + s.Address);
+            System.out.println("Phone    : " + s.PhoneNumber);
+            System.out.println("Email    : " + s.Email);
             System.out.println("Password : " + s.getPassword());
             System.out.println("___________________________________________________\n");
+            count++;
         }
-        System.out.println("--------------- Total students : " + Student.toalStudent +" --------------- ");
+        System.out.println("--------------- Total students : " + count +" --------------- ");
         System.out.println("___________________________________________________\n");
     }
 
@@ -26,6 +28,7 @@ public class Display {
         System.out.println("|                                                 |");
         System.out.println("#-------------------------------------------------#");
         System.out.println("___________________________________________________\n");
+        int count = 0;
         for(Book b : Database.bookList){
             System.out.println("ID        : " + b.bookid);
             System.out.println("ISBN      : " + b.isbn);
@@ -36,8 +39,9 @@ public class Display {
             System.out.println("Quantity  : " + b.quantity);
             System.out.println("Publisher : " + b.publisher);
             System.out.println("___________________________________________________\n");
+            count++;
         }
-        System.out.println("----------------- Total Books : " + Book.totalBook +" ----------------- ");
+        System.out.println("----------------- Total Books : " + count +" ----------------- ");
         System.out.println("___________________________________________________\n");
     }
 
@@ -48,16 +52,18 @@ public class Display {
         System.out.println("|                                                 |");
         System.out.println("#-------------------------------------------------#");
         System.out.println("___________________________________________________\n");
-        for(Librarain l : Database.librarainList){
-            System.out.println("ID       : " + l.id);
-            System.out.println("Name     : " + l.name);
-            System.out.println("Address  : " + l.address);
-            System.out.println("Phone    : " + l.phoneNumber);
-            System.out.println("Email    : " + l.email);
+        int count = 0;
+        for(Librarian l : Database.librarianList){
+            System.out.println("ID       : " + l.ID);
+            System.out.println("Name     : " + l.Name);
+            System.out.println("Address  : " + l.Address);
+            System.out.println("Phone    : " + l.PhoneNumber);
+            System.out.println("Email    : " + l.Email);
             System.out.println("Password : " + l.getPassword());
             System.out.println("___________________________________________________\n");
+            count++;
         }
-        System.out.println("--------------- Total librarain : " + Librarain.totalLibrarain +" --------------- ");
+        System.out.println("--------------- Total librarain : " + count +" --------------- ");
         System.out.println("___________________________________________________\n");
     }
 
@@ -82,8 +88,8 @@ public class Display {
                 System.out.println("Book name      : " + b.bookName);
                 System.out.println("Student ID     : " + b.studentID);
                 System.out.println("Student Name   : " + b.studentName);
-                System.out.println("Librarian ID   : " + b.librarainID);
-                System.out.println("Librarian Name : " + b.librarainName);
+                System.out.println("Librarian ID   : " + b.librarianID);
+                System.out.println("Librarian Name : " + b.librarianName);
                 System.out.println("Borrow Date    : " + b.borrowDate + " -> " + b.returnDate);
                 System.out.println("___________________________________________________\n");
                 check = 1;
@@ -111,8 +117,8 @@ public class Display {
             System.out.println("Book name      : " + r.bookName);
             System.out.println("Student ID     : " + r.studentID);
             System.out.println("Student Name   : " + r.studentName);
-            System.out.println("Librarian ID   : " + r.librarainID);
-            System.out.println("Librarian Name : " + r.librarainName);
+            System.out.println("Librarian ID   : " + r.librarianID);
+            System.out.println("Librarian Name : " + r.librarianName);
             for(Borrow b : Database.borrowList){
                 if(r.bookID == b.bookID && r.studentID == b.studentID){
                     System.out.println("Borrow Date    : " + b.borrowDate + " -> " + b.returnDate);
@@ -138,7 +144,7 @@ public class Display {
         for(Borrow b : Database.TmpBorrow){
             System.out.println("Book ID      : " + b.bookID + " Book name : " + b.bookName);
             System.out.println("Student ID   : " + b.studentID + " Student Name : " + b.studentName);
-            System.out.println("Librarian ID : " + b.librarainID + " Librarian Name : " + b.librarainName);
+            System.out.println("Librarian ID : " + b.librarianID + " Librarian Name : " + b.librarianName);
             System.out.println("Borrow Date  : " + b.borrowDate + " -> " + b.returnDate);
             System.out.println("---------------------------------------------------");
             payment+=b.payForBorrow;

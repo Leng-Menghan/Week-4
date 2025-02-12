@@ -1,34 +1,19 @@
-public class Returned {
-    int bookID;
-    String bookName; 
-    int studentID;
-    String studentName;
-    int librarainID;
-    String librarainName;
+public class Returned extends StudentAction{
+    // int bookID;
+    // String bookName;
+    // int studentID;
+    // String studentName;
+    // int librarianID;
+    // String librarianName;
     String returnedDate;
-    public Returned(int bookID, int studentID, int librarainID, String returnedDate) {
-        this.bookID = bookID;
-        this.studentID = studentID;
-        this.librarainID = librarainID;
+
+    public Returned(int bookID, int studentID, int librarianID, String returnedDate) {
+        super(bookID, studentID, librarianID); //call the parent constructor
         this.returnedDate = returnedDate;
-        for(Book b : Database.bookList){
-            if(bookID == b.bookid){
-                this.bookName = b.bookname;
-            }
-        }
-        for(Student s : Database.studentList){
-            if(studentID == s.stuID){
-                this.studentName = s.stuName;
-            }
-        }
-        for(Librarain l : Database.librarainList){
-            if(librarainID == l.id){
-                this.librarainName = l.name;
-            }
-        }
         for(Book b : Database.bookList) {
             if(b.bookid == bookID) {
                 b.quantity++;
+                break;
             }
         }
     }

@@ -1,43 +1,28 @@
-public class Borrow {
-    int bookID;
-    int studentID;
-    String studentName;
-    int librarainID;
-    String librarainName;
-    String bookName;
+public class Borrow extends StudentAction {
+    // int bookID;
+    // String bookName;
+    // int studentID;
+    // String studentName;
+    // int librarianID;
+    // String librarianName;
     String borrowDate;
     String returnDate;
     double payForBorrow;
-    public Borrow(int bookID, int studentID, int librarainID, String borrowDate, String returnDate) {
-        this.bookID = bookID;
-        this.studentID = studentID;
-        this.librarainID = librarainID;
+
+    public Borrow(int bookID, int studentID, int librarianID, String borrowDate, String returnDate) {
+        super(bookID, studentID, librarianID); // Call the parent constructor
         this.borrowDate = borrowDate;
         this.returnDate = returnDate;
         for(Book b : Database.bookList){
             if(bookID == b.bookid){
-                this.bookName = b.bookname;
-            }
-        }
-        for(Student s : Database.studentList){
-            if(studentID == s.stuID){
-                this.studentName = s.stuName;
-            }
-        }
-        for(Librarain l : Database.librarainList){
-            if(librarainID == l.id){
-                this.librarainName = l.name;
+                this.payForBorrow = b.price * 0.1 ;
+                break;
             }
         }
         for(Book b : Database.bookList) {
             if(b.bookid == bookID) {
                 b.quantity--;
-            }
-        }
-
-        for(Book b : Database.bookList){
-            if(bookID == b.bookid){
-                this.payForBorrow = b.price * 0.1 ;
+                break;
             }
         }
     }

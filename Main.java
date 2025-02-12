@@ -1,9 +1,7 @@
 public class Main {
 
     public static void main(String[] args) {
-        //library name1 = new library("ABC Library", "123 Main St.");
-        //System.out.println(name1);
-
+    Search search = new Search();
 //Add Book  
     Book book1 = new Book(123456, "Fiction", "The Great Gatsby", "F. Scott Fitzgerald", 5, 5, "Scribner");
     Book book2 = new Book(789012, "Non-Fiction", "To Kill a Mockingbird", "F. Scott Fitzgerald", 15, 3, "Penguin");
@@ -11,49 +9,49 @@ public class Main {
     Database.bookList.add(book1);
     Database.bookList.add(book2);
     Database.bookList.add(book3);
-
 //Add student
     Student student1 = new Student("John Doe", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
     Student student2 = new Student("Jane Doe", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
     Database.studentList.add(student1);
     Database.studentList.add(student2);
-
 //Add Librarain
-    Librarain librarain1 = new Librarain("smith", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
-    Database.librarainList.add(librarain1);
+    Librarian librarian1 = new Librarian("smith", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
+    Database.librarianList.add(librarian1);
 
-//Add Borrow
-    Borrow borrow1 = new Borrow(3, 2 ,1, "2023-01-01", "2023-01-15");
-    Database.TmpBorrow.add(borrow1);
+// //Add Borrow
+    Borrow borrow1 = new Borrow(3, 1 ,1, "2023-01-01", "2023-01-15");
     Borrow borrow2 = new Borrow(1, 1,1, "2023-01-01", "2023-01-15");
+    Database.TmpBorrow.add(borrow1);
     Database.TmpBorrow.add(borrow2);
     Display.DisplayInvoice();
-    Display.displayBorrow();
-    Display.displayReturn();
-    //Display.displayBorrow();
-    //Invoice.DisplayInvoice();
-//Add Return
-    // returned returned1 = new returned(3, 2, 1,  "2023-01-15");
-    // Database.returnedList.add(returned1);
-    // returned returned2 = new returned(1, 1, 1, "2023-01-18");
-    // Database.returnedList.add(returned2);
+
+// //Add return
+     Returned returned1 = new Returned(3, 1 ,1,"2023-01-17");
+    //Returned returned2 = new Returned(1, 1,1, "2023-01-15");
+     Database.returnedList.add(returned1);
+    //Database.returnedList.add(returned2);
     
-    //Search.searchBookByName("The Great Gatsby");
-    //Search.searchBookByAuthor("F. Scott Fitzgerald");
-    //search.searchBookByISBN(789012);
-    //search.searchBookByCategory("Non-Fiction");
-    //search.searchStudentByID(2);
-    //search.searchLibrarainByID(1);
-
-
-// Display Book : ID and Qty after borrow and return
-    // for(book b : Database.bookList) {
-    //     System.out.println(b.bookid + " : " + b.quantity);
-    // }
-    //Display.displayStudent();
-    //Display.displayBook();
-    //Display.displayLibrarain();
-    //Display.displayBorrow();
+    //Search
+    // Display.displayBook();
+    // Display.displayLibrarain();
+    // Display.displayStudent();
+    // Display.displayBorrow();
     // Display.displayReturn();
+
+    //search.searchBookByName("To Kill a Mockingbird");
+    //search.searchBookByAuthor("F. Scott Fitzgerald");
+    //search.searchBookByCategory("Fiction");
+    //search.searchBookByISBN(123456);
+    //search.searchStudentByID(1);
+    search.searchLibrarianByID(1);
+    
+
+
+
+
+
+
+
+
     }
 }
