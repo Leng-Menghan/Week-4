@@ -1,5 +1,4 @@
-public class Search implements BookSearchable, StudentSearchable, LibrarianSearchable {
-
+public class Search implements Searchable{
     // Search book by name
     public void searchBookByName(String bookName) {
         for(Book b : Database.bookList) {
