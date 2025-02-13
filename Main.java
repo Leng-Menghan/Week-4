@@ -17,6 +17,9 @@ public class Main {
     Librarian librarian1 = new Librarian("smith", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
     Database.librarianList.add(librarian1);
 
+//Add Admin
+    Admin admin1 = new Admin();
+    admin1.searchBookByName("The Great Gatsby");
 // //Add Borrow
     // student1.Borrow(1,1,1,"","" );
     // Display.displayBorrow();

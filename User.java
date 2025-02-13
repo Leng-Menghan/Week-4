@@ -22,6 +22,9 @@ public class User implements Search{
             this.password = password;
         }
 
+    //default constructor
+    public User() {};
+    
     // check password
     public String checkPassword(String password) {
         if (this.password.equals(password)) {
