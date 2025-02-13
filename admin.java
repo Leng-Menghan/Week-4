@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class Admin implements Search{
     String adminEmail = "admin";
     String adminPassword = "123";
@@ -93,15 +95,15 @@ public class Admin implements Search{
                 System.out.println("Password  : " + s.getPassword());
                 System.out.println("\nRecord student activity : ");
                 int checked = 0;
-                for(Student b : Database.studentList) {
-                    if(s.ID == b.studentID) {
-                        System.out.println("Book ID : " + b.bookID + " Name : " + b.bookName);
-                        System.out.println("Borrow Date: " + b.borrowDate +" -> "+ b.returnDate + " Approved by Librarian ID : " + b.librarianID + " Name : " + b.librarianName);
+                for (HashMap<String, Object> b : Database.borrowList){
+                    if((int)b.get("studentId") == s.ID) {
+                        System.out.println("Book ID : " + b.get("bookId") + " Name : " + b.get("bookName"));
+                        System.out.println("Borrow Date: " + b.get("borrowDate") +" -> "+ b.get("returnDate") + " Approved by Librarian ID : " + b.get("librarianId") + " Name : " + b.get("librarianName"));   
                         checked = 1;
                         int check = 0;
-                        for(Student r : Database.studentList) {
-                            if(b.bookID == r.bookID && b.studentID == r.studentID) {
-                                System.out.println("Returned Date: " + r.returnedDate + " Recorded by Librarian ID : " + r.librarianID + " Name : " + r.librarianName + "\n");
+                        for (HashMap<String, Object> r : Database.returnedList) {
+                            if(b.get("bookId").equals(r.get("bookId")) && b.get("studentId").equals(r.get("studentId"))) {
+                                System.out.println("Returned Date: " + r.get("returnedDate") + " Recorded by Librarian ID : " + r.get("librarianId") + " Name : " + r.get("librarianName") + "\n");
                                 check = 1;
                             }
                         }
@@ -129,16 +131,16 @@ public class Admin implements Search{
                 System.out.println("Email     : " + l.Email +"\n");
                 System.out.println("Record librarian activity : ");
                 int checked = 0;
-                for(Student b : Database.studentList) {
-                    if(l.ID == b.librarianID) {
-                        System.out.println("Student ID : " + b.studentID + " Name : " + b.studentName);
-                        System.out.println("Book ID : " + b.bookID + " Name : " + b.bookName);
-                        System.out.println("Borrow Date: " + b.borrowDate +" -> "+ b.returnDate);
+                for (HashMap<String, Object> b : Database.borrowList){
+                    if((int)b.get("librarianId") == l.ID) {
+                        System.out.println("Student ID : " + b.get("studentid") + " Name : " + b.get("studentName"));
+                        System.out.println("Book ID : " + b.get("bookId") + " Name : " + b.get("bookName"));
+                        System.out.println("Borrow Date: " + b.get("borrowDate") +" -> "+ b.get("returnDate"));
                         checked = 1;
                         int check = 0;
-                        for(Student r : Database.studentList) {
-                            if(b.bookID == r.bookID && b.studentID == r.studentID) {
-                                System.out.println("Returned Date: " + r.returnedDate + "\n");
+                        for (HashMap<String, Object> r : Database.returnedList) {
+                            if((int)b.get("bookId") == (int)r.get("bookId") && (int)b.get("studentId") == (int)r.get("studentId")) {
+                                System.out.println("Returned Date: " + r.get("returnedDate") + "\n");
                                 check = 1;
                             }
                         }

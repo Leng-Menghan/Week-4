@@ -18,11 +18,11 @@ public class Main {
     Database.librarianList.add(librarian1);
 
 // //Add Borrow
-    student1.Borrow(1,1,1,"","" );
-    Display.displayBorrow();
-    Display.DisplayInvoice();
-    Display.displayBorrow();
-    Display.displayBook();
+    // student1.Borrow(1,1,1,"","" );
+    // Display.displayBorrow();
+    // Display.DisplayInvoice();
+    // Display.displayBorrow();
+    // Display.displayBook();
 // //Add return
 
     //Database.returnedList.add(returned2);
@@ -34,7 +34,8 @@ public class Main {
     //Display.displayBorrow();
     // Display.displayReturn();
 
-    //search.searchBookByName("To Kill a Mockingbird");
+    student1.searchBookByName("To Kill a Mockingbird");
+    student2.searchBookByName("To Kill a Mockingbird");
     //search.searchBookByAuthor("F. Scott Fitzgerald");
     //search.searchBookByCategory("Fiction");
     //search.searchBookByISBN(123456);
