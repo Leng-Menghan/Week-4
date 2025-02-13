@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Display {
     public static void displayStudent(){
         System.out.println("#-------------------------------------------------#");
@@ -76,21 +79,24 @@ public class Display {
         System.out.println("#--------------------------------------------------------------------#");
         System.out.println("___________________________________________________\n");
         int check = 0;
-        for (Student b : Database.studentList){
+        for (HashMap<String, Object> b : Database.borrowList){
+            // for(Map.Entry<String, Object> borrow : b.entrySet()){
+                
+            // }
             int returned = 0;
-            for (Student r : Database.studentList){
-                if (b.bookID == r.bookID && b.studentID == r.studentID) {
+            for (HashMap<String, Object> r : Database.returnedList) {
+                if (b.get("bookId") == r.get("bookId") && b.get("studentId") == r.get("studentId")) {
                     returned = 1;
                 }
             }
             if (returned == 0) {
-                System.out.println("Book ID        : " + b.bookID);
-                System.out.println("Book name      : " + b.bookName);
-                System.out.println("Student ID     : " + b.studentID);
-                System.out.println("Student Name   : " + b.studentName);
-                System.out.println("Librarian ID   : " + b.librarianID);
-                System.out.println("Librarian Name : " + b.librarianName);
-                System.out.println("Borrow Date    : " + b.borrowDate + " -> " + b.returnDate);
+                System.out.println("Book ID        : " + b.get("bookId"));
+                System.out.println("Book name      : " + b.get("bookName"));
+                System.out.println("Student ID     : " + b.get("studentId"));
+                System.out.println("Student Name   : " + b.get("studentName"));
+                System.out.println("Librarian ID   : " + b.get("librarianId"));
+                System.out.println("Librarian Name : " + b.get("librarianName"));
+                System.out.println("Borrow Date    : " + b.get("borrowDate") + " -> " + b.get("returnDate"));
                 System.out.println("___________________________________________________\n");
                 check = 1;
                 count++;
@@ -112,19 +118,19 @@ public class Display {
         System.out.println("|                                                 |");
         System.out.println("#-------------------------------------------------#");
         System.out.println("___________________________________________________\n");
-        for (Student r : Database.studentList){
-            System.out.println("Book ID        : " + r.bookID);
-            System.out.println("Book name      : " + r.bookName);
-            System.out.println("Student ID     : " + r.studentID);
-            System.out.println("Student Name   : " + r.studentName);
-            System.out.println("Librarian ID   : " + r.librarianID);
-            System.out.println("Librarian Name : " + r.librarianName);
-            for(Student b : Database.studentList){
-                if(r.bookID == b.bookID && r.studentID == b.studentID){
-                    System.out.println("Borrow Date    : " + b.borrowDate + " -> " + b.returnDate);
+        for (HashMap<String, Object> r : Database.returnedList) {
+            System.out.println("Book ID        : " + r.get("bookId"));
+            System.out.println("Book name      : " + r.get("bookName"));
+            System.out.println("Student ID     : " + r.get("studentId"));
+            System.out.println("Student Name   : " + r.get("studentName"));
+            System.out.println("Librarian ID   : " + r.get("librarianId"));
+            System.out.println("Librarian Name : " + r.get("librarianName"));
+            for (HashMap<String, Object> b : Database.borrowList){
+                if (b.get("bookId") == r.get("bookId") && b.get("studentId") == r.get("studentId")) {
+                    System.out.println("Borrow Date    : " + b.get("borrowDate") + " -> " + b.get("returnDate"));
                 }
             }
-            System.out.println("Returned Date  : " + r.returnedDate);
+            System.out.println("Returned Date  : " + r.get("returnedDate"));
             System.out.println("___________________________________________________\n");
             count++;
         }
@@ -140,26 +146,25 @@ public class Display {
         System.out.println("#              Invoice of borrowing               #");
         System.out.println("|                                                 |");
         System.out.println("#-------------------------------------------------#");
-        System.out.println("\nStudent ID   : " + Database.studentList.get(0).studentID);
-        System.out.println("Name         : " + Database.studentList.get(0).studentName);
-        System.out.println("Librarian ID : " + Database.studentList.get(0).librarianID);
-        System.out.println("Name         : " + Database.studentList.get(0).librarianName);
-        System.out.println("Borrow Date  : " + Database.studentList.get(0).borrowDate + " -> " + Database.studentList.get(0).returnDate);
+        System.out.println("\nStudent ID   : " + Database.TmpBorrow.get(0).get("studentId"));
+        System.out.println("Name         : " + Database.TmpBorrow.get(0).get("studentName"));
+        System.out.println("Librarian ID : " + Database.TmpBorrow.get(0).get("librarianId"));
+        System.out.println("Name         : " + Database.TmpBorrow.get(0).get("librarianName"));
+        System.out.println("Borrow Date  : " + Database.TmpBorrow.get(0).get("borrowDate") + " -> " + Database.TmpBorrow.get(0).get("returnDate"));
         System.out.println("---------------------------------------------------");
         System.out.println("Borrowed Books : ");
         int count = 0;
-        for(Student b : Database.studentList){
+        for (HashMap<String, Object> b : Database.TmpBorrow) {
             count++;
-            System.out.println("(ID: " + b.bookID + ") - " + b.bookName);
-            payment+=b.payForBorrow;
-            
+            System.out.println("(ID: " + b.get("bookId") + ") - " + b.get("bookName"));
+            payment+= Double.parseDouble(b.get("payForBorrow").toString());
         }
         System.out.println("---------------------------------------------------");
         System.out.println("             Total payment : " + payment +" $" );
         System.out.println("                   books : " + count);
         System.out.println("---------------------------------------------------\n");
-        Database.studentList.addAll(Database.studentList);
-        Database.studentList.clear();
+        Database.borrowList.addAll(Database.TmpBorrow);
+        Database.TmpBorrow.clear();
     }
     
 

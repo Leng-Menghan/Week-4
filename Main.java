@@ -19,8 +19,10 @@ public class Main {
 
 // //Add Borrow
     student1.Borrow(1,1,1,"","" );
-    //Display.DisplayInvoice();
-
+    Display.displayBorrow();
+    Display.DisplayInvoice();
+    Display.displayBorrow();
+    Display.displayBook();
 // //Add return
 
     //Database.returnedList.add(returned2);
@@ -29,7 +31,7 @@ public class Main {
     //Display.displayBook();
     // Display.displayLibrarain();
     // Display.displayStudent();
-     Display.displayBorrow();
+    //Display.displayBorrow();
     // Display.displayReturn();
 
     //search.searchBookByName("To Kill a Mockingbird");

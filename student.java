@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class Student extends User {
 //Register
     public Student(String Name, String Address, String PhoneNumber, String Email, String password) {
@@ -9,43 +11,35 @@ public class Student extends User {
         super(Email, password); 
     }
 
-    int bookID;
-    String bookName;
-    int studentID;
-    String studentName;
-    int librarianID;
-    String librarianName;
-    String borrowDate;
-    String returnDate;
-    double payForBorrow;
     //For fill information borrow or return
     public void Borrow(int bookID, int studentID, int librarianID, String borrowDate, String returnDate) {
-        this.bookID = bookID;
-        this.studentID = studentID;
-        this.librarianID = librarianID;
-        this.borrowDate = borrowDate;
-        this.returnDate = returnDate;
+        HashMap<String, Object> borrowList = new HashMap<>();
+        borrowList.put("bookId", bookID);
         for(Book b : Database.bookList){
             if(bookID == b.bookid){
-                this.bookName = b.bookname;
+                borrowList.put("bookName", b.bookname);
                 break;
             }
         }
+        borrowList.put("studentId", studentID);
         for(Student s : Database.studentList){
             if(studentID == s.ID){
-                this.studentName = s.Name;
+                borrowList.put("studentName", s.Name);
                 break;
             }
         }
+        borrowList.put("librarianId", librarianID);
         for(Librarian l : Database.librarianList){
             if(librarianID == l.ID){
-                this.librarianName = l.Name;
+                borrowList.put("librarianName", l.Name);
                 break;
             }
         }
+        borrowList.put(returnDate, borrowList);
+        borrowList.put("borrowDate", borrowDate);
         for(Book b : Database.bookList){
             if(bookID == b.bookid){
-                this.payForBorrow = b.price * 0.1 ;
+                borrowList.put("payForBorrow", b.price * 0.1 );
                 break;
             }
         }
@@ -55,31 +49,30 @@ public class Student extends User {
                 break;
             }
         }
+    Database.TmpBorrow.add(borrowList);
     }
     
-    String returnedDate;
-
     //For fill information borrow or return
     public void Returned(int bookID, int studentID, int librarianID, String returnedDate) {
-        this.bookID = bookID;
-        this.studentID = studentID;
-        this.librarianID = librarianID;
-        this.returnedDate = returnedDate;
+        HashMap<String, Object> returnedList = new HashMap<>();
+        returnedList.put("bookId", bookID);
         for(Book b : Database.bookList){
             if(bookID == b.bookid){
-                this.bookName = b.bookname;
+                returnedList.put("bookName", b.bookname);
                 break;
             }
         }
+        returnedList.put("studentId", studentID);
         for(Student s : Database.studentList){
             if(studentID == s.ID){
-                this.studentName = s.Name;
+                returnedList.put("studentName", s.Name);
                 break;
             }
         }
+        returnedList.put("librarianId", librarianID);
         for(Librarian l : Database.librarianList){
             if(librarianID == l.ID){
-                this.librarianName = l.Name;
+                returnedList.put("librarianName", l.Name);
                 break;
             }
         }
@@ -89,5 +82,7 @@ public class Student extends User {
                 break;
             }
         }
+        returnedList.put("returnedDate", returnedDate);
+        Database.returnedList.add(returnedList);
     }
 }
