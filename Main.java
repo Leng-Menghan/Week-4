@@ -1,6 +1,5 @@
 public class Main {
     public static void main(String[] args) {
-    Search search = new Search();
 //Add Book  
     Book book1 = new Book(123456, "Fiction", "The Great Gatsby", "F. Scott Fitzgerald", 5, 5, "Scribner");
     Book book2 = new Book(789012, "Non-Fiction", "To Kill a Mockingbird", "F. Scott Fitzgerald", 15, 3, "Penguin");
@@ -19,23 +18,18 @@ public class Main {
     Database.librarianList.add(librarian1);
 
 // //Add Borrow
-    Borrow borrow1 = new Borrow(3, 1 ,1, "2023-01-01", "2023-01-15");
-    Borrow borrow2 = new Borrow(1, 1,1, "2023-01-01", "2023-01-15");
-    Database.TmpBorrow.add(borrow1);
-    Database.TmpBorrow.add(borrow2);
+    student1.Borrow(1,1,1,"","" );
     //Display.DisplayInvoice();
 
 // //Add return
-    Returned returned1 = new Returned(3, 1 ,1,"2023-01-17");
-    //Returned returned2 = new Returned(1, 1,1, "2023-01-15");
-    Database.returnedList.add(returned1);
+
     //Database.returnedList.add(returned2);
     
     //Search
-    Display.displayBook();
+    //Display.displayBook();
     // Display.displayLibrarain();
     // Display.displayStudent();
-    // Display.displayBorrow();
+     Display.displayBorrow();
     // Display.displayReturn();
 
     //search.searchBookByName("To Kill a Mockingbird");

@@ -76,9 +76,9 @@ public class Display {
         System.out.println("#--------------------------------------------------------------------#");
         System.out.println("___________________________________________________\n");
         int check = 0;
-        for (Borrow b : Database.borrowList){
+        for (Student b : Database.studentList){
             int returned = 0;
-            for (Returned r : Database.returnedList){
+            for (Student r : Database.studentList){
                 if (b.bookID == r.bookID && b.studentID == r.studentID) {
                     returned = 1;
                 }
@@ -112,14 +112,14 @@ public class Display {
         System.out.println("|                                                 |");
         System.out.println("#-------------------------------------------------#");
         System.out.println("___________________________________________________\n");
-        for (Returned r : Database.returnedList){
+        for (Student r : Database.studentList){
             System.out.println("Book ID        : " + r.bookID);
             System.out.println("Book name      : " + r.bookName);
             System.out.println("Student ID     : " + r.studentID);
             System.out.println("Student Name   : " + r.studentName);
             System.out.println("Librarian ID   : " + r.librarianID);
             System.out.println("Librarian Name : " + r.librarianName);
-            for(Borrow b : Database.borrowList){
+            for(Student b : Database.studentList){
                 if(r.bookID == b.bookID && r.studentID == b.studentID){
                     System.out.println("Borrow Date    : " + b.borrowDate + " -> " + b.returnDate);
                 }
@@ -140,15 +140,15 @@ public class Display {
         System.out.println("#              Invoice of borrowing               #");
         System.out.println("|                                                 |");
         System.out.println("#-------------------------------------------------#");
-        System.out.println("\nStudent ID   : " + Database.TmpBorrow.get(0).studentID);
-        System.out.println("Name         : " + Database.TmpBorrow.get(0).studentName);
-        System.out.println("Librarian ID : " + Database.TmpBorrow.get(0).librarianID);
-        System.out.println("Name         : " + Database.TmpBorrow.get(0).librarianName);
-        System.out.println("Borrow Date  : " + Database.TmpBorrow.get(0).borrowDate + " -> " + Database.TmpBorrow.get(0).returnDate);
+        System.out.println("\nStudent ID   : " + Database.studentList.get(0).studentID);
+        System.out.println("Name         : " + Database.studentList.get(0).studentName);
+        System.out.println("Librarian ID : " + Database.studentList.get(0).librarianID);
+        System.out.println("Name         : " + Database.studentList.get(0).librarianName);
+        System.out.println("Borrow Date  : " + Database.studentList.get(0).borrowDate + " -> " + Database.studentList.get(0).returnDate);
         System.out.println("---------------------------------------------------");
         System.out.println("Borrowed Books : ");
         int count = 0;
-        for(Borrow b : Database.TmpBorrow){
+        for(Student b : Database.studentList){
             count++;
             System.out.println("(ID: " + b.bookID + ") - " + b.bookName);
             payment+=b.payForBorrow;
@@ -158,8 +158,8 @@ public class Display {
         System.out.println("             Total payment : " + payment +" $" );
         System.out.println("                   books : " + count);
         System.out.println("---------------------------------------------------\n");
-        Database.borrowList.addAll(Database.TmpBorrow);
-        Database.TmpBorrow.clear();
+        Database.studentList.addAll(Database.studentList);
+        Database.studentList.clear();
     }
     
 
