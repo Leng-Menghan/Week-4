@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class Admin implements Search{
+public class Admin extends User{
     String adminEmail = "admin";
     String adminPassword = "123";
 
@@ -15,73 +15,6 @@ public class Admin implements Search{
             
         }
     }
-    public void searchBookByName(String bookName) {
-        for(Book b : Database.bookList) {
-            if(b.bookname.equals(bookName)) {
-                System.out.println("Book found");
-                System.out.println("----------------------------------------------------");
-                System.out.println("Book ID   : " + b.bookid);
-                System.out.println("ISBN      : " + b.isbn);
-                System.out.println("Book name : " + b.bookname);
-                System.out.println("Author    : " + b.author);
-                System.out.println("Category  : " + b.category);
-                System.out.println("Price     : " + b.price + " $");
-                System.out.println("Quantity  : " + b.quantity);
-                System.out.println("Publisher : " + b.publisher);
-                System.out.println("----------------------------------------------------\n");
-                return;
-            }
-        }
-        System.out.println("Book not found");
-    }
-
-    public void searchBookByAuthor(String authorName) {
-        System.out.println("Books of author : " + authorName);
-        System.out.println("----------------------------------------------------");
-        int checked = 0;
-        for(Book b : Database.bookList) {
-            if(b.author.equals(authorName)) {
-                System.out.println("(ID : " + b.bookid +") : " + b.bookname + " quantity: " + b.quantity);
-                checked = 1;
-            }
-        }
-        if(checked == 0) {
-            System.out.println("Book not found");
-        }
-        System.out.println("----------------------------------------------------\n");
-    }
-
-    // Search book by category
-    public void searchBookByCategory(String category) {
-        System.out.println("Books of category : " + category);
-        int checked = 0;
-        for(Book b : Database.bookList) {
-            if(b.category.equals(category)) {
-                System.out.println("(ID : " + b.bookid +") : " + b.bookname + " quantity: " + b.quantity);
-                checked = 1;
-            }
-        }
-        if(checked == 0) {
-            System.out.println("Book not found");
-        }
-    }
-
-    // Search book by ISBN
-    public void searchBookByISBN(int ISBN) {
-        for(Book b : Database.bookList) {
-            if(b.isbn == ISBN) {
-                System.out.println("ISBN      : " + b.isbn);
-                System.out.println("Book name : " + b.bookname);
-                System.out.println("Author    : " + b.author);
-                System.out.println("Category  : " + b.category);
-                System.out.println("Price     : " + b.price);
-                System.out.println("Quantity  : " + b.quantity);
-                System.out.println("Publisher : " + b.publisher);
-                return;
-            }
-        }
-        System.out.println("Book not found");
-    } 
 
     // Search student by ID
     public void searchStudentByID(int studentID) {
