@@ -85,4 +85,32 @@ public class Student extends User {
         returnedList.put("returnedDate", returnedDate);
         Database.returnedList.add(returnedList);
     }
+
+    public void DisplayInvoice(){
+        double payment = 0;
+        System.out.println("#-------------------------------------------------#");
+        System.out.println("|                                                 |");
+        System.out.println("#              Invoice of borrowing               #");
+        System.out.println("|                                                 |");
+        System.out.println("#-------------------------------------------------#");
+        System.out.println("\nStudent ID   : " + Database.TmpBorrow.get(0).get("studentId"));
+        System.out.println("Name         : " + Database.TmpBorrow.get(0).get("studentName"));
+        System.out.println("Librarian ID : " + Database.TmpBorrow.get(0).get("librarianId"));
+        System.out.println("Name         : " + Database.TmpBorrow.get(0).get("librarianName"));
+        System.out.println("Borrow Date  : " + Database.TmpBorrow.get(0).get("borrowDate") + " -> " + Database.TmpBorrow.get(0).get("returnDate"));
+        System.out.println("---------------------------------------------------");
+        System.out.println("Borrowed Books : ");
+        int count = 0;
+        for (HashMap<String, Object> b : Database.TmpBorrow) {
+            count++;
+            System.out.println("(ID: " + b.get("bookId") + ") - " + b.get("bookName"));
+            payment+= Double.parseDouble(b.get("payForBorrow").toString());
+        }
+        System.out.println("---------------------------------------------------");
+        System.out.println("             Total payment : " + payment +" $" );
+        System.out.println("                   books : " + count);
+        System.out.println("---------------------------------------------------\n");
+        Database.borrowList.addAll(Database.TmpBorrow);
+        Database.TmpBorrow.clear();
+    }
 }

@@ -1,4 +1,4 @@
-public class User implements Search{
+public class User implements UserAction{
     int ID = 0;
     String Name;
     String Address;
@@ -115,5 +115,29 @@ public class User implements Search{
             }
         }
         System.out.println("Book not found");
+    }
+
+    public void displayBook(){
+        System.out.println("#-------------------------------------------------#");
+        System.out.println("|                                                 |");
+        System.out.println("#     Book list in Library Management System      #");
+        System.out.println("|                                                 |");
+        System.out.println("#-------------------------------------------------#");
+        System.out.println("___________________________________________________\n");
+        int count = 0;
+        for(Book b : Database.bookList){
+            System.out.println("ID        : " + b.bookid);
+            System.out.println("ISBN      : " + b.isbn);
+            System.out.println("Name      : " + b.bookname);
+            System.out.println("Author    : " + b.author);
+            System.out.println("Category  : " + b.category);
+            System.out.println("Price     : " + b.price + " $");
+            System.out.println("Quantity  : " + b.quantity);
+            System.out.println("Publisher : " + b.publisher);
+            System.out.println("___________________________________________________\n");
+            count++;
+        }
+        System.out.println("----------------- Total Books : " + count +" ----------------- ");
+        System.out.println("___________________________________________________\n");
     }
 }
