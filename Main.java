@@ -6,7 +6,6 @@ public class Main {
     Book book3 = new Book(789012, "Non-Fiction", "To Kill", "F. Scott Fitzgerald", 13, 3, "Penguin");
     Database.bookList.add(book1);
     Database.bookList.add(book2);
-
     Database.bookList.add(book3);
 //Add student
     Student student1 = new Student("John Doe", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
@@ -27,7 +26,7 @@ public class Main {
     // Display.displayBorrow();
     // Display.displayBook();
 // //Add return
-
+    librarian1.displayStudent();
     //Database.returnedList.add(returned2);
     
     //Search
@@ -37,8 +36,8 @@ public class Main {
     //Display.displayBorrow();
     // Display.displayReturn();
 
-    student1.searchBookByName("To Kill a Mockingbird");
-    student2.searchBookByName("To Kill a Mockingbird");
+    //student1.searchBookByName("To Kill a Mockingbird");
+    //student2.searchBookByName("To Kill a Mockingbird");
     //search.searchBookByAuthor("F. Scott Fitzgerald");
     //search.searchBookByCategory("Fiction");
     //search.searchBookByISBN(123456);
