@@ -14,65 +14,59 @@ public class Student extends User {
     //For fill information borrow or return
     public void Borrow(int bookID, int studentID, int librarianID, String borrowDate, String returnDate) {
         HashMap<String, Object> borrowList = new HashMap<>();
-        borrowList.put("bookId", bookID);
         for(Book b : Database.bookList){
             if(bookID == b.bookid){
                 borrowList.put("bookName", b.bookname);
                 break;
             }
         }
-        borrowList.put("studentId", studentID);
         for(Student s : Database.studentList){
             if(studentID == s.ID){
                 borrowList.put("studentName", s.Name);
                 break;
             }
         }
-        borrowList.put("librarianId", librarianID);
         for(Librarian l : Database.librarianList){
             if(librarianID == l.ID){
                 borrowList.put("librarianName", l.Name);
                 break;
             }
         }
-        borrowList.put(returnDate, borrowList);
-        borrowList.put("borrowDate", borrowDate);
         for(Book b : Database.bookList){
             if(bookID == b.bookid){
                 borrowList.put("payForBorrow", b.price * 0.1 );
                 break;
             }
         }
+        borrowList.put("bookId", bookID);
+        borrowList.put("studentId", studentID);
+        borrowList.put("librarianId", librarianID);
+        borrowList.put("returnDate", returnDate);
+        borrowList.put("borrowDate", borrowDate);
         for(Book b : Database.bookList) {
             if(b.bookid == bookID) {
                 b.quantity--;
                 break;
             }
         }
+        borrowList.put("LibrarianReturnId","None");
+        borrowList.put("LibrarianReturnName","None");
+        borrowList.put("Returned","None");
     Database.TmpBorrow.add(borrowList);
     }
     
     //For fill information borrow or return
     public void Returned(int bookID, int studentID, int librarianID, String returnedDate) {
-        HashMap<String, Object> returnedList = new HashMap<>();
-        returnedList.put("bookId", bookID);
-        for(Book b : Database.bookList){
-            if(bookID == b.bookid){
-                returnedList.put("bookName", b.bookname);
-                break;
-            }
-        }
-        returnedList.put("studentId", studentID);
-        for(Student s : Database.studentList){
-            if(studentID == s.ID){
-                returnedList.put("studentName", s.Name);
-                break;
-            }
-        }
-        returnedList.put("librarianId", librarianID);
-        for(Librarian l : Database.librarianList){
-            if(librarianID == l.ID){
-                returnedList.put("librarianName", l.Name);
+        for (HashMap<String, Object> b : Database.borrowList) {
+            if (b.get("bookId").equals(bookID) && b.get("studentId").equals(studentID)) {
+                b.put("Returned", returnedDate);
+                b.put("LibrarianReturnId", librarianID);
+                for(Librarian l : Database.librarianList){
+                    if(librarianID == l.ID){
+                        b.put("LibrarianReturnName", l.Name);
+                        break;
+                    }
+                }
                 break;
             }
         }
@@ -82,8 +76,6 @@ public class Student extends User {
                 break;
             }
         }
-        returnedList.put("returnedDate", returnedDate);
-        Database.returnedList.add(returnedList);
     }
 
     public void DisplayInvoice(){

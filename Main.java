@@ -18,15 +18,24 @@ public class Main {
 
 //Add Admin
     Admin admin1 = new Admin();
-    admin1.searchBookByName("The Great Gatsby");
+    //admin1.displayLibrarain();
+    //admin1.searchBookByName("The Great Gatsby");
 // //Add Borrow
-    // student1.Borrow(1,1,1,"","" );
-    // Display.displayBorrow();
-    // Display.DisplayInvoice();
-    // Display.displayBorrow();
-    // Display.displayBook();
+    student1.Borrow(1,1,3,"12-02-2024","26-02-2024" );
+    student2.Borrow(2,2,3,"12-02-2024","26-02-2024");
+    student1.DisplayInvoice();
+    // librarian1.displayBorrow();
+    // librarian1.displayReturn();
+    student1.Returned(1, 1, 3, "22-02-2024");
+    // librarian1.displayBorrow();
+    // librarian1.displayReturn();
+    // student1.displayBook();
+    //admin1.searchLibrarianByID(3);
+    //admin1.searchStudentByID(2);
+    //admin1.displayBook();
+    admin1.displayStudent();
 // //Add return
-    librarian1.displayStudent();
+    //librarian1.displayStudent();
     //Database.returnedList.add(returned2);
     
     //Search
