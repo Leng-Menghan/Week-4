@@ -1,6 +1,4 @@
 public class User implements UserAction{
-    static int total = 0;
-    int ID = 0;
     String Name;
     String Address;
     String PhoneNumber;
@@ -9,7 +7,6 @@ public class User implements UserAction{
 
     // Register
     public User(String Name, String Address, String PhoneNumber, String Email, String password) {
-            this.ID = ++total;
             this.Name = Name;
             this.Address = Address;
             this.PhoneNumber = PhoneNumber;        

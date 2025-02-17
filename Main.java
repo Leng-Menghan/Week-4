@@ -14,26 +14,28 @@ public class Main {
     Database.studentList.add(student2);
 //Add Librarain
     Librarian librarian1 = new Librarian("smith", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
+    Librarian librarian2 = new Librarian("smile", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
     Database.librarianList.add(librarian1);
+    Database.librarianList.add(librarian2);
 
 //Add Admin
     Admin admin1 = new Admin();
     //admin1.displayLibrarain();
     //admin1.searchBookByName("The Great Gatsby");
 // //Add Borrow
-    student1.Borrow(1,1,3,"12-02-2024","26-02-2024" );
-    student2.Borrow(2,2,3,"12-02-2024","26-02-2024");
+    student1.Borrow(1,1,1,"12-02-2024","26-02-2024" );
+    student2.Borrow(2,2,1,"12-02-2024","26-02-2024");
     student1.DisplayInvoice();
     // librarian1.displayBorrow();
     // librarian1.displayReturn();
-    student1.Returned(1, 1, 3, "22-02-2024");
+    //student1.Returned(1, 1, 3, "22-02-2024");
     // librarian1.displayBorrow();
     // librarian1.displayReturn();
     // student1.displayBook();
-    //admin1.searchLibrarianByID(3);
-    //admin1.searchStudentByID(2);
+    admin1.searchLibrarianByID(1);
+    //librarian1.searchStudentByID(1);
     //admin1.displayBook();
-    admin1.displayStudent();
+    //admin1.displayStudent();
 // //Add return
     //librarian1.displayStudent();
     //Database.returnedList.add(returned2);

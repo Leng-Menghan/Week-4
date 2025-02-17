@@ -18,14 +18,16 @@ public class Admin extends User{
 
     // Search student by ID
     public void searchStudentByID(int studentID) {
+        System.out.println("Result of student with ID : " + studentID);
+        System.out.println("___________________________________________________\n");
         for(Student s : Database.studentList) {
             if(s.ID == studentID) {
-                System.out.println("ID        : " + s.ID);
                 System.out.println("Name      : " + s.Name);
                 System.out.println("Address   : " + s.Address);
                 System.out.println("Phone     : " + s.PhoneNumber);
                 System.out.println("Email     : " + s.Email);
                 System.out.println("Password  : " + s.getPassword());
+                System.out.println("___________________________________________________");
                 System.out.println("\nRecord student activity : ");
                 int checked = 0;
                 for (HashMap<String, Object> b : Database.borrowList){
@@ -46,18 +48,21 @@ public class Admin extends User{
                 return;
             }
         }
-        System.out.println("Student not found");
+        System.out.println("                Student not found");
+        System.out.println("___________________________________________________\n");
     }
-
     public void searchLibrarianByID(int librarianID) {
+        System.out.println("Result of librarian with ID : " + librarianID);
+        System.out.println("___________________________________________________\n");
         for(Librarian l : Database.librarianList) {
             if(l.ID == librarianID) {
                 System.out.println("ID        : " + l.ID);
                 System.out.println("Name      : " + l.Name);
                 System.out.println("Address   : " + l.Address);
                 System.out.println("Phone     : " + l.PhoneNumber);
-                System.out.println("Email     : " + l.Email +"\n");
-                System.out.println("Record librarian activity : ");
+                System.out.println("Email     : " + l.Email);
+                System.out.println("___________________________________________________");
+                System.out.println("\nRecord librarian activity : ");
                 System.out.println("1. Borrow activity : ");
                 int checked = 0;
                 for (HashMap<String, Object> b : Database.borrowList){
@@ -73,9 +78,9 @@ public class Admin extends User{
                         }
                     }
                 }
-                System.out.println("1. Return activity : ");
+                System.out.println("2. Return activity : ");
                 for (HashMap<String, Object> b : Database.borrowList){
-                    if((int)b.get("LibrarianReturnId") == l.ID) {
+                    if(b.get("LibrarianReturnId").equals(String.valueOf(librarianID))) {
                         System.out.println("Student ID  : " + b.get("studentId") + " Name : " + b.get("studentName"));
                         System.out.println("Book ID     : " + b.get("bookId") + " Name : " + b.get("bookName"));
                         System.out.println("Returned Date: " + b.get("Returned"));
@@ -89,7 +94,8 @@ public class Admin extends User{
                 return;
             }
         }
-        System.out.println("Librarian not found");
+        System.out.println("                Librarian not found");
+        System.out.println("___________________________________________________");
     }
 
     public void displayBorrow(){

@@ -1,9 +1,12 @@
 import java.util.HashMap;
 
 public class Student extends User {
+    static int total = 0;
+    int ID = 0;
 //Register
     public Student(String Name, String Address, String PhoneNumber, String Email, String password) {
         super(Name, Address, PhoneNumber, Email, password); 
+        this.ID = ++total;
     }
     
 //login

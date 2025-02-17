@@ -1,9 +1,11 @@
 import java.util.HashMap;
 
 public class Librarian extends User {
-
+    static int total = 0;
+    int ID = 0;
     public Librarian(String Name, String Address, String PhoneNumber, String Email, String password) {
         super(Name, Address, PhoneNumber, Email, password); 
+        this.ID = ++total;
     }
 
     public Librarian(String Email, String password) {
@@ -12,14 +14,16 @@ public class Librarian extends User {
 
     // Search student by ID
     public void searchStudentByID(int studentID) {
+        System.out.println("Result of student with ID : " + studentID);
+        System.out.println("___________________________________________________\n");
         for(Student s : Database.studentList) {
             if(s.ID == studentID) {
-                System.out.println("ID        : " + s.ID);
                 System.out.println("Name      : " + s.Name);
                 System.out.println("Address   : " + s.Address);
                 System.out.println("Phone     : " + s.PhoneNumber);
                 System.out.println("Email     : " + s.Email);
                 System.out.println("Password  : " + s.getPassword());
+                System.out.println("___________________________________________________");
                 System.out.println("\nRecord student activity : ");
                 int checked = 0;
                 for (HashMap<String, Object> b : Database.borrowList){
@@ -40,7 +44,8 @@ public class Librarian extends User {
                 return;
             }
         }
-        System.out.println("Student not found");
+        System.out.println("                Student not found");
+        System.out.println("___________________________________________________\n");
     }
 
     public void displayBorrow(){
