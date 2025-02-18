@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-//Add Book  
+//Add Book
     Book book1 = new Book(123456, "Fiction", "The Great Gatsby", "F. Scott Fitzgerald", 5, 5, "Scribner");
     Book book2 = new Book(789012, "Non-Fiction", "To Kill a Mockingbird", "F. Scott Fitzgerald", 15, 3, "Penguin");
     Book book3 = new Book(789012, "Non-Fiction", "To Kill", "F. Scott Fitzgerald", 13, 3, "Penguin");
@@ -28,31 +28,16 @@ public class Main {
     student1.DisplayInvoice();
     // librarian1.displayBorrow();
     // librarian1.displayReturn();
-    //student1.Returned(1, 1, 3, "22-02-2024");
+    student1.Returned(1, 1, 1, "22-02-2024");
     // librarian1.displayBorrow();
     // librarian1.displayReturn();
     // student1.displayBook();
-    admin1.searchLibrarianByID(1);
+    //admin1.searchLibrarianByID(1);
     //librarian1.searchStudentByID(1);
-    //admin1.displayBook();
+    admin1.displayBook();
     //admin1.displayStudent();
-// //Add return
-    //librarian1.displayStudent();
-    //Database.returnedList.add(returned2);
-    
-    //Search
-    //Display.displayBook();
-    // Display.displayLibrarain();
-    // Display.displayStudent();
-    //Display.displayBorrow();
-    // Display.displayReturn();
-
-    //student1.searchBookByName("To Kill a Mockingbird");
-    //student2.searchBookByName("To Kill a Mockingbird");
-    //search.searchBookByAuthor("F. Scott Fitzgerald");
-    //search.searchBookByCategory("Fiction");
-    //search.searchBookByISBN(123456);
-    //search.searchStudentByID(1);
-    //search.searchLibrarianByID(1);
+    //admin1.displayLibrarain();
+    //admin1.displayBorrow();
+    //admin1.displayReturn();
     }
 }

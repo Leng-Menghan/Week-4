@@ -116,26 +116,21 @@ public class User implements UserAction{
     }
 
     public void displayBook(){
-        System.out.println("#-------------------------------------------------#");
-        System.out.println("|                                                 |");
-        System.out.println("#     Book list in Library Management System      #");
-        System.out.println("|                                                 |");
-        System.out.println("#-------------------------------------------------#");
-        System.out.println("___________________________________________________\n");
+        System.out.println("#---------------------------------------------------------------------------------------------------------------------------------#");
+        System.out.println("|                                                                                                                                 |");
+        System.out.println("#                                           Book list in Library Management System                                                #");
+        System.out.println("|                                                                                                                                 |");
+        System.out.println("#---------------------------------------------------------------------------------------------------------------------------------#");
+        String format = "| %-3s | %-6s | %-27s | %-20s | %-20s | %-7s | %-8s | %-15s |\n";
+        System.out.println("+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
+        System.out.printf(format, "ID", "ISBN", "Name", "Author", "Category", "Price", "Quantity", "Publisher");
+        System.out.println("+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
         int count = 0;
         for(Book b : Database.bookList){
-            System.out.println("ID        : " + b.bookid);
-            System.out.println("ISBN      : " + b.isbn);
-            System.out.println("Name      : " + b.bookname);
-            System.out.println("Author    : " + b.author);
-            System.out.println("Category  : " + b.category);
-            System.out.println("Price     : " + b.price + " $");
-            System.out.println("Quantity  : " + b.quantity);
-            System.out.println("Publisher : " + b.publisher);
-            System.out.println("___________________________________________________\n");
+            System.out.printf(format, b.bookid, b.isbn, b.bookname, b.author, b.category, b.price, b.quantity, b.publisher);
+            System.out.println("+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
             count++;
         }
-        System.out.println("----------------- Total Books : " + count +" ----------------- ");
-        System.out.println("___________________________________________________\n");
+        System.out.println("| Total Books : " + count +"   |\n");
     }
 }

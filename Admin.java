@@ -65,19 +65,23 @@ public class Admin extends User{
                 System.out.println("\nRecord librarian activity : ");
                 System.out.println("1. Borrow activity : ");
                 int checked = 0;
+                String format = "| %-10s | %-20s | %-7s | %-30s | %-25s | %-14s |\n";
+                System.out.println("+------------+----------------------+---------+--------------------------------+---------------------------+----------------+");
+                System.out.printf(format, "Student ID", "Name", "Book ID" , "Book Name", "Borrow Date", "Return Status");
+                System.out.println("+------------+----------------------+---------+--------------------------------+---------------------------+----------------+");
                 for (HashMap<String, Object> b : Database.borrowList){
                     if((int)b.get("librarianId") == l.ID) {
-                        System.out.println("Student ID  : " + b.get("studentId") + " Name : " + b.get("studentName"));
-                        System.out.println("Book ID     : " + b.get("bookId") + " Name : " + b.get("bookName"));
-                        System.out.println("Borrow Date : " + b.get("borrowDate") +" -> "+ b.get("returnDate"));
                         checked = 1;
                         if(b.get("Returned").equals("None")) {
-                            System.out.println("Not returned\n");
+                            System.out.printf(format, b.get("studentId"), b.get("studentName"), b.get("bookId"), b.get("bookName"),b.get("borrowDate") + " -> " + b.get("returnDate"),"Not Returned");
                         }else{
-                            System.out.println("Returned Date: " + b.get("Returned") +"\n");
+                            System.out.printf(format, b.get("studentId"), b.get("studentName"), b.get("bookId"), b.get("bookName"),b.get("borrowDate") + " -> " + b.get("returnDate"), b.get("Returned"));
                         }
+                        
                     }
+                    
                 }
+                System.out.println("+------------+----------------------+---------+--------------------------------+---------------------------+----------------+");
                 System.out.println("2. Return activity : ");
                 for (HashMap<String, Object> b : Database.borrowList){
                     if(b.get("LibrarianReturnId").equals(String.valueOf(librarianID))) {
@@ -100,54 +104,46 @@ public class Admin extends User{
 
     public void displayBorrow(){
         int count = 0;
-        System.out.println("#--------------------------------------------------------------------#");
-        System.out.println("|                                                                    |");
-        System.out.println("#   Borrowed list (Not returned yet) in Library Management System    #");
-        System.out.println("|                                                                    |");
-        System.out.println("#--------------------------------------------------------------------#");
-        System.out.println("___________________________________________________\n");
+        System.out.println("#--------------------------------------------------------------------------------------------------------------------------------#");
+        System.out.println("|                                                                                                                                |");
+        System.out.println("#                                      Borrowed list (Not returned yet) in Library Management System                             #");
+        System.out.println("|                                                                                                                                |");
+        System.out.println("#--------------------------------------------------------------------------------------------------------------------------------#");
         int check = 0;
+        String format = "| %-6s | %-18s | %-5s | %-30s | %-6s | %-18s | %-25s |\n";
+        System.out.println("+--------+--------------------+-------+--------------------------------+--------+--------------------+---------------------------+");
+        System.out.printf(format, "Stu ID", "Name", "B ID" , "Book Name","Lib ID", "Librarian Name", "Borrow Date");
+        System.out.println("+--------+--------------------+-------+--------------------------------+--------+--------------------+---------------------------+");
         for (HashMap<String, Object> b : Database.borrowList){
             if(b.get("Returned").equals("None")) {
-                System.out.println("Book ID        : " + b.get("bookId"));
-                System.out.println("Book name      : " + b.get("bookName"));
-                System.out.println("Student ID     : " + b.get("studentId"));
-                System.out.println("Student Name   : " + b.get("studentName"));
-                System.out.println("Librarian ID   : " + b.get("librarianId"));
-                System.out.println("Librarian Name : " + b.get("librarianName"));
-                System.out.println("Borrow Date    : " + b.get("borrowDate") + " -> " + b.get("returnDate"));
-                System.out.println("___________________________________________________\n");
+                System.out.printf(format, b.get("studentId"), b.get("studentName"), b.get("bookId"), b.get("bookName"), b.get("librarianId"), b.get("librarianName"), b.get("borrowDate") + " -> " + b.get("returnDate"));
                 count++;
                 check = 1;
             }
         }
+        System.out.println("+--------+--------------------+-------+--------------------------------+--------+--------------------+---------------------------+");
         if(check == 0){
             System.out.println("                     None !");
             System.out.println("___________________________________________________\n");
         }
         System.out.println("--------------- Total borrowed : "+ count +" --------------- ");
-        System.out.println("___________________________________________________\n");
     }
 
     public void displayReturn(){
         int count = 0;
-        System.out.println("#-------------------------------------------------#");
-        System.out.println("|                                                 |");
-        System.out.println("#   Returned list in Library Management System    #");
-        System.out.println("|                                                 |");
-        System.out.println("#-------------------------------------------------#");
-        System.out.println("___________________________________________________\n");
+        System.out.println("#--------------------------------------------------------------------------------------------------------------------------------#");
+        System.out.println("|                                                                                                                                |");
+        System.out.println("#                                          Returned list in Library Management System                                            #");
+        System.out.println("|                                                                                                                                |");
+        System.out.println("#--------------------------------------------------------------------------------------------------------------------------------#");
         int check = 0;
+        String format = "| %-6s | %-18s | %-5s | %-30s | %-6s | %-18s | %-25s |\n";
+        System.out.println("+--------+--------------------+-------+--------------------------------+--------+--------------------+---------------------------+");
+        System.out.printf(format, "Stu ID", "Name", "B ID" , "Book Name","Lib ID", "Librarian Name", "Returned Date");
+        System.out.println("+--------+--------------------+-------+--------------------------------+--------+--------------------+---------------------------+");
         for (HashMap<String, Object> b : Database.borrowList){
             if(!b.get("Returned").equals("None")) {
-            System.out.println("Book ID        : " + b.get("bookId"));
-            System.out.println("Book name      : " + b.get("bookName"));
-            System.out.println("Student ID     : " + b.get("studentId"));
-            System.out.println("Student Name   : " + b.get("studentName"));
-            System.out.println("Librarian ID   : " + b.get("LibrarianReturnId"));
-            System.out.println("Librarian Name : " + b.get("LibrarianReturnName"));
-            System.out.println("Returned Date  : " + b.get("Returned"));
-            System.out.println("___________________________________________________\n");
+            System.out.printf(format, b.get("studentId"), b.get("studentName"), b.get("bookId"), b.get("bookName"), b.get("LibrarianReturnId"), b.get("LibrarianReturnName"), b.get("Returned"));
             count++;
             check = 1;
             }
@@ -156,51 +152,46 @@ public class Admin extends User{
             System.out.println("                     None !");
             System.out.println("___________________________________________________\n");
         }
+        System.out.println("+--------+--------------------+-------+--------------------------------+--------+--------------------+---------------------------+");
         System.out.println("--------------- Total returned : "+count+" --------------- ");
-        System.out.println("___________________________________________________\n");
     }
 
     public void displayLibrarain(){
-        System.out.println("#-------------------------------------------------#");
-        System.out.println("|                                                 |");
-        System.out.println("#   Librarain list in Library Management System   #");
-        System.out.println("|                                                 |");
-        System.out.println("#-------------------------------------------------#");
+        System.out.println("#-----------------------------------------------------------------------------------------------------------------#");
+        System.out.println("|                                                                                                                 |");
+        System.out.println("#                                      Librarain list in Library Management System                                #");
+        System.out.println("|                                                                                                                 |");
+        System.out.println("#-----------------------------------------------------------------------------------------------------------------#");
         System.out.println("___________________________________________________\n");
         int count = 0;
+        String format = "| %-5s | %-20s | %-20s | %-15s | %-20s | %-15s |\n";
+        System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
+        System.out.printf(format, " ID", "Name", "Address" , "Phone Number", "Email", "Password");
+        System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
         for(Librarian l : Database.librarianList){
-            System.out.println("ID       : " + l.ID);
-            System.out.println("Name     : " + l.Name);
-            System.out.println("Address  : " + l.Address);
-            System.out.println("Phone    : " + l.PhoneNumber);
-            System.out.println("Email    : " + l.Email);
-            System.out.println("Password : " + l.getPassword());
-            System.out.println("___________________________________________________\n");
+            System.out.printf(format, l.ID, l.Name, l.Address, l.PhoneNumber, l.Email, l.getPassword());
             count++;
         }
+        System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
         System.out.println("--------------- Total librarain : " + count +" --------------- ");
-        System.out.println("___________________________________________________\n");
     }
 
     public void displayStudent(){
-        System.out.println("#-------------------------------------------------#");
-        System.out.println("|                                                 |");
-        System.out.println("#    Student list in Library Management System    #");
-        System.out.println("|                                                 |");
-        System.out.println("#-------------------------------------------------#");
-        System.out.println("___________________________________________________\n");
+        System.out.println("#----------------------------------------------------------------------------------------------------------------#");
+        System.out.println("|                                                                                                                |");
+        System.out.println("#                                         Student list in Library Management System                              #");
+        System.out.println("|                                                                                                                |");
+        System.out.println("#----------------------------------------------------------------------------------------------------------------#");
         int count = 0;
+        String format = "| %-5s | %-20s | %-20s | %-15s | %-20s | %-15s |\n";
+        System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
+        System.out.printf(format, " ID", "Name", "Address" , "Phone Number", "Email", "Password");
+        System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
         for(Student s : Database.studentList){
-            System.out.println("ID       : " + s.ID);
-            System.out.println("Name     : " + s.Name);
-            System.out.println("Address  : " + s.Address);
-            System.out.println("Phone    : " + s.PhoneNumber);
-            System.out.println("Email    : " + s.Email);
-            System.out.println("Password : " + s.getPassword());
-            System.out.println("___________________________________________________\n");
+            System.out.printf(format, s.ID, s.Name, s.Address, s.PhoneNumber, s.Email, s.getPassword());
             count++;
         }
+        System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
         System.out.println("--------------- Total students : " + count +" --------------- ");
-        System.out.println("___________________________________________________\n");
     }
 }
