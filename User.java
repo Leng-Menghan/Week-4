@@ -1,4 +1,5 @@
-public class User implements UserAction{
+public abstract class User implements UserAction{
+    String ID;
     String Name;
     String Address;
     String PhoneNumber;
@@ -47,6 +48,7 @@ public class User implements UserAction{
         }
     }
 
+    //Search Book by name
     public void searchBookByName(String bookName) {
         for(Book b : Database.bookList) {
             if(b.bookname.equals(bookName)) {
@@ -67,6 +69,7 @@ public class User implements UserAction{
         System.out.println("Book not found");
     }
 
+    //Search Book by Author
     public void searchBookByAuthor(String authorName) {
         System.out.println("Books of author : " + authorName);
         System.out.println("----------------------------------------------------");
@@ -115,6 +118,7 @@ public class User implements UserAction{
         System.out.println("Book not found");
     }
 
+    //Display Book
     public void displayBook(){
         System.out.println("#---------------------------------------------------------------------------------------------------------------------------------#");
         System.out.println("|                                                                                                                                 |");
@@ -133,4 +137,9 @@ public class User implements UserAction{
         }
         System.out.println("| Total Books : " + count +"   |\n");
     }
+
+    //abstract method
+    public abstract void Borrow(int bookID, String studentID, String librarianID, String borrowDate, String returnDate);
+    public abstract void Returned(int bookID, String studentID, String librarianID, String returnedDate);
+    public abstract void DisplayInvoice();
 }

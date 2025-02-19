@@ -2,11 +2,10 @@ import java.util.HashMap;
 
 public class Student extends User {
     static int total = 0;
-    int ID = 0;
 //Register
     public Student(String Name, String Address, String PhoneNumber, String Email, String password) {
         super(Name, Address, PhoneNumber, Email, password); 
-        this.ID = ++total;
+        this.ID = "S" + ++total;
     }
     
 //login
@@ -14,8 +13,8 @@ public class Student extends User {
         super(Email, password); 
     }
 
-    //For fill information borrow or return
-    public void Borrow(int bookID, int studentID, int librarianID, String borrowDate, String returnDate) {
+    //Borrow
+    public void Borrow(int bookID, String studentID, String librarianID, String borrowDate, String returnDate) {
         HashMap<String, Object> borrowList = new HashMap<>();
         for(Book b : Database.bookList){
             if(bookID == b.bookid){
@@ -23,14 +22,14 @@ public class Student extends User {
                 break;
             }
         }
-        for(Student s : Database.studentList){
-            if(studentID == s.ID){
+        for(User s : Database.UserList){
+            if(studentID.equals(s.ID)){
                 borrowList.put("studentName", s.Name);
                 break;
             }
         }
-        for(Librarian l : Database.librarianList){
-            if(librarianID == l.ID){
+        for(User l : Database.UserList){
+            if(librarianID.equals(l.ID)){
                 borrowList.put("librarianName", l.Name);
                 break;
             }
@@ -58,14 +57,14 @@ public class Student extends User {
     Database.TmpBorrow.add(borrowList);
     }
     
-    //For fill information borrow or return
-    public void Returned(int bookID, int studentID, int librarianID, String returnedDate) {
+    //Return
+    public void Returned(int bookID, String studentID, String librarianID, String returnedDate) {
         for (HashMap<String, Object> b : Database.borrowList) {
             if (b.get("bookId").equals(bookID) && b.get("studentId").equals(studentID)) {
                 b.put("Returned", returnedDate);
                 b.put("LibrarianReturnId", librarianID);
-                for(Librarian l : Database.librarianList){
-                    if(librarianID == l.ID){
+                for(User l : Database.UserList){
+                    if(librarianID.equals(l.ID)){
                         b.put("LibrarianReturnName", l.Name);
                         break;
                     }
@@ -81,6 +80,7 @@ public class Student extends User {
         }
     }
 
+    //Invoice
     public void DisplayInvoice(){
         double payment = 0;
         System.out.println("#-------------------------------------------------#");
