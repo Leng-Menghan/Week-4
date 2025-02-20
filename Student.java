@@ -108,4 +108,10 @@ public class Student extends User {
         Database.borrowList.addAll(Database.TmpBorrow);
         Database.TmpBorrow.clear();
     }
+
+    public void searchStudentByID(String studentID) {};
+    public void searchLibrarianByID(String librarianID) {};
+    public void displayStudent() {};
+    public void displayReturn() {};
+    public void displayBorrow() {};
 }

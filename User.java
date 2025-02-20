@@ -139,7 +139,13 @@ public abstract class User implements UserAction{
     }
 
     //abstract method
+        //For student
     public abstract void Borrow(int bookID, String studentID, String librarianID, String borrowDate, String returnDate);
     public abstract void Returned(int bookID, String studentID, String librarianID, String returnedDate);
     public abstract void DisplayInvoice();
+        //For librarian
+    public abstract void searchStudentByID(String studentID);
+    public abstract void displayStudent();
+    public abstract void displayBorrow();
+    public abstract void displayReturn();
 }

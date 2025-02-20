@@ -28,7 +28,8 @@ public class Main {
     student1.DisplayInvoice();
     //admin1.searchLibrarianByID("L1");
     //admin1.searchStudentByID("S1");
-    admin1.displayLibrarain();
+    //admin1.displayLibrarain();
     //admin1.displayStudent();
+    librarian1.searchStudentByID("S1");
     }
 }
