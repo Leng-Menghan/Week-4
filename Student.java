@@ -8,11 +8,6 @@ public class Student extends User {
         this.ID = "S" + ++total;
     }
     
-//login
-    public Student(String Email, String password) {
-        super(Email, password); 
-    }
-
     //Borrow
     public void Borrow(int bookID, String studentID, String librarianID, String borrowDate, String returnDate) {
         HashMap<String, Object> borrowList = new HashMap<>();

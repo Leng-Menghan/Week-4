@@ -9,11 +9,11 @@ public class Main {
     Database.bookList.add(book3);
 //Add student
     User student1 = new Student("John Doe", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
-    User student2 = new Student("Jane Doe", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
+    User student2 = new Student("Jane Doe", "123 Main St.", "123-456-7890", "yWV7V@example.com","12345");
     Database.UserList.add(student1);
     Database.UserList.add(student2);
 //Add Librarain
-    User librarian1 = new Librarian("smith", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
+    User librarian1 = new Librarian("smith", "123 Main St.", "123-456-7890", "yWV7V@example.com","234");
     User librarian2 = new Librarian("smile", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
     Database.UserList.add(librarian1);
     Database.UserList.add(librarian2);
@@ -24,10 +24,11 @@ public class Main {
     student1.Borrow(1,"S2","L1","12-02-2024","26-02-2024" );
     student2.Borrow(2,"S2","L1","12-02-2024","26-02-2024");
     student1.DisplayInvoice();
+    student1.login("yWV7V@example.com","12345");
     //admin1.searchLibrarianByID("L1");
     //admin1.searchStudentByID("S1");
     //admin1.displayLibrarain();
-    admin1.displayStudent();
+    //admin1.displayStudent();
     //librarian1.searchStudentByID("S1");
     }
 }

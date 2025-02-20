@@ -4,7 +4,7 @@ public abstract class User implements UserAction{
     String Address;
     String PhoneNumber;
     String Email;
-    private String password;
+    private String Password;
 
     // Register
     public User(String Name, String Address, String PhoneNumber, String Email, String password) {
@@ -12,22 +12,28 @@ public abstract class User implements UserAction{
             this.Address = Address;
             this.PhoneNumber = PhoneNumber;        
             this.Email = Email;
-            this.password = password;
+            this.Password = password;
         }
 
     // login
-    public User(String Email, String password) {
-            this.Email = Email;
-            this.password = password;
+    public boolean login(String email, String password) {
+        for(User u : Database.UserList) {
+            if (u.Email.equals(email) && u.Password.equals(password)) {
+                System.out.println("User logged in");
+                return true;
+            }
         }
-
+        System.out.println("Invalid email or password");
+        return false;
+    }
+    
     //default constructor
     public User() {};
     
     // check password
     public String checkPassword(String password) {
-        if (this.password.equals(password)) {
-            return password;
+        if (password.equals(Password)) {
+            return Password;
         } else {
             return "Invalid Password";
         }
@@ -35,13 +41,13 @@ public abstract class User implements UserAction{
 
     // get password
     public String getPassword() {
-        return password;
+        return Password;
     }
 
     // change password
     public void setNewPassword(String newPassword, String oldPassword) {
-        if (this.password.equals(oldPassword)) {
-            this.password = newPassword;
+        if (Password.equals(oldPassword)) {
+            Password = newPassword;
             System.out.println("Password changed successfully");
         } else {
             System.out.println("Invalid Password");

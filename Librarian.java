@@ -7,10 +7,6 @@ public class Librarian extends User {
         this.ID = "L" + ++total;
     }
 
-    public Librarian(String Email, String password) {
-        super(Email, password); 
-    }
-
     //default constructor
     public Librarian() {};
 
