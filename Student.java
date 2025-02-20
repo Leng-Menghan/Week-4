@@ -110,7 +110,6 @@ public class Student extends User {
     }
 
     public void searchStudentByID(String studentID) {};
-    public void searchLibrarianByID(String librarianID) {};
     public void displayStudent() {};
     public void displayReturn() {};
     public void displayBorrow() {};

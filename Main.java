@@ -20,16 +20,14 @@ public class Main {
 
 //Add Admin
     Admin admin1 = new Admin();
-    //admin1.displayLibrarain();
-    //admin1.searchBookByName("The Great Gatsby");
 // //Add Borrow
-    student1.Borrow(1,"S1","L1","12-02-2024","26-02-2024" );
+    student1.Borrow(1,"S2","L1","12-02-2024","26-02-2024" );
     student2.Borrow(2,"S2","L1","12-02-2024","26-02-2024");
     student1.DisplayInvoice();
     //admin1.searchLibrarianByID("L1");
     //admin1.searchStudentByID("S1");
     //admin1.displayLibrarain();
-    //admin1.displayStudent();
-    librarian1.searchStudentByID("S1");
+    admin1.displayStudent();
+    //librarian1.searchStudentByID("S1");
     }
 }
