@@ -4,5 +4,5 @@ public interface UserAction {
     void searchBookByCategory(String category);
     void searchBookByISBN(int ISBN);
     void displayBook();
-    boolean login(String email, String password);
+    boolean login();
 }

@@ -28,7 +28,7 @@ public class Main {
                     String username = scanner.nextLine();
                     System.out.print("Enter Password : ");
                     String password = scanner.nextLine();
-                    admin.login(username, password);
+                    admin.adminlogin(username, password);
                     System.out.println("Welcome to Admin function");
                     System.out.println("1. Display Librarian");
                     System.out.println("2. Display Student");
@@ -100,11 +100,7 @@ public class Main {
                         break;
                         case 2:
                             System.out.println("Please Login as Librarian");
-                            System.out.print("Enter Email : ");
-                            String Email = scanner.nextLine();
-                            System.out.print("Enter Password : ");
-                            String password1 = scanner.nextLine();
-                            librarian.login(Email, password1);
+                            librarian.login();
                             System.out.println("Welcome to Librarian function");
                             System.out.println("1. Display Student");
                             System.out.println("2. Display Book");
@@ -173,11 +169,7 @@ public class Main {
                         break;
                         case 2:
                         System.out.println("Please Login as Student");
-                        System.out.print("Enter Email : ");
-                        String Email1 = scanner.nextLine();
-                        System.out.print("Enter Password : ");
-                        String password2 = scanner.nextLine();
-                        student.login(Email1, password2);
+                        student.login();
                         System.out.println("Welcome to Student function");
                         System.out.println("1. Display Book");
                         System.out.println("2. Search Book By ISBN");

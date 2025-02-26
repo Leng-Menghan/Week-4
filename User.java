@@ -21,9 +21,13 @@ public abstract class User implements UserAction{
     public User() {};
     
     // login
-    public boolean login(String email, String password) {
+    public boolean login() {
+        System.out.print("Enter Email : ");
+        String Email = scanner.nextLine();
+        System.out.print("Enter Password : ");
+        String Password = scanner.nextLine();
         for(User u : Database.UserList) {
-            if (u.Email.equals(email) && u.Password.equals(password)) {
+            if (u.Email.equals(Email) && u.Password.equals(Password)) {
                 System.out.println("User logged in");
                 return true;
             }
