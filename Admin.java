@@ -2,8 +2,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Admin extends Librarian{
-    String adminUsername = "admin";
-    String adminPassword = "123";
+    private String adminUsername = "admin";
+    private String adminPassword = "123";
     Scanner scanner = new Scanner(System.in);
     public boolean adminlogin() {
         System.out.print("Enter Username : ");
