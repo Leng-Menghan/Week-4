@@ -1,11 +1,12 @@
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Admin extends Librarian{
-    String adminEmail = "admin";
+    String adminUsername = "admin";
     String adminPassword = "123";
-
+    Scanner scanner = new Scanner(System.in);
     public boolean adminlogin(String email, String password) {
-        if (email.equals(adminEmail) && password.equals(adminPassword)) {
+        if (email.equals(adminUsername) && password.equals(adminPassword)) {
             return true;
         }
         return false;
