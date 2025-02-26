@@ -6,13 +6,9 @@ public class Admin extends Librarian{
 
     public boolean adminlogin(String email, String password) {
         if (email.equals(adminEmail) && password.equals(adminPassword)) {
-            System.out.println( "Admin logged in");
             return true;
         }
-        else {
-            System.out.println("Invalid email or password");
-            return false;
-        }
+        return false;
     }
 
     // Search Librarian by id

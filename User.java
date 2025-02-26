@@ -1,9 +1,9 @@
 public abstract class User implements UserAction{
-    String ID;
-    String Name;
-    String Address;
-    String PhoneNumber;
-    String Email;
+    protected String ID;
+    protected String Name;
+    protected String Address;
+    protected String PhoneNumber;
+    protected String Email;
     private String Password;
 
     // Register
@@ -13,7 +13,10 @@ public abstract class User implements UserAction{
             this.PhoneNumber = PhoneNumber;        
             this.Email = Email;
             this.Password = password;
-        }
+    }
+
+    //default constructor
+    public User() {};
 
     // login
     public boolean login(String email, String password) {
@@ -23,20 +26,7 @@ public abstract class User implements UserAction{
                 return true;
             }
         }
-        System.out.println("Invalid email or password");
         return false;
-    }
-    
-    //default constructor
-    public User() {};
-    
-    // check password
-    public String checkPassword(String password) {
-        if (password.equals(Password)) {
-            return Password;
-        } else {
-            return "Invalid Password";
-        }
     }
 
     // get password
@@ -45,7 +35,7 @@ public abstract class User implements UserAction{
     }
 
     // change password
-    public void setNewPassword(String newPassword, String oldPassword) {
+    public void changePassword(String newPassword, String oldPassword) {
         if (Password.equals(oldPassword)) {
             Password = newPassword;
             System.out.println("Password changed successfully");
@@ -57,7 +47,7 @@ public abstract class User implements UserAction{
     //Search Book by name
     public void searchBookByName(String bookName) {
         for(Book b : Database.bookList) {
-            if(b.bookname.equals(bookName)) {
+            if(b.bookname.toLowerCase().equals(bookName.toLowerCase())) {
                 System.out.println("Book found");
                 System.out.println("----------------------------------------------------");
                 System.out.println("Book ID   : " + b.bookid);
@@ -77,11 +67,10 @@ public abstract class User implements UserAction{
 
     //Search Book by Author
     public void searchBookByAuthor(String authorName) {
-        System.out.println("Books of author : " + authorName);
         System.out.println("----------------------------------------------------");
         int checked = 0;
         for(Book b : Database.bookList) {
-            if(b.author.equals(authorName)) {
+            if(b.author.toLowerCase().equals(authorName.toLowerCase())) {
                 System.out.println("(ID : " + b.bookid +") : " + b.bookname + " quantity: " + b.quantity);
                 checked = 1;
             }
@@ -94,10 +83,9 @@ public abstract class User implements UserAction{
 
     // Search book by category
     public void searchBookByCategory(String category) {
-        System.out.println("Books of category : " + category);
         int checked = 0;
         for(Book b : Database.bookList) {
-            if(b.category.equals(category)) {
+            if(b.category.toLowerCase().equals(category.toLowerCase())) {
                 System.out.println("(ID : " + b.bookid +") : " + b.bookname + " quantity: " + b.quantity);
                 checked = 1;
             }
@@ -137,7 +125,7 @@ public abstract class User implements UserAction{
         System.out.println("+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
         int count = 0;
         for(Book b : Database.bookList){
-            System.out.printf(format, b.bookid, b.isbn, b.bookname, b.author, b.category, b.price, b.quantity, b.publisher);
+            System.out.printf(format, b.bookid, b.isbn, b.bookname, b.author, b.category, b.price + " $", b.quantity, b.publisher);
             System.out.println("+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
             count++;
         }
@@ -154,4 +142,7 @@ public abstract class User implements UserAction{
     public abstract void displayStudent();
     public abstract void displayBorrow();
     public abstract void displayReturn();
+    public abstract void addBook();
+    public abstract void deleteBook();
+    public abstract void addBookQuantityByISBN();
 }

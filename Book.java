@@ -8,6 +8,7 @@ public class Book {
     double price;
     int quantity;
     String publisher;
+
 //Add book
     public Book(int isbn, String category, String bookname, String author, double price, int quantity, String publisher) {
         this.bookid = ++totalBook;

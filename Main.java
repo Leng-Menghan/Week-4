@@ -1,34 +1,45 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-//Add Book
-    Book book1 = new Book(123456, "Fiction", "The Great Gatsby", "F. Scott Fitzgerald", 5, 5, "Scribner");
-    Book book2 = new Book(789012, "Non-Fiction", "To Kill a Mockingbird", "F. Scott Fitzgerald", 15, 3, "Penguin");
-    Book book3 = new Book(789012, "Non-Fiction", "To Kill", "F. Scott Fitzgerald", 13, 3, "Penguin");
-    Database.bookList.add(book1);
-    Database.bookList.add(book2);
-    Database.bookList.add(book3);
-//Add student
-    User student1 = new Student("John Doe", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
-    User student2 = new Student("Jane Doe", "123 Main St.", "123-456-7890", "yWV7V@example.com","12345");
-    Database.UserList.add(student1);
-    Database.UserList.add(student2);
-//Add Librarain
-    User librarian1 = new Librarian("smith", "123 Main St.", "123-456-7890", "yWV7V@example.com","234");
-    User librarian2 = new Librarian("smile", "123 Main St.", "123-456-7890", "yWV7V@example.com","1234");
-    Database.UserList.add(librarian1);
-    Database.UserList.add(librarian2);
+        Admin admin = new Admin();
+        User student = new Student();
+        User librarian = new Librarian();
+        Scanner scanner = new Scanner(System.in);
+            System.out.println("#---------------------------------------------------#");
+            System.out.println("|                                                   |");
+            System.out.println("#        Welcome to Library Management System       #");
+            System.out.println("|                                                   |");
+            System.out.println("#---------------------------------------------------#");
+            System.out.println("----------------------------------------------------");
+            System.out.println("1. Admin");
+            System.out.println("2. Librarian");
+            System.out.println("3. Student");
+            System.out.println("4. Exit");
+            System.out.println("----------------------------------------------------");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
 
-//Add Admin
-    Admin admin1 = new Admin();
-// //Add Borrow
-    student1.Borrow(1,"S2","L1","12-02-2024","26-02-2024" );
-    student2.Borrow(2,"S2","L1","12-02-2024","26-02-2024");
-    student1.DisplayInvoice();
-    student1.login("yWV7V@example.com","12345");
-    //admin1.searchLibrarianByID("L1");
-    //admin1.searchStudentByID("S1");
-    //admin1.displayLibrarain();
-    //admin1.displayStudent();
-    //librarian1.searchStudentByID("S1");
-    }
+            switch (choice) {
+                case 1:
+
+                break;
+
+                case 2:
+
+                break;
+
+                case 3:
+
+                break;
+
+                case 4: 
+
+                break;
+
+                default:
+            }
+        scanner.close();
+    } 
 }

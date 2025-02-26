@@ -1,7 +1,11 @@
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Librarian extends User {
+    Scanner scanner = new Scanner(System.in);
     static int total = 0;
+
+    // constructor for register
     public Librarian(String Name, String Address, String PhoneNumber, String Email, String password) {
         super(Name, Address, PhoneNumber, Email, password); 
         this.ID = "L" + ++total;
@@ -127,6 +131,64 @@ public class Librarian extends User {
         System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
         System.out.println("--------------- Total students : " + count +" --------------- ");
     }
+    
+    //Add book
+    public void addBook(){
+        System.out.println("#---------------------------------------#");
+        System.out.println("|          Enter Book Details           |");
+        System.out.println("#---------------------------------------#");
+
+        System.out.print("ISBN          : ");
+        int ISBN = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Category      : ");
+        String category = scanner.nextLine();
+
+        System.out.print("Book Name     : ");
+        String bookName = scanner.nextLine();
+
+        System.out.print("Author        : ");
+        String author = scanner.nextLine();
+
+        System.out.print("Price of Book : $ ");
+        double price = scanner.nextDouble();
+
+        System.out.print("Quantity      : ");
+        int quantity = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Publisher     : ");
+        String publisher = scanner.nextLine();
+
+        Database.bookList.add(new Book(ISBN, category, bookName, author, price, quantity, publisher));
+    };
+
+    //Delete book
+    public void deleteBook(){
+        System.out.println("Enter book ISBN: ");
+        int ISBN = scanner.nextInt();
+        for(Book b : Database.bookList){
+            if(b.isbn == ISBN) {
+                Database.bookList.remove(b);
+                break;
+            }
+        }
+    };
+
+    public void addBookQuantityByISBN(){
+        System.out.print("Enter book ISBN: ");
+        int ISBN = scanner.nextInt();
+        for(Book b : Database.bookList){
+            if(b.isbn == ISBN) {
+                System.out.println("How many books do you want to add?");
+                System.out.print("Enter quantity: ");
+                int newQuantity = scanner.nextInt();
+                b.quantity += newQuantity;
+                break;
+            }
+        }
+    };
     
     //Empty method from Parent(User)'s abstract method
     public void Borrow(int bookID, String studentID, String librarianID, String borrowDate, String returnDate){};

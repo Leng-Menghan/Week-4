@@ -2,12 +2,12 @@ import java.util.HashMap;
 
 public class Student extends User {
     static int total = 0;
-//Register
+    //Register
     public Student(String Name, String Address, String PhoneNumber, String Email, String password) {
         super(Name, Address, PhoneNumber, Email, password); 
         this.ID = "S" + ++total;
     }
-    
+    public Student() {};
     //Borrow
     public void Borrow(int bookID, String studentID, String librarianID, String borrowDate, String returnDate) {
         HashMap<String, Object> borrowList = new HashMap<>();
@@ -108,4 +108,7 @@ public class Student extends User {
     public void displayStudent() {};
     public void displayReturn() {};
     public void displayBorrow() {};
+    public void addBookQuantityByISBN() {};
+    public void deleteBook() {};
+    public void addBook() {};
 }
