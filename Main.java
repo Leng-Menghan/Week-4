@@ -24,11 +24,7 @@ public class Main {
             switch (choice) {
                 case 1:
                     System.out.println("Please Login as Admin");
-                    System.out.print("Enter Username : ");
-                    String username = scanner.nextLine();
-                    System.out.print("Enter Password : ");
-                    String password = scanner.nextLine();
-                    admin.adminlogin(username, password);
+                    admin.adminlogin();
                     System.out.println("Welcome to Admin function");
                     System.out.println("1. Display Librarian");
                     System.out.println("2. Display Student");
@@ -63,26 +59,16 @@ public class Main {
                             admin.deleteBook();
                         break;
                         case 7:
-                            System.out.print("Enter book ISBN: ");
-                            int ISBN = scanner.nextInt();
-                            admin.searchBookByISBN(ISBN);
+                            admin.searchBookByISBN();
                         break;
                         case 8:
-                            System.out.print("Enter book name: ");
-                            String bookName = scanner.nextLine();
-                            admin.searchBookByName(bookName);
+                            admin.searchBookByName();
                         break;
                         case 9:
-                            System.out.print("Enter book author: ");
-                            String authorName = scanner.nextLine();
-                            admin.searchBookByAuthor(authorName);
+                            admin.searchBookByAuthor();
                         break;
                         case 10:
-                            System.out.print("Enter book category: ");
-                            String category = scanner.nextLine();
-                            admin.searchBookByCategory(category);
-                        break;
-                        default:
+                            admin.searchBookByCategory();
                         break;
                     }
                 break;
@@ -131,31 +117,20 @@ public class Main {
                                     librarian.deleteBook();
                                 break;
                                 case 6:
-                                    System.out.print("Enter book ISBN: ");
-                                    int ISBN1 = scanner.nextInt();
-                                    librarian.searchBookByISBN(ISBN1);
+                                    librarian.searchBookByISBN();
                                 break;
                                 case 7:
-                                    System.out.print("Enter book name: ");
-                                    String bookName1 = scanner.nextLine();
-                                    librarian.searchBookByName(bookName1);
+                                    librarian.searchBookByName();
                                 break;
                                 case 8:
-                                    System.out.print("Enter book author: ");
-                                    String authorName1 = scanner.nextLine();
-                                    librarian.searchBookByAuthor(authorName1);
+                                    librarian.searchBookByAuthor();
                                 break;
                                 case 9:
-                                    System.out.print("Enter book category: ");
-                                    String category1 = scanner.nextLine();
-                                    librarian.searchBookByCategory(category1);
-                                break;
-                                default:
+                                    librarian.searchBookByCategory();
                                 break;
                             }
                     }
                 break;
-
                 case 3:
                     System.out.println("Student");
                     System.out.println("1. Register Student");
@@ -167,77 +142,50 @@ public class Main {
                         case 1:
                             student.register();
                         break;
-                        case 2:
-                        System.out.println("Please Login as Student");
-                        student.login();
-                        System.out.println("Welcome to Student function");
-                        System.out.println("1. Display Book");
-                        System.out.println("2. Search Book By ISBN");
-                        System.out.println("3. Search Book By Name");
-                        System.out.println("4. Search Book By Author");
-                        System.out.println("5. Search Book By Category");
-                        System.out.println("6. Borrow Book");
-                        System.out.println("7. Return Book");
-                        System.out.print("Please Select Option (1-7) : ");
-                        int option3 = scanner.nextInt();
-                        scanner.nextLine();
-                        switch (option3) {
-                            case 1:
-                                student.displayBook();
-                            break;
-                            case 2:
-                                System.out.print("Enter book ISBN: ");
-                                int ISBN2 = scanner.nextInt();
-                                student.searchBookByISBN(ISBN2);
-                            break;
-                            case 3:
-                                System.out.print("Enter book name: ");
-                                String bookName2 = scanner.nextLine();
-                                student.searchBookByName(bookName2);
-                            break;
-                            case 4:
-                                System.out.print("Enter book author: ");
-                                String authorName2 = scanner.nextLine();
-                                student.searchBookByAuthor(authorName2);
-                            break;
-                            case 5:
-                                System.out.print("Enter book category: ");
-                                String category2 = scanner.nextLine();
-                                student.searchBookByCategory(category2);
-                            break;
-                            case 6:
-                                System.out.print("Enter book ID : ");
-                                int bookId = scanner.nextInt();
-                                scanner.nextLine();
-                                System.out.print("Enter student ID : ");
-                                String studentID = scanner.nextLine();
-                                System.out.print("Enter librarian ID : ");
-                                String librarianID = scanner.nextLine();
-                                System.out.print("Enter borrow Date : ");
-                                String BDate = scanner.nextLine();
-                                System.out.print("Enter return Date : ");
-                                String RDate = scanner.nextLine();
-                                student.Borrow(bookId, studentID, librarianID, BDate, RDate);
-                            break;
-                            case 7:
-                                System.out.print("Enter book ID : ");
-                                int bookId1 = scanner.nextInt();
-                                scanner.nextLine();
-                                System.out.print("Enter student ID : ");
-                                String studentID1 = scanner.nextLine();
-                                System.out.print("Enter librarian ID : ");
-                                String librarianID1 = scanner.nextLine();
-                                System.out.print("Enter return Date : ");
-                                String RDate1 = scanner.nextLine();
-                                student.Returned(bookId1, studentID1, librarianID1, RDate1);
-                            break;
-                        }
-                    }
-                    break;
-                case 4 : 
 
+                        case 2:
+                            System.out.println("Please Login as Student");
+                            student.login();
+                            System.out.println("Welcome to Student function");
+                            System.out.println("1. Display Book");
+                            System.out.println("2. Search Book By ISBN");
+                            System.out.println("3. Search Book By Name");
+                            System.out.println("4. Search Book By Author");
+                            System.out.println("5. Search Book By Category");
+                            System.out.println("6. Borrow Book");
+                            System.out.println("7. Return Book");
+                            System.out.print("Please Select Option (1-7) : ");
+                            int option3 = scanner.nextInt();
+                            scanner.nextLine();
+                            switch (option3) {
+                                case 1:
+                                    student.displayBook();
+                                break;
+                                case 2:
+                                    student.searchBookByISBN();
+                                break;
+                                case 3:
+                                    student.searchBookByName();
+                                break;
+                                case 4:
+                                    student.searchBookByAuthor();
+                                break;
+                                case 5:
+                                    student.searchBookByCategory();
+                                break;
+                                case 6:
+                                    student.Borrow();
+                                break;
+                                case 7:
+                                    student.Returned();
+                                break;
+                            }
+                        break;
+                    }
                 break;
-                default:
+                case 4 : 
+                    System.exit(0);
+                break;
             }
         scanner.close();
     } 

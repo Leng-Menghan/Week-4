@@ -27,8 +27,19 @@ public class Student extends User {
         String password2 = scanner.nextLine();
         Database.UserList.add(new Student(name, address, phoneNumber, email, password2));
     };
-    public void Borrow(int bookID, String studentID, String librarianID, String borrowDate, String returnDate) {
+    public void Borrow() {
         HashMap<String, Object> borrowList = new HashMap<>();
+        System.out.print("Enter book ID : ");
+        int bookID = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter student ID : ");
+        String studentID = scanner.nextLine();
+        System.out.print("Enter librarian ID : ");
+        String librarianID = scanner.nextLine();
+        System.out.print("Enter borrow Date : ");
+        String borrowDate = scanner.nextLine();
+        System.out.print("Enter return Date : ");
+        String returnDate = scanner.nextLine();
         for(Book b : Database.bookList){
             if(bookID == b.bookid){
                 borrowList.put("bookName", b.bookname);
@@ -71,7 +82,16 @@ public class Student extends User {
     }
     
     //Return
-    public void Returned(int bookID, String studentID, String librarianID, String returnedDate) {
+    public void Returned() {
+        System.out.print("Enter book ID : ");
+        int bookID = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter student ID : ");
+        String studentID = scanner.nextLine();
+        System.out.print("Enter librarian ID : ");
+        String librarianID = scanner.nextLine();
+        System.out.print("Enter return Date : ");
+        String returnedDate = scanner.nextLine();
         for (HashMap<String, Object> b : Database.borrowList) {
             if (b.get("bookId").equals(bookID) && b.get("studentId").equals(studentID)) {
                 b.put("Returned", returnedDate);
@@ -122,12 +142,12 @@ public class Student extends User {
         Database.TmpBorrow.clear();
     }
 
-    public void searchStudentByID(String studentID) {};
+    public void searchStudentByID() {};
     public void displayStudent() {};
     public void displayReturn() {};
     public void displayBorrow() {};
     public void addBookQuantityByISBN() {};
     public void deleteBook() {};
     public void addBook() {};
-
+    
 }

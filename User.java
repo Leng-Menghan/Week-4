@@ -51,7 +51,9 @@ public abstract class User implements UserAction{
     }
 
     //Search Book by name
-    public void searchBookByName(String bookName) {
+    public void searchBookByName() {
+        System.out.print("Enter book name: ");
+        String bookName = scanner.nextLine();
         for(Book b : Database.bookList) {
             if(b.bookname.toLowerCase().equals(bookName.toLowerCase())) {
                 System.out.println("Book found");
@@ -72,7 +74,9 @@ public abstract class User implements UserAction{
     }
 
     //Search Book by Author
-    public void searchBookByAuthor(String authorName) {
+    public void searchBookByAuthor() {
+        System.out.println("Enter author name: ");
+        String authorName = scanner.nextLine();
         System.out.println("----------------------------------------------------");
         int checked = 0;
         for(Book b : Database.bookList) {
@@ -88,7 +92,9 @@ public abstract class User implements UserAction{
     }
 
     // Search book by category
-    public void searchBookByCategory(String category) {
+    public void searchBookByCategory() {
+        System.out.print("Enter book category: ");
+        String category = scanner.nextLine();
         int checked = 0;
         for(Book b : Database.bookList) {
             if(b.category.toLowerCase().equals(category.toLowerCase())) {
@@ -102,7 +108,9 @@ public abstract class User implements UserAction{
     }
 
     // Search book by ISBN
-    public void searchBookByISBN(int ISBN) {
+    public void searchBookByISBN() {
+        System.out.print("Enter book ISBN: ");
+        int ISBN = scanner.nextInt();
         for(Book b : Database.bookList) {
             if(b.isbn == ISBN) {
                 System.out.println("ISBN      : " + b.isbn);
@@ -139,17 +147,18 @@ public abstract class User implements UserAction{
     }
 
     //abstract method
+    public abstract void register();
         //For student
-    public abstract void Borrow(int bookID, String studentID, String librarianID, String borrowDate, String returnDate);
-    public abstract void Returned(int bookID, String studentID, String librarianID, String returnedDate);
+    public abstract void Borrow();
+    public abstract void Returned();
     public abstract void DisplayInvoice();
         //For librarian
-    public abstract void searchStudentByID(String studentID);
+    public abstract void searchStudentByID();
     public abstract void displayStudent();
     public abstract void displayBorrow();
     public abstract void displayReturn();
     public abstract void addBook();
     public abstract void deleteBook();
     public abstract void addBookQuantityByISBN();
-    public abstract void register();
+    
 }

@@ -5,8 +5,12 @@ public class Admin extends Librarian{
     String adminUsername = "admin";
     String adminPassword = "123";
     Scanner scanner = new Scanner(System.in);
-    public boolean adminlogin(String email, String password) {
-        if (email.equals(adminUsername) && password.equals(adminPassword)) {
+    public boolean adminlogin() {
+        System.out.print("Enter Username : ");
+        String username = scanner.nextLine();
+        System.out.print("Enter Password : ");
+        String password = scanner.nextLine();
+        if (username.equals(adminUsername) && password.equals(adminPassword)) {
             return true;
         }
         return false;

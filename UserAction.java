@@ -1,8 +1,8 @@
 public interface UserAction {
-    void searchBookByName(String bookName);
-    void searchBookByAuthor(String authorName);
-    void searchBookByCategory(String category);
-    void searchBookByISBN(int ISBN);
+    void searchBookByName();
+    void searchBookByAuthor();
+    void searchBookByCategory();
+    void searchBookByISBN();
     void displayBook();
     boolean login();
 }

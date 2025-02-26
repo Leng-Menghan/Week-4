@@ -30,8 +30,9 @@ public class Librarian extends User {
         Database.UserList.add(new Librarian(name, address, phoneNumber, email, password2));
     }
     // Search student by ID
-    public void searchStudentByID(String studentID) {
-        System.out.println("Result of student with ID : " + studentID);
+    public void searchStudentByID() {
+        System.out.println("Enter student ID : ");
+        String studentID = scanner.nextLine();
         System.out.println("___________________________________________________\n");
         for(User s : Database.UserList) {
             if(studentID.equals(s.ID)) {
@@ -206,7 +207,7 @@ public class Librarian extends User {
     };
     
     //Empty method from Parent(User)'s abstract method
-    public void Borrow(int bookID, String studentID, String librarianID, String borrowDate, String returnDate){};
-    public void Returned(int bookID, String studentID, String librarianID, String returnedDate){};
+    public void Borrow(){};
+    public void Returned(){};
     public void DisplayInvoice(){};
 }
