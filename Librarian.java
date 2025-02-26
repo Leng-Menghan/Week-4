@@ -14,6 +14,21 @@ public class Librarian extends User {
     //default constructor
     public Librarian() {};
 
+    //Register
+    public void register() {
+        System.out.println("Please Register as Librarian");
+        System.out.print("Enter name : ");
+        String name = scanner.nextLine();
+        System.out.print("Enter address : ");
+        String address = scanner.nextLine();
+        System.out.print("Enter phone number : ");
+        String phoneNumber = scanner.nextLine();
+        System.out.print("Enter email : ");
+        String email = scanner.nextLine();
+        System.out.print("Enter password : ");
+        String password2 = scanner.nextLine();
+        Database.UserList.add(new Librarian(name, address, phoneNumber, email, password2));
+    }
     // Search student by ID
     public void searchStudentByID(String studentID) {
         System.out.println("Result of student with ID : " + studentID);

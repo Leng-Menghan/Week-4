@@ -1,14 +1,32 @@
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Student extends User {
+    Scanner scanner = new Scanner(System.in);
     static int total = 0;
-    //Register
+    //Constructor
     public Student(String Name, String Address, String PhoneNumber, String Email, String password) {
         super(Name, Address, PhoneNumber, Email, password); 
         this.ID = "S" + ++total;
     }
     public Student() {};
     //Borrow
+
+    //Register
+    public void register() {
+        System.out.println("Please Register as Librarian");
+        System.out.print("Enter name : ");
+        String name = scanner.nextLine();
+        System.out.print("Enter address : ");
+        String address = scanner.nextLine();
+        System.out.print("Enter phone number : ");
+        String phoneNumber = scanner.nextLine();
+        System.out.print("Enter email : ");
+        String email = scanner.nextLine();
+        System.out.print("Enter password : ");
+        String password2 = scanner.nextLine();
+        Database.UserList.add(new Student(name, address, phoneNumber, email, password2));
+    };
     public void Borrow(int bookID, String studentID, String librarianID, String borrowDate, String returnDate) {
         HashMap<String, Object> borrowList = new HashMap<>();
         for(Book b : Database.bookList){
@@ -111,4 +129,5 @@ public class Student extends User {
     public void addBookQuantityByISBN() {};
     public void deleteBook() {};
     public void addBook() {};
+
 }

@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public abstract class User implements UserAction{
     protected String ID;
     protected String Name;
@@ -5,8 +7,8 @@ public abstract class User implements UserAction{
     protected String PhoneNumber;
     protected String Email;
     private String Password;
-
-    // Register
+    Scanner scanner = new Scanner(System.in);
+    //Constructor
     public User(String Name, String Address, String PhoneNumber, String Email, String password) {
             this.Name = Name;
             this.Address = Address;
@@ -17,7 +19,7 @@ public abstract class User implements UserAction{
 
     //default constructor
     public User() {};
-
+    
     // login
     public boolean login(String email, String password) {
         for(User u : Database.UserList) {
@@ -145,4 +147,5 @@ public abstract class User implements UserAction{
     public abstract void addBook();
     public abstract void deleteBook();
     public abstract void addBookQuantityByISBN();
+    public abstract void register();
 }
