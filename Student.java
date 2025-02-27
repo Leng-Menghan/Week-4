@@ -27,7 +27,7 @@ public class Student extends User {
         String password2 = scanner.nextLine();
         Database.UserList.add(new Student(name, address, phoneNumber, email, password2));
     };
-    public void Borrow() {
+    public void Borrow(){
         HashMap<String, Object> borrowList = new HashMap<>();
         System.out.print("Enter book ID : ");
         int bookID = scanner.nextInt();
@@ -78,7 +78,7 @@ public class Student extends User {
         borrowList.put("LibrarianReturnId","None");
         borrowList.put("LibrarianReturnName","None");
         borrowList.put("Returned","None");
-    Database.TmpBorrow.add(borrowList);
+        Database.TmpBorrow.add(borrowList);
     }
     
     //Return

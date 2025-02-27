@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Librarian extends User {
+public class Librarian extends User{
     Scanner scanner = new Scanner(System.in);
     static int total = 0;
 
@@ -173,7 +173,12 @@ public class Librarian extends User {
         System.out.print("Quantity      : ");
         int quantity = scanner.nextInt();
         scanner.nextLine();
-
+        try {
+            ExceptionCase.isValidBookQty(quantity);
+        } catch (ExceptionCase e) {
+            System.out.println(e.getMessage());
+            return;
+        }
         System.out.print("Publisher     : ");
         String publisher = scanner.nextLine();
 

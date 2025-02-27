@@ -5,6 +5,7 @@ public class Main {
         Admin admin = new Admin();
         User student = new Student();
         User librarian = new Librarian();
+        librarian.addBook();
         Scanner scanner = new Scanner(System.in);
             System.out.println("#---------------------------------------------------#");
             System.out.println("|                                                   |");
@@ -83,6 +84,48 @@ public class Main {
                     switch (option1) {
                         case 1:
                             librarian.register();
+                            System.out.println("Welcome to Librarian function");
+                            System.out.println("1. Display Student");
+                            System.out.println("2. Display Book");
+                            System.out.println("3. Add Book");
+                            System.out.println("4. Add Book Quantity By ISBN");
+                            System.out.println("5. Remove Book By ISBN");
+                            System.out.println("6. Search Book By ISBN");
+                            System.out.println("7. Search Book By Name");
+                            System.out.println("8. Search Book By Author");
+                            System.out.println("9. Search Book By Category");
+                            System.out.print("Please Select Option (1-9) : ");
+                            int option2 = scanner.nextInt();
+                            scanner.nextLine();
+                            switch (option2) {
+                                case 1:
+                                    librarian.displayStudent();
+                                break;
+                                case 2:
+                                    librarian.displayBook();
+                                break;
+                                case 3:
+                                    librarian.addBook();
+                                break;
+                                case 4:
+                                    librarian.addBookQuantityByISBN();
+                                break;
+                                case 5:
+                                    librarian.deleteBook();
+                                break;
+                                case 6:
+                                    librarian.searchBookByISBN();
+                                break;
+                                case 7:
+                                    librarian.searchBookByName();
+                                break;
+                                case 8:
+                                    librarian.searchBookByAuthor();
+                                break;
+                                case 9:
+                                    librarian.searchBookByCategory();
+                                break;
+                            }
                         break;
                         case 2:
                             System.out.println("Please Login as Librarian");
@@ -141,6 +184,41 @@ public class Main {
                     switch (option2) {
                         case 1:
                             student.register();
+                            System.out.println("Welcome to Student function");
+                            System.out.println("1. Display Book");
+                            System.out.println("2. Search Book By ISBN");
+                            System.out.println("3. Search Book By Name");
+                            System.out.println("4. Search Book By Author");
+                            System.out.println("5. Search Book By Category");
+                            System.out.println("6. Borrow Book");
+                            System.out.println("7. Return Book");
+                            System.out.print("Please Select Option (1-7) : ");
+                            int option4 = scanner.nextInt();
+                            scanner.nextLine();
+                            switch (option4) {
+                                case 1:
+                                    student.displayBook();
+                                break;
+                                case 2:
+                                    student.searchBookByISBN();
+                                break;
+                                case 3:
+                                    student.searchBookByName();
+                                break;
+                                case 4:
+                                    student.searchBookByAuthor();
+                                break;
+                                case 5:
+                                    student.searchBookByCategory();
+                                break;
+                                case 6:
+                                    student.Borrow();
+                                    student.DisplayInvoice();
+                                break;
+                                case 7:
+                                    student.Returned();
+                                break;
+                            }
                         break;
 
                         case 2:
