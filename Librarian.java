@@ -26,9 +26,10 @@ public class Librarian extends User{
         System.out.print("Enter email : ");
         String email = scanner.nextLine();
         System.out.print("Enter password : ");
-        String password2 = scanner.nextLine();
-        Database.UserList.add(new Librarian(name, address, phoneNumber, email, password2));
+        String password = scanner.nextLine();
+        Database.UserList.add(new Librarian(name, address, phoneNumber, email, password));
     }
+    
     // Search student by ID
     public void searchStudentByID() {
         System.out.println("Enter student ID : ");
@@ -140,7 +141,7 @@ public class Librarian extends User{
         System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
         for(User s : Database.UserList){
             if(s.ID.charAt(0)=='S'){
-                System.out.printf(format, s.ID, s.Name, s.Address, s.PhoneNumber, s.Email, s.getPassword());
+                System.out.println(s.toString());
                 count++; 
             } 
         }

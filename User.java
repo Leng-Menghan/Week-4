@@ -139,11 +139,17 @@ public abstract class User implements UserAction{
         System.out.println("+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
         int count = 0;
         for(Book b : Database.bookList){
-            System.out.printf(format, b.bookid, b.isbn, b.bookname, b.author, b.category, b.price + " $", b.quantity, b.publisher);
-            System.out.println("+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
+            System.out.println(b.toString());
             count++;
         }
         System.out.println("| Total Books : " + count +"   |\n");
+    }
+
+    @Override
+    public String toString() {
+        String format = "| %-5s | %-20s | %-20s | %-15s | %-20s | %-15s |";
+        String result = String.format(format, ID, Name, Address, PhoneNumber, Email, Password);
+        return result;
     }
 
     //abstract method
@@ -160,5 +166,4 @@ public abstract class User implements UserAction{
     public abstract void addBook();
     public abstract void deleteBook();
     public abstract void addBookQuantityByISBN();
-    
 }

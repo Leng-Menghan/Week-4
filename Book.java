@@ -20,4 +20,13 @@ public class Book {
         this.quantity = quantity;
         this.publisher = publisher;
     }
+
+    @Override
+    public String toString() {
+        String format = "| %-3s | %-6s | %-27s | %-20s | %-20s | %-7s | %-8s | %-15s |\n";
+        String result = String.format(format, bookid, isbn, bookname, author, category, price + " $", quantity, publisher);
+        String line = "+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+";
+        return result + line;
+    }
+    
 }

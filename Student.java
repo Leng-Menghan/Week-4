@@ -24,9 +24,10 @@ public class Student extends User {
         System.out.print("Enter email : ");
         String email = scanner.nextLine();
         System.out.print("Enter password : ");
-        String password2 = scanner.nextLine();
-        Database.UserList.add(new Student(name, address, phoneNumber, email, password2));
+        String password = scanner.nextLine();
+        Database.UserList.add(new Student(name, address, phoneNumber, email, password));
     };
+    
     public void Borrow(){
         HashMap<String, Object> borrowList = new HashMap<>();
         System.out.print("Enter book ID : ");

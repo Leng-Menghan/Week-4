@@ -82,7 +82,7 @@ public class Admin extends Librarian{
         System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
         for(User l : Database.UserList){
             if(l.ID.charAt(0)=='L'){
-                System.out.printf(format, l.ID, l.Name, l.Address, l.PhoneNumber, l.Email, l.getPassword());
+                System.out.println(l.toString());
                 count++;
             }
         }
