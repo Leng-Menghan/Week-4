@@ -5,7 +5,6 @@ public class Main {
         Admin admin = new Admin();
         User student = new Student();
         User librarian = new Librarian();
-        librarian.addBook();
         Scanner scanner = new Scanner(System.in);
             System.out.println("#---------------------------------------------------#");
             System.out.println("|                                                   |");

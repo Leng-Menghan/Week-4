@@ -17,7 +17,18 @@ public class Admin extends Librarian{
     }
 
     // Search Librarian by id
-    public void searchLibrarianByID(String librarianID) {
+    public void searchLibrarianByID() {
+        String librarianID;
+        while(true){
+            try{
+                System.out.print("Enter Librarian ID     : ");
+                librarianID = scanner.nextLine();
+                InputException test = new InputException(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         System.out.println("Result of librarian with ID : " + librarianID);
         System.out.println("___________________________________________________\n");
         for(User l : Database.UserList) {

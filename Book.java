@@ -1,7 +1,7 @@
 public class Book {
     static int totalBook = 0;
     int bookid;
-    int isbn;
+    String isbn;
     String category;
     String bookname;
     String author;
@@ -10,7 +10,7 @@ public class Book {
     String publisher;
 
 //Add book
-    public Book(int isbn, String category, String bookname, String author, double price, int quantity, String publisher) {
+    public Book(String isbn, String category, String bookname, String author, double price, int quantity, String publisher) {
         this.bookid = ++totalBook;
         this.isbn = isbn;
         this.category = category;

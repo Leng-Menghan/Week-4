@@ -17,23 +17,80 @@ public class Librarian extends User{
     //Register
     public void register() {
         System.out.println("Please Register as Librarian");
-        System.out.print("Enter name : ");
-        String name = scanner.nextLine();
-        System.out.print("Enter address : ");
-        String address = scanner.nextLine();
-        System.out.print("Enter phone number : ");
-        String phoneNumber = scanner.nextLine();
-        System.out.print("Enter email : ");
-        String email = scanner.nextLine();
-        System.out.print("Enter password : ");
-        String password = scanner.nextLine();
+        String name;
+        while(true){
+            try{
+                System.out.print("Enter name : ");
+                name = scanner.nextLine();
+                CharacterOnlyException test = new CharacterOnlyException(name, "^[a-zA-Z ]+$");
+                break;
+            } catch (CharacterOnlyException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        String address;
+        while(true){
+            try{
+                System.out.print("Enter address : ");
+                address = scanner.nextLine();
+                InputException test = new InputException(address, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        String phoneNumber;
+        while(true){
+            try{
+                System.out.print("Enter phone number : ");
+                phoneNumber = scanner.nextLine();
+                NumberOnlyException test = new NumberOnlyException(phoneNumber, "^[0-9]+$");
+                break;
+            } catch (NumberOnlyException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        String email;
+        while(true){
+            try{
+                System.out.print("Enter email : ");
+                email = scanner.nextLine();
+                InputException test = new InputException(email, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        String password;
+        while(true){
+            try{
+                System.out.print("Enter password : ");
+                password = scanner.nextLine();
+                InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         Database.UserList.add(new Librarian(name, address, phoneNumber, email, password));
     }
     
     // Search student by ID
     public void searchStudentByID() {
-        System.out.println("Enter student ID : ");
-        String studentID = scanner.nextLine();
+        String studentID;
+        while(true){
+            try{
+                System.out.print("Enter student ID     : ");
+                studentID = scanner.nextLine();
+                InputException test = new InputException(studentID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         System.out.println("___________________________________________________\n");
         for(User s : Database.UserList) {
             if(studentID.equals(s.ID)) {
@@ -154,55 +211,142 @@ public class Librarian extends User{
         System.out.println("#---------------------------------------#");
         System.out.println("|          Enter Book Details           |");
         System.out.println("#---------------------------------------#");
-
-        System.out.print("ISBN          : ");
-        int ISBN = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Category      : ");
-        String category = scanner.nextLine();
-
-        System.out.print("Book Name     : ");
-        String bookName = scanner.nextLine();
-
-        System.out.print("Author        : ");
-        String author = scanner.nextLine();
-
-        System.out.print("Price of Book : $ ");
-        double price = scanner.nextDouble();
-
-        System.out.print("Quantity      : ");
-        int quantity = scanner.nextInt();
-        scanner.nextLine();
-        try {
-            ExceptionCase.isValidBookQty(quantity);
-        } catch (ExceptionCase e) {
-            System.out.println(e.getMessage());
-            return;
+        
+        String ISBN;
+        while(true){
+            try{
+                System.out.print("ISBN          : ");
+                ISBN = scanner.nextLine();
+                InputException test = new InputException(ISBN, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
         }
-        System.out.print("Publisher     : ");
-        String publisher = scanner.nextLine();
 
-        Database.bookList.add(new Book(ISBN, category, bookName, author, price, quantity, publisher));
+        String category;
+        while(true){
+            try{
+                System.out.print("Category      : ");
+                category = scanner.nextLine();
+                InputException test = new InputException(category, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        String bookName;
+        while(true){
+            try{
+                System.out.print("Book Name     : ");
+                bookName = scanner.nextLine();
+                InputException test = new InputException(bookName, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        String author;
+        while(true){
+            try{
+                System.out.print("Author name : ");
+                author = scanner.nextLine();
+                CharacterOnlyException test = new CharacterOnlyException(author, "^[a-zA-Z ]+$");
+                break;
+            } catch (CharacterOnlyException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        String price;
+        while(true){
+            try{
+                System.out.print("Price of Book : $ ");
+                price = scanner.nextLine();
+                NumberOnlyException test = new NumberOnlyException(price, "^-?[0-9]+(\\.[0-9]+)?$");
+
+                double priceDouble = Double.parseDouble(price);
+                InputException test2 = new InputException(priceDouble);
+
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberOnlyException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        String quantity;
+        while(true){
+            try{
+                System.out.print("Quantity      : ");
+                quantity = scanner.nextLine();
+                NumberOnlyException test1 = new NumberOnlyException(quantity, "^-?[0-9]+(\\.[0-9]+)?$");
+
+                Double qty = Double.parseDouble(quantity);
+                InputException test2 = new InputException(qty);
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberOnlyException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        
+        String publisher;
+        while(true){
+            try{
+                System.out.print("Publisher     : ");
+                publisher = scanner.nextLine();
+                InputException test = new InputException(publisher, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        Database.bookList.add(new Book(ISBN, category, bookName, author, Double.parseDouble(price),(int)Double.parseDouble(quantity), publisher));
     };
 
     //Delete book
     public void deleteBook(){
-        System.out.println("Enter book ISBN: ");
-        int ISBN = scanner.nextInt();
+        String ISBN;
+        while(true){
+            try{
+                System.out.print("ISBN : ");
+                ISBN = scanner.nextLine();
+                InputException test = new InputException(ISBN, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         for(Book b : Database.bookList){
-            if(b.isbn == ISBN) {
+            if(b.isbn.equals(ISBN)){ {
                 Database.bookList.remove(b);
                 break;
             }
         }
+    }
     };
 
     public void addBookQuantityByISBN(){
-        System.out.print("Enter book ISBN: ");
-        int ISBN = scanner.nextInt();
+        String ISBN;
+        while(true){
+            try{
+                System.out.print("ISBN : ");
+                ISBN = scanner.nextLine();
+                InputException test = new InputException(ISBN, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         for(Book b : Database.bookList){
-            if(b.isbn == ISBN) {
+            if(b.isbn.equals(ISBN)){ {
                 System.out.println("How many books do you want to add?");
                 System.out.print("Enter quantity: ");
                 int newQuantity = scanner.nextInt();
@@ -210,6 +354,7 @@ public class Librarian extends User{
                 break;
             }
         }
+    }
     };
     
     //Empty method from Parent(User)'s abstract method

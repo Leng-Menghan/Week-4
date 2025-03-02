@@ -22,10 +22,28 @@ public abstract class User implements UserAction{
     
     // login
     public boolean login() {
-        System.out.print("Enter Email : ");
-        String Email = scanner.nextLine();
-        System.out.print("Enter Password : ");
-        String Password = scanner.nextLine();
+        String email;
+        while(true){
+            try{
+                System.out.print("Enter email : ");
+                email = scanner.nextLine();
+                InputException test = new InputException(email, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        String password;
+        while(true){
+            try{
+                System.out.print("Enter password : ");
+                password = scanner.nextLine();
+                InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         for(User u : Database.UserList) {
             if (u.Email.equals(Email) && u.Password.equals(Password)) {
                 System.out.println("User logged in");
@@ -52,8 +70,17 @@ public abstract class User implements UserAction{
 
     //Search Book by name
     public void searchBookByName() {
-        System.out.print("Enter book name: ");
-        String bookName = scanner.nextLine();
+        String bookName;
+        while(true){
+            try{
+                System.out.print("Enter book name: ");
+                bookName = scanner.nextLine();
+                InputException test = new InputException(bookName, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         for(Book b : Database.bookList) {
             if(b.bookname.toLowerCase().equals(bookName.toLowerCase())) {
                 System.out.println("Book found");
@@ -75,8 +102,17 @@ public abstract class User implements UserAction{
 
     //Search Book by Author
     public void searchBookByAuthor() {
-        System.out.println("Enter author name: ");
-        String authorName = scanner.nextLine();
+        String authorName;
+        while(true){
+            try{
+                System.out.println("Enter author name: ");
+                authorName = scanner.nextLine();
+                CharacterOnlyException test = new CharacterOnlyException(authorName, "^[a-zA-Z ]+$");
+                break;
+            } catch (CharacterOnlyException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         System.out.println("----------------------------------------------------");
         int checked = 0;
         for(Book b : Database.bookList) {
@@ -93,8 +129,17 @@ public abstract class User implements UserAction{
 
     // Search book by category
     public void searchBookByCategory() {
-        System.out.print("Enter book category: ");
-        String category = scanner.nextLine();
+        String category;
+        while(true){
+            try{
+                System.out.print("Enter book category: ");
+                category = scanner.nextLine();
+                InputException test = new InputException(category, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         int checked = 0;
         for(Book b : Database.bookList) {
             if(b.category.toLowerCase().equals(category.toLowerCase())) {
@@ -109,10 +154,19 @@ public abstract class User implements UserAction{
 
     // Search book by ISBN
     public void searchBookByISBN() {
-        System.out.print("Enter book ISBN: ");
-        int ISBN = scanner.nextInt();
+        String ISBN;
+        while(true){
+            try{
+                System.out.print("Enter book ISBN: ");
+                ISBN = scanner.nextLine();
+                InputException test = new InputException(ISBN, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         for(Book b : Database.bookList) {
-            if(b.isbn == ISBN) {
+            if(b.isbn.equals(ISBN)) {
                 System.out.println("ISBN      : " + b.isbn);
                 System.out.println("Book name : " + b.bookname);
                 System.out.println("Author    : " + b.author);

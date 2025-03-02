@@ -15,34 +15,115 @@ public class Student extends User {
     //Register
     public void register() {
         System.out.println("Please Register as Librarian");
-        System.out.print("Enter name : ");
-        String name = scanner.nextLine();
-        System.out.print("Enter address : ");
-        String address = scanner.nextLine();
-        System.out.print("Enter phone number : ");
-        String phoneNumber = scanner.nextLine();
-        System.out.print("Enter email : ");
-        String email = scanner.nextLine();
-        System.out.print("Enter password : ");
-        String password = scanner.nextLine();
+        String name;
+        while(true){
+            try{
+                System.out.print("Enter name : ");
+                name = scanner.nextLine();
+                CharacterOnlyException test = new CharacterOnlyException(name, "^[a-zA-Z ]+$");
+                break;
+            } catch (CharacterOnlyException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        String address;
+        while(true){
+            try{
+                System.out.print("Enter address : ");
+                address = scanner.nextLine();
+                InputException test = new InputException(address, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        String phoneNumber;
+        while(true){
+            try{
+                System.out.print("Enter phone number : ");
+                phoneNumber = scanner.nextLine();
+                NumberOnlyException test = new NumberOnlyException(phoneNumber, "^[0-9]+$");
+                break;
+            } catch (NumberOnlyException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        String email;
+        while(true){
+            try{
+                System.out.print("Enter email : ");
+                email = scanner.nextLine();
+                InputException test = new InputException(email, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        String password;
+        while(true){
+            try{
+                System.out.print("Enter password : ");
+                password = scanner.nextLine();
+                InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         Database.UserList.add(new Student(name, address, phoneNumber, email, password));
-    };
+    }
     
     public void Borrow(){
         HashMap<String, Object> borrowList = new HashMap<>();
-        System.out.print("Enter book ID : ");
-        int bookID = scanner.nextInt();
-        scanner.nextLine();
-        System.out.print("Enter student ID : ");
-        String studentID = scanner.nextLine();
-        System.out.print("Enter librarian ID : ");
-        String librarianID = scanner.nextLine();
+        String bookID;
+        while(true){
+            try{
+                System.out.print("Enter book ID : ");
+                bookID = scanner.nextLine();
+                NumberOnlyException test1 = new NumberOnlyException(bookID, "^-?[0-9]+$");
+
+                int qty = Integer.parseInt(bookID);
+                InputException test2 = new InputException(qty);
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberOnlyException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        String studentID;
+        while(true){
+            try{
+                System.out.print("Enter student ID : ");
+                studentID = scanner.nextLine();
+                InputException test = new InputException(studentID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        String librarianID;
+        while(true){
+            try{
+                System.out.print("Enter librarian ID : ");
+                librarianID = scanner.nextLine();
+                InputException test = new InputException(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         System.out.print("Enter borrow Date : ");
         String borrowDate = scanner.nextLine();
         System.out.print("Enter return Date : ");
         String returnDate = scanner.nextLine();
         for(Book b : Database.bookList){
-            if(bookID == b.bookid){
+            if(Integer.parseInt(bookID) == b.bookid){
                 borrowList.put("bookName", b.bookname);
                 break;
             }
@@ -60,7 +141,7 @@ public class Student extends User {
             }
         }
         for(Book b : Database.bookList){
-            if(bookID == b.bookid){
+            if(Integer.parseInt(bookID) == b.bookid){
                 borrowList.put("payForBorrow", b.price * 0.1 );
                 break;
             }
@@ -71,26 +152,60 @@ public class Student extends User {
         borrowList.put("returnDate", returnDate);
         borrowList.put("borrowDate", borrowDate);
         for(Book b : Database.bookList) {
-            if(b.bookid == bookID) {
+            if(b.bookid == Integer.parseInt(bookID)){ 
                 b.quantity--;
                 break;
             }
-        }
         borrowList.put("LibrarianReturnId","None");
         borrowList.put("LibrarianReturnName","None");
         borrowList.put("Returned","None");
         Database.TmpBorrow.add(borrowList);
-    }
+        }
+}
     
     //Return
     public void Returned() {
-        System.out.print("Enter book ID : ");
-        int bookID = scanner.nextInt();
-        scanner.nextLine();
-        System.out.print("Enter student ID : ");
-        String studentID = scanner.nextLine();
-        System.out.print("Enter librarian ID : ");
-        String librarianID = scanner.nextLine();
+        String bookID;
+        while(true){
+            try{
+                System.out.print("Enter book ID : ");
+                bookID = scanner.nextLine();
+                NumberOnlyException test1 = new NumberOnlyException(bookID, "^-?[0-9]+$");
+
+                int qty = Integer.parseInt(bookID);
+                InputException test2 = new InputException(qty);
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberOnlyException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        String studentID;
+        while(true){
+            try{
+                System.out.print("Enter student ID : ");
+                studentID = scanner.nextLine();
+                InputException test = new InputException(studentID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        String librarianID;
+        while(true){
+            try{
+                System.out.print("Enter librarian ID : ");
+                librarianID = scanner.nextLine();
+                InputException test = new InputException(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
         System.out.print("Enter return Date : ");
         String returnedDate = scanner.nextLine();
         for (HashMap<String, Object> b : Database.borrowList) {
@@ -107,7 +222,7 @@ public class Student extends User {
             }
         }
         for(Book b : Database.bookList) {
-            if(b.bookid == bookID) {
+            if(b.bookid == Integer.parseInt(bookID)){ 
                 b.quantity++;
                 break;
             }
