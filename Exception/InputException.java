@@ -1,3 +1,4 @@
+package Exception;
 
 public class InputException extends IllegalArgumentException {
     public InputException(String message) {

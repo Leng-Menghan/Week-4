@@ -1,5 +1,10 @@
+package Library;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import Exception.CharacterOnlyException;
+import Exception.InputException;
+import Exception.NumberOnlyException;
 
 public class Student extends User {
     Scanner scanner = new Scanner(System.in);
@@ -55,7 +60,7 @@ public class Student extends User {
             try{
                 System.out.print("Enter email : ");
                 email = scanner.nextLine();
-                InputException test = new InputException(email, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                InputException test = new InputException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
                 break;
             } catch (InputException e) {
                 System.out.println(e.getMessage());
@@ -156,11 +161,11 @@ public class Student extends User {
                 b.quantity--;
                 break;
             }
+        }
         borrowList.put("LibrarianReturnId","None");
         borrowList.put("LibrarianReturnName","None");
         borrowList.put("Returned","None");
         Database.TmpBorrow.add(borrowList);
-        }
 }
     
     //Return

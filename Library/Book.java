@@ -1,13 +1,14 @@
+package Library;
 public class Book {
     static int totalBook = 0;
-    int bookid;
-    String isbn;
-    String category;
-    String bookname;
-    String author;
-    double price;
-    int quantity;
-    String publisher;
+    protected int bookid;
+    protected String isbn;
+    protected String category;
+    protected String bookname;
+    protected String author;
+    protected double price;
+    protected int quantity;
+    protected String publisher;
 
 //Add book
     public Book(String isbn, String category, String bookname, String author, double price, int quantity, String publisher) {

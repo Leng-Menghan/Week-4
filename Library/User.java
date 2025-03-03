@@ -1,4 +1,8 @@
+package Library;
 import java.util.Scanner;
+
+import Exception.CharacterOnlyException;
+import Exception.InputException;
 
 public abstract class User implements UserAction{
     protected String ID;
@@ -27,7 +31,7 @@ public abstract class User implements UserAction{
             try{
                 System.out.print("Enter email : ");
                 email = scanner.nextLine();
-                InputException test = new InputException(email, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                InputException test = new InputException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
                 break;
             } catch (InputException e) {
                 System.out.println(e.getMessage());
@@ -45,7 +49,7 @@ public abstract class User implements UserAction{
             }
         }
         for(User u : Database.UserList) {
-            if (u.Email.equals(Email) && u.Password.equals(Password)) {
+            if (u.Email.equals(email) && u.Password.equals(password)) {
                 System.out.println("User logged in");
                 return true;
             }

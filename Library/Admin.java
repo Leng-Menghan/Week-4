@@ -1,5 +1,8 @@
+package Library;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import Exception.InputException;
 
 public class Admin extends Librarian{
     private String adminUsername = "admin";
