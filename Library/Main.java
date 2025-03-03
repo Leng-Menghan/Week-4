@@ -6,6 +6,7 @@ import Exception.LimitOptionAuthentication;
 import Exception.LimitOptionStudentException;
 import Exception.LimitOptionUserException;
 import Exception.NumberOnlyException;
+import Exception.ExitException;
 
 public class Main {
     public static void main(String[] args) {
@@ -75,24 +76,51 @@ public class Main {
                                 switch (Integer.parseInt(option)) {
                                     case 1:
                                         admin.displayLibrarain();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit = scanner.nextLine();
+                                        String exit;
+                                        while(true){
+                                            try{
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit = scanner.nextLine();
+                                                ExitException test = new ExitException(exit, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit.equals("Y") || exit.equals("y")) {
                                             continue;
                                         }
                                         break;
                                     case 2:
                                         admin.displayStudent();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit1 = scanner.nextLine();
+                                        String exit1;
+                                        while(true){
+                                            try{
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit1 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit1, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit1.equals("Y") || exit1.equals("y")) {
                                             continue;
                                         }
                                         break;
                                     case 3:
                                         admin.displayBook();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit2 = scanner.nextLine();
+                                        String exit2;
+                                        while(true){
+                                            try{
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit2 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit2, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit2.equals("Y") || exit2.equals("y")) {
                                             continue;
                                         }
@@ -105,56 +133,119 @@ public class Main {
                                         for (int i = 0; i < newQuantity; i++) {
                                             admin.addBook();
                                         }
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit3 = scanner.nextLine();
+                                        String exit3;
+                                        while(true){
+                                            try{
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit3 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit3, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit3.equals("Y") || exit3.equals("y")) {
                                             continue;
                                         }
                                         break;
                                     case 5:
                                         admin.addBookQuantityByISBN();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit4 = scanner.nextLine();
+                                        String exit4;
+                                        while(true){
+                                            try{
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit4 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit4, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit4.equals("Y") || exit4.equals("y")) {
                                             continue;
                                         }
                                         break;
                                     case 6:
                                         admin.deleteBook();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit5 = scanner.nextLine();
+                                        String exit5;
+                                        while(true){
+                                            try{
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit5 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit5, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit5.equals("Y") || exit5.equals("y")) {
                                             continue;
                                         }
                                         break;
                                     case 7:
                                         admin.searchBookByISBN();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit6 = scanner.nextLine();
+                                        String exit6;
+                                        while(true){
+                                            try{
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit6 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit6, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit6.equals("Y") || exit6.equals("y")) {
                                             continue;
                                         }
                                         break;
                                     case 8:
                                         admin.searchBookByName();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit7 = scanner.nextLine();
+                                        String exit7;
+                                        while(true){
+                                            try{
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit7 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit7, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit7.equals("Y") || exit7.equals("y")) {
                                             continue;
                                         }
                                         break;
                                     case 9:
                                         admin.searchBookByAuthor();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit8 = scanner.nextLine();
+                                        String exit8;
+                                        while(true){
+                                            try{
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit8 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit8, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit8.equals("Y") || exit8.equals("y")) {
                                             continue;
                                         }
                                         break;
                                     case 10:
                                         admin.searchBookByCategory();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit9 = scanner.nextLine();
+                                        String exit9;
+                                        while(true){
+                                            try{
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit9 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit9, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit9.equals("Y") || exit9.equals("y")) {
                                             continue;
                                         }
@@ -183,10 +274,11 @@ public class Main {
                     System.out.println("Librarian");
                     System.out.println("1. Register Librarian");
                     System.out.println("2. Log in Librarian");
+                    System.out.println("3. Exit");
                     String option1;
                     while (true) {
                         try {
-                            System.out.print("Please Select Option (1-2) : ");
+                            System.out.print("Please Select Option (1-3) : ");
                             option1 = scanner.nextLine();
                             NumberOnlyException test1 = new NumberOnlyException(option1, "^[0-9]+$");
                             LimitOptionAuthentication test = new LimitOptionAuthentication(Integer.parseInt(option1));
@@ -211,7 +303,7 @@ public class Main {
                                 System.out.println("7. Search Book By Name");
                                 System.out.println("8. Search Book By Author");
                                 System.out.println("9. Search Book By Category");
-                                System.out.println("10. Exit");
+                                System.out.println("10. Log out");
                                 String option2;
                                 while (true) {
                                     try {
@@ -260,11 +352,7 @@ public class Main {
                                         break;
                                     case 4:
                                         librarian.addBookQuantityByISBN();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit3 = scanner.nextLine();
-                                        if (exit3.equals("Y") || exit3.equals("y")) {
-                                            continue;
-                                        }
+
                                         break;
                                     case 5:
                                         librarian.deleteBook();
@@ -329,8 +417,7 @@ public class Main {
                                         System.out.println("7. Search Book By Name");
                                         System.out.println("8. Search Book By Author");
                                         System.out.println("9. Search Book By Category");
-                                        System.out.println("10. Exit");
-                                        System.out.print("Please Select Option (1-10) : ");
+                                        System.out.println("10. Log out");
                                         String option2;
                                         while (true) {
                                             try {
@@ -436,6 +523,11 @@ public class Main {
                                     break;
                                 }
                             }
+                    
+                    
+                        
+                        case 3:
+                        break;
                     }
                     break;
 
@@ -443,10 +535,11 @@ public class Main {
                     System.out.println("Student");
                     System.out.println("1. Register Student");
                     System.out.println("2. Log in Student");
+                    System.out.println("3. Exit");
                     String option2;
                     while (true) {
                         try {
-                            System.out.print("Please Select Option (1-2) : ");
+                            System.out.print("Please Select Option (1-3) : ");
                             option2 = scanner.nextLine();
                             NumberOnlyException test = new NumberOnlyException(option2, "^[0-9]+$");
                             LimitOptionAuthentication test2 = new LimitOptionAuthentication(Integer.parseInt(option2));
@@ -469,7 +562,7 @@ public class Main {
                                 System.out.println("5. Search Book By Category");
                                 System.out.println("6. Borrow Book");
                                 System.out.println("7. Return Book");
-                                System.out.println("8. Exit");
+                                System.out.println("8. Log out");
                                 String option4;
                                 while (true) {
                                     try {
@@ -565,7 +658,7 @@ public class Main {
                                         System.out.println("5. Search Book By Category");
                                         System.out.println("6. Borrow Book");
                                         System.out.println("7. Return Book");
-                                        System.out.println("8. Exit");
+                                        System.out.println("8. Log out");
                                         String option4;
                                         while (true) {
                                             try {
@@ -659,12 +752,12 @@ public class Main {
                                 }
                             }
                             break;
+                    
+                        case 3:
+                            break;
                     }
-                case 4:
-                    break;
 
-            }
-            
+            } 
         }
     }
 }
