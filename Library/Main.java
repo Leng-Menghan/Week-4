@@ -64,7 +64,7 @@ public class Main {
                                         option = scanner.nextLine();
                                         NumberOnlyException test = new NumberOnlyException(option, "^[0-9]+$");
                                         int optionInt = Integer.parseInt(option);
-                                        LimitOptionAdminException test1 = new LimitOptionAdminException(option);
+                                        LimitOptionAdminException test1 = new LimitOptionAdminException(optionInt);
                                         break;
                                     } catch (LimitOptionAdminException e) {
                                         System.out.println(e.getMessage());
