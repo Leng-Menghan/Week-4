@@ -1,16 +1,58 @@
 package Library;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
-
 import Exception.LimitOptionAdminException;
 import Exception.LimitOptionAuthentication;
+import Exception.LimitOptionLibrarianException;
 import Exception.LimitOptionStudentException;
 import Exception.LimitOptionUserException;
 import Exception.NumberOnlyException;
 import Exception.ExitException;
-
 public class Main {
     public static void main(String[] args) {
+    String selectQuery = "SELECT * FROM User";
+    ResultSet rs = MySQLConnection.executeQuery(selectQuery);
+    try {
+        while (rs != null && rs.next()) {
+            String id = rs.getString("ID");
+            String name = rs.getString("Name");
+            String address = rs.getString("Address");
+            String phoneNumber = rs.getString("PhoneNumber");
+            String email = rs.getString("Email");
+            String password = rs.getString("Password");
+            if(id.equals("S")){
+                int inc = 0;
+                Database.UserList.add(new Student("S"+ ++inc,name, address, phoneNumber, email, password));
+            }else{
+                int inc = 0;
+                Database.UserList.add(new Librarian("L"+ ++inc,name, address, phoneNumber, email, password));
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    String selectQuery2 = "SELECT * FROM Book";
+    ResultSet rs2 = MySQLConnection.executeQuery(selectQuery2);
+    try {
+        while (rs2 != null && rs2.next()) {
+            String ISBN = rs2.getString("ISBN");
+            String category = rs2.getString("Category");
+            String bookname = rs2.getString("Name");
+            String author = rs2.getString("Author");
+            double price = rs2.getDouble("Price");
+            int quantity = rs2.getInt("Qty");
+            String publisher = rs2.getString("Publisher");
+            int inc = 0;
+            Database.bookList.add(new Book(++inc,ISBN, category, bookname, author, price, quantity, publisher));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    MySQLConnection.closeConnection();
+
         Admin admin = new Admin();
         User student = new Student();
         User librarian = new Librarian();
@@ -312,9 +354,9 @@ public class Main {
                                         option2 = scanner.nextLine();
                                         NumberOnlyException test = new NumberOnlyException(option2, "^[0-9]+$");
                                         int optionInt = Integer.parseInt(option2);
-                                        LimitOptionAdminException test1 = new LimitOptionAdminException(option2);
+                                        LimitOptionLibrarianException test1 = new LimitOptionLibrarianException(optionInt);
                                         break;
-                                    } catch (LimitOptionAdminException e) {
+                                    } catch (LimitOptionLibrarianException e) {
                                         System.out.println(e.getMessage());
                                     } catch (NumberOnlyException e) {
                                         System.out.println(e.getMessage());
@@ -511,10 +553,9 @@ public class Main {
                                                 option2 = scanner.nextLine();
                                                 NumberOnlyException test = new NumberOnlyException(option2, "^[0-9]+$");
                                                 int optionInt = Integer.parseInt(option2);
-                                                LimitOptionAdminException test1 = new LimitOptionAdminException(
-                                                        option2);
+                                                LimitOptionLibrarianException test1 = new LimitOptionLibrarianException(optionInt);
                                                 break;
-                                            } catch (LimitOptionAdminException e) {
+                                            } catch (LimitOptionLibrarianException e) {
                                                 System.out.println(e.getMessage());
                                             } catch (NumberOnlyException e) {
                                                 System.out.println(e.getMessage());

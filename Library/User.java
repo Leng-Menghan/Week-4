@@ -13,12 +13,13 @@ public abstract class User implements UserAction{
     private String Password;
     Scanner scanner = new Scanner(System.in);
     //Constructor
-    public User(String Name, String Address, String PhoneNumber, String Email, String password) {
+    public User(String ID, String Name, String Address, String PhoneNumber, String Email, String password) {
             this.Name = Name;
             this.Address = Address;
             this.PhoneNumber = PhoneNumber;        
             this.Email = Email;
             this.Password = password;
+            this.ID = ID;
     }
 
     //default constructor

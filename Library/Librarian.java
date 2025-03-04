@@ -8,12 +8,10 @@ import Exception.NumberOnlyException;
 
 public class Librarian extends User{
     Scanner scanner = new Scanner(System.in);
-    static int total = 0;
 
     // constructor for register
-    public Librarian(String Name, String Address, String PhoneNumber, String Email, String password) {
-        super(Name, Address, PhoneNumber, Email, password); 
-        this.ID = "L" + ++total;
+    public Librarian(String ID,String Name, String Address, String PhoneNumber, String Email, String password) {
+        super(ID,Name, Address, PhoneNumber, Email, password); 
     }
 
     //default constructor
@@ -80,7 +78,9 @@ public class Librarian extends User{
                 System.out.println(e.getMessage());
             }
         }
-        Database.UserList.add(new Librarian(name, address, phoneNumber, email, password));
+        String insertQuery = String.format("INSERT INTO User (ID, Name, Address, PhoneNumber, Email, Password) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
+                "L", name, address, phoneNumber, email,password);
+        MySQLConnection.executeUpdate(insertQuery);
     }
     
     // Search student by ID
@@ -313,7 +313,9 @@ public class Librarian extends User{
             }
         }
 
-        Database.bookList.add(new Book(ISBN, category, bookName, author, Double.parseDouble(price),(int)Double.parseDouble(quantity), publisher));
+        String insertQuery = String.format("INSERT INTO Book VALUES ( '%s', '%s', '%s', '%s', '%s','%s', '%s')",
+        ISBN, category, bookName, author, price, quantity, publisher);
+        MySQLConnection.executeUpdate(insertQuery);
     };
 
     //Delete book

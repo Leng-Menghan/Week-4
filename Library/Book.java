@@ -1,6 +1,5 @@
 package Library;
 public class Book {
-    static int totalBook = 0;
     protected int bookid;
     protected String isbn;
     protected String category;
@@ -10,9 +9,8 @@ public class Book {
     protected int quantity;
     protected String publisher;
 
-//Add book
-    public Book(String isbn, String category, String bookname, String author, double price, int quantity, String publisher) {
-        this.bookid = ++totalBook;
+    public Book(int bookid, String isbn, String category, String bookname, String author, double price, int quantity, String publisher) {
+        this.bookid = bookid;
         this.isbn = isbn;
         this.category = category;
         this.bookname = bookname;
