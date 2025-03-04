@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 import Exception.CharacterOnlyException;
 import Exception.InputException;
-
+import Exception.EmailException;
 public abstract class User implements UserAction{
     protected String ID;
     protected String Name;
@@ -31,9 +31,9 @@ public abstract class User implements UserAction{
             try{
                 System.out.print("Enter email : ");
                 email = scanner.nextLine();
-                InputException test = new InputException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+                EmailException test = new EmailException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
                 break;
-            } catch (InputException e) {
+            } catch (EmailException e) {
                 System.out.println(e.getMessage());
             }
         }

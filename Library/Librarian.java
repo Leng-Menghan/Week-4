@@ -50,7 +50,7 @@ public class Librarian extends User{
             try{
                 System.out.print("Enter phone number : ");
                 phoneNumber = scanner.nextLine();
-                NumberOnlyException test = new NumberOnlyException(phoneNumber, "^[0-9]+$");
+                NumberOnlyException test = new NumberOnlyException(phoneNumber, "^[0-9 ]+$");
                 break;
             } catch (NumberOnlyException e) {
                 System.out.println(e.getMessage());

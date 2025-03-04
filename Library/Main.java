@@ -1,4 +1,5 @@
 package Library;
+
 import java.util.Scanner;
 
 import Exception.LimitOptionAdminException;
@@ -77,8 +78,8 @@ public class Main {
                                     case 1:
                                         admin.displayLibrarain();
                                         String exit;
-                                        while(true){
-                                            try{
+                                        while (true) {
+                                            try {
                                                 System.out.print("Exit (Y/y) : ");
                                                 exit = scanner.nextLine();
                                                 ExitException test = new ExitException(exit, "^[Yy]");
@@ -94,8 +95,8 @@ public class Main {
                                     case 2:
                                         admin.displayStudent();
                                         String exit1;
-                                        while(true){
-                                            try{
+                                        while (true) {
+                                            try {
                                                 System.out.print("Exit (Y/y) : ");
                                                 exit1 = scanner.nextLine();
                                                 ExitException test = new ExitException(exit1, "^[Yy]");
@@ -111,8 +112,8 @@ public class Main {
                                     case 3:
                                         admin.displayBook();
                                         String exit2;
-                                        while(true){
-                                            try{
+                                        while (true) {
+                                            try {
                                                 System.out.print("Exit (Y/y) : ");
                                                 exit2 = scanner.nextLine();
                                                 ExitException test = new ExitException(exit2, "^[Yy]");
@@ -134,8 +135,8 @@ public class Main {
                                             admin.addBook();
                                         }
                                         String exit3;
-                                        while(true){
-                                            try{
+                                        while (true) {
+                                            try {
                                                 System.out.print("Exit (Y/y) : ");
                                                 exit3 = scanner.nextLine();
                                                 ExitException test = new ExitException(exit3, "^[Yy]");
@@ -151,8 +152,8 @@ public class Main {
                                     case 5:
                                         admin.addBookQuantityByISBN();
                                         String exit4;
-                                        while(true){
-                                            try{
+                                        while (true) {
+                                            try {
                                                 System.out.print("Exit (Y/y) : ");
                                                 exit4 = scanner.nextLine();
                                                 ExitException test = new ExitException(exit4, "^[Yy]");
@@ -168,8 +169,8 @@ public class Main {
                                     case 6:
                                         admin.deleteBook();
                                         String exit5;
-                                        while(true){
-                                            try{
+                                        while (true) {
+                                            try {
                                                 System.out.print("Exit (Y/y) : ");
                                                 exit5 = scanner.nextLine();
                                                 ExitException test = new ExitException(exit5, "^[Yy]");
@@ -185,8 +186,8 @@ public class Main {
                                     case 7:
                                         admin.searchBookByISBN();
                                         String exit6;
-                                        while(true){
-                                            try{
+                                        while (true) {
+                                            try {
                                                 System.out.print("Exit (Y/y) : ");
                                                 exit6 = scanner.nextLine();
                                                 ExitException test = new ExitException(exit6, "^[Yy]");
@@ -202,8 +203,8 @@ public class Main {
                                     case 8:
                                         admin.searchBookByName();
                                         String exit7;
-                                        while(true){
-                                            try{
+                                        while (true) {
+                                            try {
                                                 System.out.print("Exit (Y/y) : ");
                                                 exit7 = scanner.nextLine();
                                                 ExitException test = new ExitException(exit7, "^[Yy]");
@@ -219,8 +220,8 @@ public class Main {
                                     case 9:
                                         admin.searchBookByAuthor();
                                         String exit8;
-                                        while(true){
-                                            try{
+                                        while (true) {
+                                            try {
                                                 System.out.print("Exit (Y/y) : ");
                                                 exit8 = scanner.nextLine();
                                                 ExitException test = new ExitException(exit8, "^[Yy]");
@@ -236,8 +237,8 @@ public class Main {
                                     case 10:
                                         admin.searchBookByCategory();
                                         String exit9;
-                                        while(true){
-                                            try{
+                                        while (true) {
+                                            try {
                                                 System.out.print("Exit (Y/y) : ");
                                                 exit9 = scanner.nextLine();
                                                 ExitException test = new ExitException(exit9, "^[Yy]");
@@ -322,16 +323,34 @@ public class Main {
                                 switch (Integer.parseInt(option2)) {
                                     case 1:
                                         librarian.displayStudent();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit = scanner.nextLine();
+                                        String exit;
+                                        while (true) {
+                                            try {
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit = scanner.nextLine();
+                                                ExitException test = new ExitException(exit, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit.equals("Y") || exit.equals("y")) {
                                             continue;
                                         }
                                         break;
                                     case 2:
                                         librarian.displayBook();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit1 = scanner.nextLine();
+                                        String exit1;
+                                        while (true) {
+                                            try {
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit1 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit1, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit1.equals("Y") || exit1.equals("y")) {
                                             continue;
                                         }
@@ -344,52 +363,119 @@ public class Main {
                                         for (int i = 0; i < quantity; i++) {
                                             librarian.addBook();
                                         }
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit2 = scanner.nextLine();
+                                        String exit2;
+                                        while (true) {
+                                            try {
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit2 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit2, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit2.equals("Y") || exit2.equals("y")) {
                                             continue;
                                         }
                                         break;
                                     case 4:
                                         librarian.addBookQuantityByISBN();
-
+                                        String exit3;
+                                        while (true) {
+                                            try {
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit3 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit3, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
+                                        if (exit3.equals("Y") || exit3.equals("y")) {
+                                            continue;
+                                        }
                                         break;
                                     case 5:
                                         librarian.deleteBook();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit4 = scanner.nextLine();
+                                        String exit4;
+                                        while (true) {
+                                            try {
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit4 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit4, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit4.equals("Y") || exit4.equals("y")) {
                                             continue;
                                         }
                                         break;
                                     case 6:
                                         librarian.searchBookByISBN();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit5 = scanner.nextLine();
+                                        String exit5;
+                                        while (true) {
+                                            try {
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit5 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit5, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit5.equals("Y") || exit5.equals("y")) {
                                             continue;
                                         }
                                         break;
                                     case 7:
                                         librarian.searchBookByName();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit6 = scanner.nextLine();
+                                        String exit6;
+                                        while (true) {
+                                            try {
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit6 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit6, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit6.equals("Y") || exit6.equals("y")) {
                                             continue;
                                         }
                                         break;
                                     case 8:
                                         librarian.searchBookByAuthor();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit7 = scanner.nextLine();
+                                        String exit7;
+                                        while (true) {
+                                            try {
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit7 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit7, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit7.equals("Y") || exit7.equals("y")) {
                                             continue;
                                         }
                                         break;
                                     case 9:
                                         librarian.searchBookByCategory();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit8 = scanner.nextLine();
+                                        String exit8;
+                                        while (true) {
+                                            try {
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit8 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit8, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                         if (exit8.equals("Y") || exit8.equals("y")) {
                                             continue;
                                         }
@@ -437,72 +523,159 @@ public class Main {
                                         switch (Integer.parseInt(option2)) {
                                             case 1:
                                                 librarian.displayStudent();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit = scanner.nextLine();
+                                                String exit;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit.equals("Y") || exit.equals("y")) {
                                                     continue;
                                                 }
                                                 break;
                                             case 2:
                                                 librarian.displayBook();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit1 = scanner.nextLine();
+                                                String exit1;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit1 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit1, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit1.equals("Y") || exit1.equals("y")) {
                                                     continue;
                                                 }
                                                 break;
                                             case 3:
-                                                librarian.addBook();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit2 = scanner.nextLine();
+                                                System.out.println("How many books do you want to add?");
+                                                System.out.print("Enter quantity: ");
+                                                int quantity = scanner.nextInt();
+                                                scanner.nextLine();
+                                                for (int i = 0; i < quantity; i++) {
+                                                    librarian.addBook();
+                                                }
+                                                String exit2;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit2 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit2, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit2.equals("Y") || exit2.equals("y")) {
                                                     continue;
                                                 }
                                                 break;
                                             case 4:
                                                 librarian.addBookQuantityByISBN();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit3 = scanner.nextLine();
+                                                String exit3;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit3 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit3, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit3.equals("Y") || exit3.equals("y")) {
                                                     continue;
                                                 }
                                                 break;
                                             case 5:
                                                 librarian.deleteBook();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit4 = scanner.nextLine();
+                                                String exit4;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit4 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit4, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit4.equals("Y") || exit4.equals("y")) {
                                                     continue;
                                                 }
                                                 break;
                                             case 6:
                                                 librarian.searchBookByISBN();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit5 = scanner.nextLine();
+                                                String exit5;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit5 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit5, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit5.equals("Y") || exit5.equals("y")) {
                                                     continue;
                                                 }
                                                 break;
                                             case 7:
                                                 librarian.searchBookByName();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit6 = scanner.nextLine();
+                                                String exit6;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit6 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit6, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit6.equals("Y") || exit6.equals("y")) {
                                                     continue;
                                                 }
                                                 break;
                                             case 8:
                                                 librarian.searchBookByAuthor();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit7 = scanner.nextLine();
+                                                String exit7;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit7 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit7, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit7.equals("Y") || exit7.equals("y")) {
                                                     continue;
                                                 }
                                                 break;
                                             case 9:
                                                 librarian.searchBookByCategory();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit8 = scanner.nextLine();
+                                                String exit8;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit8 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit8, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit8.equals("Y") || exit8.equals("y")) {
                                                     continue;
                                                 }
@@ -523,11 +696,9 @@ public class Main {
                                     break;
                                 }
                             }
-                    
-                    
-                        
+
                         case 3:
-                        break;
+                            break;
                     }
                     break;
 
@@ -581,60 +752,123 @@ public class Main {
                                 switch (Integer.parseInt(option4)) {
                                     case 1:
                                         student.displayBook();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit = scanner.nextLine();
-                                        if (exit.equals("Y") || exit.equals("y")) {
-                                            continue;
-                                        }
+                                        String exit;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
+                                                if (exit.equals("Y") || exit.equals("y")) {
+                                                    continue;
+                                                }
                                         break;
                                     case 2:
                                         student.searchBookByISBN();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit2 = scanner.nextLine();
-                                        if (exit2.equals("Y") || exit2.equals("y")) {
-                                            continue;
-                                        }
+                                        String exit1;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit1 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit1, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
+                                                if (exit1.equals("Y") || exit1.equals("y")) {
+                                                    continue;
+                                                }
                                         break;
                                     case 3:
                                         student.searchBookByName();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit3 = scanner.nextLine();
-                                        if (exit3.equals("Y") || exit3.equals("y")) {
-                                            continue;
-                                        }
+                                        String exit2;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit2 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit2, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
+                                                if (exit2.equals("Y") || exit2.equals("y")) {
+                                                    continue;
+                                                }
                                         break;
                                     case 4:
                                         student.searchBookByAuthor();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit4 = scanner.nextLine();
-                                        if (exit4.equals("Y") || exit4.equals("y")) {
-                                            continue;
-                                        }
+                                        String exit3;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit3 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit3, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
+                                                if (exit3.equals("Y") || exit3.equals("y")) {
+                                                    continue;
+                                                }
                                         break;
                                     case 5:
                                         student.searchBookByCategory();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit5 = scanner.nextLine();
-                                        if (exit5.equals("Y") || exit5.equals("y")) {
-                                            continue;
-                                        }
+                                        String exit4;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit4 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit4, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
+                                                if (exit4.equals("Y") || exit4.equals("y")) {
+                                                    continue;
+                                                }
                                         break;
                                     case 6:
                                         student.Borrow();
                                         student.DisplayInvoice();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit6 = scanner.nextLine();
-                                        if (exit6.equals("Y") || exit6.equals("y")) {
-                                            continue;
-                                        }
+                                        String exit5;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit5 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit5, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
+                                                if (exit5.equals("Y") || exit5.equals("y")) {
+                                                    continue;
+                                                }
                                         break;
                                     case 7:
                                         student.Returned();
-                                        System.out.print("Exit (Y/y) : ");
-                                        String exit7 = scanner.nextLine();
-                                        if (exit7.equals("Y") || exit7.equals("y")) {
-                                            continue;
-                                        }
+                                        String exit6;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit6 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit6, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
+                                                if (exit6.equals("Y") || exit6.equals("y")) {
+                                                    continue;
+                                                }
                                         break;
                                     case 8:
 
@@ -676,62 +910,125 @@ public class Main {
                                         }
                                         switch (Integer.parseInt(option4)) {
                                             case 1:
-                                                student.displayBook();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit = scanner.nextLine();
+                                        student.displayBook();
+                                        String exit;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit.equals("Y") || exit.equals("y")) {
                                                     continue;
                                                 }
-                                                break;
-                                            case 2:
-                                                student.searchBookByISBN();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit2 = scanner.nextLine();
+                                        break;
+                                    case 2:
+                                        student.searchBookByISBN();
+                                        String exit1;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit1 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit1, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
+                                                if (exit1.equals("Y") || exit1.equals("y")) {
+                                                    continue;
+                                                }
+                                        break;
+                                    case 3:
+                                        student.searchBookByName();
+                                        String exit2;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit2 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit2, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit2.equals("Y") || exit2.equals("y")) {
                                                     continue;
                                                 }
-                                                break;
-                                            case 3:
-                                                student.searchBookByName();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit3 = scanner.nextLine();
+                                        break;
+                                    case 4:
+                                        student.searchBookByAuthor();
+                                        String exit3;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit3 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit3, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit3.equals("Y") || exit3.equals("y")) {
                                                     continue;
                                                 }
-                                                break;
-                                            case 4:
-                                                student.searchBookByAuthor();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit4 = scanner.nextLine();
+                                        break;
+                                    case 5:
+                                        student.searchBookByCategory();
+                                        String exit4;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit4 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit4, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit4.equals("Y") || exit4.equals("y")) {
                                                     continue;
                                                 }
-                                                break;
-                                            case 5:
-                                                student.searchBookByCategory();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit5 = scanner.nextLine();
+                                        break;
+                                    case 6:
+                                        student.Borrow();
+                                        student.DisplayInvoice();
+                                        String exit5;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit5 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit5, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit5.equals("Y") || exit5.equals("y")) {
                                                     continue;
                                                 }
-                                                break;
-                                            case 6:
-                                                student.Borrow();
-                                                student.DisplayInvoice();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit6 = scanner.nextLine();
+                                        break;
+                                    case 7:
+                                        student.Returned();
+                                        String exit6;
+                                                while (true) {
+                                                    try {
+                                                        System.out.print("Exit (Y/y) : ");
+                                                        exit6 = scanner.nextLine();
+                                                        ExitException test = new ExitException(exit6, "^[Yy]");
+                                                        break;
+                                                    } catch (ExitException e) {
+                                                        System.out.println(e.getMessage());
+                                                    }
+                                                }
                                                 if (exit6.equals("Y") || exit6.equals("y")) {
                                                     continue;
                                                 }
-                                                break;
-                                            case 7:
-                                                student.Returned();
-                                                System.out.print("Exit (Y/y) : ");
-                                                String exit7 = scanner.nextLine();
-                                                if (exit7.equals("Y") || exit7.equals("y")) {
-                                                    continue;
-                                                }
-                                                break;
+                                        break;
                                             case 8:
                                                 loginAttemptsStudent = 4;
                                                 break;
@@ -752,12 +1049,12 @@ public class Main {
                                 }
                             }
                             break;
-                    
+
                         case 3:
                             break;
                     }
 
-            } 
+            }
         }
     }
 }

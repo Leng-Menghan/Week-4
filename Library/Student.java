@@ -5,7 +5,7 @@ import java.util.Scanner;
 import Exception.CharacterOnlyException;
 import Exception.InputException;
 import Exception.NumberOnlyException;
-
+import Exception.EmailException;
 public class Student extends User {
     Scanner scanner = new Scanner(System.in);
     static int total = 0;
@@ -48,7 +48,7 @@ public class Student extends User {
             try{
                 System.out.print("Enter phone number : ");
                 phoneNumber = scanner.nextLine();
-                NumberOnlyException test = new NumberOnlyException(phoneNumber, "^[0-9]+$");
+                NumberOnlyException test = new NumberOnlyException(phoneNumber, "^[0-9 ]+$");
                 break;
             } catch (NumberOnlyException e) {
                 System.out.println(e.getMessage());
@@ -60,9 +60,9 @@ public class Student extends User {
             try{
                 System.out.print("Enter email : ");
                 email = scanner.nextLine();
-                InputException test = new InputException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+                EmailException test = new EmailException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
                 break;
-            } catch (InputException e) {
+            } catch (EmailException e) {
                 System.out.println(e.getMessage());
             }
         }
