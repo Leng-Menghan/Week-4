@@ -1,5 +1,8 @@
+package Library;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import Exception.InputException;
 
 public class Admin extends Librarian{
     private String adminUsername = "admin";
@@ -17,7 +20,18 @@ public class Admin extends Librarian{
     }
 
     // Search Librarian by id
-    public void searchLibrarianByID(String librarianID) {
+    public void searchLibrarianByID() {
+        String librarianID;
+        while(true){
+            try{
+                System.out.print("Enter Librarian ID     : ");
+                librarianID = scanner.nextLine();
+                InputException test = new InputException(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         System.out.println("Result of librarian with ID : " + librarianID);
         System.out.println("___________________________________________________\n");
         for(User l : Database.UserList) {
@@ -82,7 +96,7 @@ public class Admin extends Librarian{
         System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
         for(User l : Database.UserList){
             if(l.ID.charAt(0)=='L'){
-                System.out.printf(format, l.ID, l.Name, l.Address, l.PhoneNumber, l.Email, l.getPassword());
+                System.out.println(l.toString());
                 count++;
             }
         }
