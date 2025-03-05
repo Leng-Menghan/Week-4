@@ -1,7 +1,4 @@
 package Library;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -134,24 +131,31 @@ public class Student extends User {
         String borrowDate = scanner.nextLine();
         System.out.print("Enter return Date : ");
         String returnDate = scanner.nextLine();
+        String bookName = "";
         for (Book b : Database.bookList) {
             if (Integer.parseInt(bookID) == b.bookid) {
                 borrowList.put("bookName", b.bookname);
+                bookName = b.bookname;
                 break;
             }
         }
+        String studentName = "";
         for (User s : Database.UserList) {
             if (studentID.equals(s.ID)) {
                 borrowList.put("studentName", s.Name);
+                studentName = s.Name;
                 break;
             }
         }
+        String librarianName = "";
         for (User l : Database.UserList) {
             if (librarianID.equals(l.ID)) {
                 borrowList.put("librarianName", l.Name);
+                librarianName = l.Name;
                 break;
             }
         }
+        //double price = 0;
         for (Book b : Database.bookList) {
             if (Integer.parseInt(bookID) == b.bookid) {
                 borrowList.put("payForBorrow", b.price * 0.1);
@@ -174,7 +178,14 @@ public class Student extends User {
         borrowList.put("LibrarianReturnId", "None");
         borrowList.put("LibrarianReturnName", "None");
         borrowList.put("Returned", "None");
+        
         Database.TmpBorrow.add(borrowList);
+        //Add to database
+        String insertQuery = String.format(
+        "INSERT INTO BorrowList VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s','%s')",
+        bookID, bookName, studentID, studentName, librarianID, librarianName, borrowDate, returnDate, "None", "None", "None");
+        MySQLConnection.executeUpdate(insertQuery);
+        
     }
 
     // Return
@@ -223,26 +234,35 @@ public class Student extends User {
         System.out.print("Enter return Date : ");
         String returnedDate = scanner.nextLine();
         for (HashMap<String, Object> b : Database.borrowList) {
-            if (b.get("bookId").equals(bookID) && b.get("studentId").equals(studentID)) {
-                b.put("Returned", returnedDate);
+            if (String.valueOf(b.get("bookId")).equals(bookID) && String.valueOf(b.get("studentId")).equals(studentID)) {
+                b.put("ReturnedDate", returnedDate);
                 b.put("LibrarianReturnId", librarianID);
+                String LirbrarianReturnName = "";
+
                 for (User l : Database.UserList) {
                     if (librarianID.equals(l.ID)) {
                         b.put("LibrarianReturnName", l.Name);
+                        LirbrarianReturnName = l.Name;
                         break;
                     }
                 }
-                break;
-            }
-        }
-        for (Book b : Database.bookList) {
-            if (b.bookid == Integer.parseInt(bookID)) {
-                String Update = "Update Book set Qty=Qty+1 where ISBN='" + b.isbn + "'";
+
+                String Update = ("Update BorrowList set LibrarianReturnId='"+ librarianID +"', LibrarianReturnName='"+ LirbrarianReturnName +"', ReturnedDate='"+ returnedDate +"' where BookId='"+ bookID +"' and StudentId='"+ studentID +"'");
                 MySQLConnection.executeUpdate(Update);
-                b.quantity++;
+
+                for (Book B : Database.bookList) {
+                    if (B.bookid == Integer.parseInt(bookID)) {
+                        String UpdateB = "Update Book set Qty=Qty+1 where ISBN='" + B.isbn + "'";
+                        MySQLConnection.executeUpdate(UpdateB);
+                        B.quantity++;
+                        break;
+                    }
+                }
+
                 break;
             }
         }
+
     }
 
     // Invoice
@@ -271,7 +291,6 @@ public class Student extends User {
         System.out.println("             Total payment : " + payment + " $");
         System.out.println("                   books : " + count);
         System.out.println("---------------------------------------------------\n");
-        Database.borrowList.addAll(Database.TmpBorrow);
         Database.TmpBorrow.clear();
     }
 

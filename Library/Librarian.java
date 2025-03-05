@@ -112,7 +112,7 @@ public class Librarian extends User{
                 System.out.printf(format, "Book ID", "Book Name", "Lib ID" , "Librarian Name", "Borrow Date", "Return Status");
                 System.out.println("+---------+--------------------------------+---------+--------------------------------+---------------------------+----------------+");
                 for (HashMap<String, Object> b : Database.borrowList){
-                    if(b.get("studentId").equals(s.ID)) {
+                    if(String.valueOf(b.get("studentId")).equals(s.ID)) {
                         checked = 1;
                         if(b.get("Returned").equals("None")) {
                             System.out.printf(format, b.get("bookId"), b.get("bookName"), b.get("librarianId"), b.get("librarianName"),b.get("borrowDate") + " -> " + b.get("returnDate"), "Not returned");
@@ -147,7 +147,7 @@ public class Librarian extends User{
         System.out.printf(format, "Stu ID", "Name", "B ID" , "Book Name","Lib ID", "Librarian Name", "Borrow Date");
         System.out.println("+--------+--------------------+-------+--------------------------------+--------+--------------------+---------------------------+");
         for (HashMap<String, Object> b : Database.borrowList){
-            if(b.get("Returned").equals("None")) {
+            if(b.get("ReturnedDate").equals("None")) {
                 System.out.printf(format, b.get("studentId"), b.get("studentName"), b.get("bookId"), b.get("bookName"), b.get("librarianId"), b.get("librarianName"), b.get("borrowDate") + " -> " + b.get("returnDate"));
                 count++;
                 check = 1;
@@ -175,17 +175,18 @@ public class Librarian extends User{
         System.out.printf(format, "Stu ID", "Name", "B ID" , "Book Name","Lib ID", "Librarian Name", "Returned Date");
         System.out.println("+--------+--------------------+-------+--------------------------------+--------+--------------------+---------------------------+");
         for (HashMap<String, Object> b : Database.borrowList){
-            if(!b.get("Returned").equals("None")) {
-            System.out.printf(format, b.get("studentId"), b.get("studentName"), b.get("bookId"), b.get("bookName"), b.get("LibrarianReturnId"), b.get("LibrarianReturnName"), b.get("Returned"));
+            if(!b.get("ReturnedDate").equals("None")) {
+            System.out.printf(format, b.get("studentId"), b.get("studentName"), b.get("bookId"), b.get("bookName"), b.get("librarianReturnId"), b.get("librarianReturnName"), b.get("ReturnedDate"));
             count++;
             check = 1;
+            System.out.println("+--------+--------------------+-------+--------------------------------+--------+--------------------+---------------------------+");
             }
         }
         if(check == 0){
             System.out.println("                     None !");
             System.out.println("___________________________________________________\n");
         }
-        System.out.println("+--------+--------------------+-------+--------------------------------+--------+--------------------+---------------------------+");
+       
         System.out.println("--------------- Total returned : "+count+" --------------- ");
     }
     
@@ -203,7 +204,7 @@ public class Librarian extends User{
         System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
         for(User s : Database.UserList){
             if(s.ID.charAt(0)=='S'){
-                System.out.println(s.toString());
+                System.out.println(s);
                 count++; 
             } 
         }

@@ -5,8 +5,8 @@ public class LimitOptionAdminException extends IllegalArgumentException {
     }
 
     public LimitOptionAdminException(int input) throws LimitOptionAdminException {
-        if(input>11 || input<1){
-            throw new LimitOptionAdminException("Number must be between 1 and 11");
+        if(input>15 || input<1){
+            throw new LimitOptionAdminException("Number must be between 1 and 15");
         }
     }
 }

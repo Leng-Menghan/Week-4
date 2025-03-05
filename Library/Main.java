@@ -1,7 +1,5 @@
 package Library;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Scanner;
 import Exception.LimitOptionAdminException;
 import Exception.LimitOptionAuthentication;
@@ -12,46 +10,14 @@ import Exception.NumberOnlyException;
 import Exception.ExitException;
 public class Main {
     public static void main(String[] args) {
-    String selectQuery = "SELECT * FROM User";
-    ResultSet rs = MySQLConnection.executeQuery(selectQuery);
-    try {
-        while (rs != null && rs.next()) {
-            String id = rs.getString("ID");
-            String name = rs.getString("Name");
-            String address = rs.getString("Address");
-            String phoneNumber = rs.getString("PhoneNumber");
-            String email = rs.getString("Email");
-            String password = rs.getString("Password");
-            if(id.equals("S")){
-                int inc = 0;
-                Database.UserList.add(new Student("S"+ ++inc,name, address, phoneNumber, email, password));
-            }else{
-                int inc = 0;
-                Database.UserList.add(new Librarian("L"+ ++inc,name, address, phoneNumber, email, password));
-            }
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
+    //Select data from User and ADD to UserList
+    Database.GetDataFromUser();
 
-    String selectQuery2 = "SELECT * FROM Book";
-    ResultSet rs2 = MySQLConnection.executeQuery(selectQuery2);
-    try {
-        while (rs2 != null && rs2.next()) {
-            String ISBN = rs2.getString("ISBN");
-            String category = rs2.getString("Category");
-            String bookname = rs2.getString("Name");
-            String author = rs2.getString("Author");
-            double price = rs2.getDouble("Price");
-            int quantity = rs2.getInt("Qty");
-            String publisher = rs2.getString("Publisher");
-            int inc = 0;
-            Database.bookList.add(new Book(++inc,ISBN, category, bookname, author, price, quantity, publisher));
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-    MySQLConnection.closeConnection();
+    //Select data from Book and ADD to BookList
+    Database.GetDataFromBook();
+
+    //Select data from Borrow and ADD to BorrowList
+    Database.GetDataFromBorrow();
 
         Admin admin = new Admin();
         User student = new Student();
@@ -100,11 +66,15 @@ public class Main {
                                 System.out.println("8. Search Book By Name");
                                 System.out.println("9. Search Book By Author");
                                 System.out.println("10. Search Book By Category");
-                                System.out.println("11. Logout");
+                                System.out.println("11. Display Borrow");
+                                System.out.println("12. Display Return");
+                                System.out.println("13. Search Student By ID");
+                                System.out.println("14. Search Librarian By ID");
+                                System.out.println("15. Logout");
                                 String option;
                                 while (true) {
                                     try {
-                                        System.out.print("Please Select Option (1-11) : ");
+                                        System.out.print("Please Select Option (1-15) : ");
                                         option = scanner.nextLine();
                                         NumberOnlyException test = new NumberOnlyException(option, "^[0-9]+$");
                                         int optionInt = Integer.parseInt(option);
@@ -294,6 +264,74 @@ public class Main {
                                         }
                                         break;
                                     case 11:
+                                        admin.displayBorrow();
+                                        String exit10;
+                                        while (true) {
+                                            try {
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit10 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit10, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
+                                        if (exit10.equals("Y") || exit10.equals("y")) {
+                                            continue;
+                                        }
+                                        break;
+                                    case 12:
+                                        admin.displayReturn();
+                                        String exit11;
+                                        while (true) {
+                                            try {
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit11 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit11, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
+                                        if (exit11.equals("Y") || exit11.equals("y")) {
+                                            continue;
+                                        }
+                                        break;
+                                    case 13:
+                                        admin.searchStudentByID();
+                                        String exit12;
+                                        while (true) {
+                                            try {
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit12 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit12, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
+                                        if (exit12.equals("Y") || exit12.equals("y")) {
+                                            continue;
+                                        }
+                                        break;
+                                    case 14:
+                                        admin.searchLibrarianByID();
+                                        String exit13;
+                                        while (true) {
+                                            try {
+                                                System.out.print("Exit (Y/y) : ");
+                                                exit13 = scanner.nextLine();
+                                                ExitException test = new ExitException(exit13, "^[Yy]");
+                                                break;
+                                            } catch (ExitException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
+                                        if (exit13.equals("Y") || exit13.equals("y")) {
+                                            continue;
+                                        }
+                                        break;
+                                    case 15:
                                         loginAttempts = 4;
                                         break;
                                 }

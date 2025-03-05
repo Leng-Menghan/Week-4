@@ -96,7 +96,7 @@ public class Admin extends Librarian{
         System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
         for(User l : Database.UserList){
             if(l.ID.charAt(0)=='L'){
-                System.out.println(l.toString());
+                System.out.println(l);
                 count++;
             }
         }

@@ -80,26 +80,4 @@ public class MySQLConnection {
             }
         }
     }
-public static void main(String[] args) {
-    // Select and display users
-    String selectQuery = "SELECT * FROM User";
-    ResultSet rs = executeQuery(selectQuery);
-
-    try {
-        while (rs != null && rs.next()) {
-            String id = rs.getString("ID");
-            String name = rs.getString("Name");
-            String address = rs.getString("Address");
-            String phoneNumber = rs.getString("PhoneNumber");
-            String email = rs.getString("Email");
-            String password = rs.getString("Password");
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-
-    // Close the connection
-    closeConnection();
-}
-
 }
