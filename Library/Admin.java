@@ -21,6 +21,8 @@ public class Admin extends Librarian{
 
     // Search Librarian by id
     public void searchLibrarianByID() {
+        Database.GetDataFromUser();
+        Database.GetDataFromBorrow();
         String librarianID;
         while(true){
             try{
@@ -84,6 +86,7 @@ public class Admin extends Librarian{
 
     //Display Librarian
     public void displayLibrarain(){
+        Database.GetDataFromUser();
         System.out.println("#-----------------------------------------------------------------------------------------------------------------#");
         System.out.println("|                                                                                                                 |");
         System.out.println("#                                      Librarain list in Library Management System                                #");

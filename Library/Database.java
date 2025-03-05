@@ -13,6 +13,7 @@ public class Database {
     public static void GetDataFromUser() {
         String selectQuery = "SELECT * FROM User";
         ResultSet rs = MySQLConnection.executeQuery(selectQuery);
+        Database.UserList.clear();
         int inc = 1;
         int inc1 = 1;
         try {
@@ -38,6 +39,7 @@ public class Database {
     public static void GetDataFromBook(){
         String selectQuery2 = "SELECT * FROM Book";
         ResultSet rs2 = MySQLConnection.executeQuery(selectQuery2);
+        Database.bookList.clear();
         int inc2 = 0;
         try {
             while (rs2 != null && rs2.next()) {
@@ -58,6 +60,7 @@ public class Database {
 
     public static void GetDataFromBorrow(){ 
         String selectQuery3 = "SELECT * FROM BorrowList";
+        Database.borrowList.clear();
         ResultSet rs3 = MySQLConnection.executeQuery(selectQuery3);
         try {
             while (rs3 != null && rs3.next()) {

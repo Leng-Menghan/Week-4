@@ -86,6 +86,7 @@ public class Librarian extends User{
     
     // Login
     public boolean login() {
+        Database.GetDataFromUser();
         String email;
         while(true){
             try{
@@ -121,6 +122,8 @@ public class Librarian extends User{
     
     // Search student by ID
     public void searchStudentByID() {
+        Database.GetDataFromUser();
+        Database.GetDataFromBorrow();
         String studentID;
         while(true){
             try{
@@ -171,6 +174,7 @@ public class Librarian extends User{
 
     // Display borrowed list
     public void displayBorrow(){
+        Database.GetDataFromBorrow();
         int count = 0;
         System.out.println("#--------------------------------------------------------------------------------------------------------------------------------#");
         System.out.println("|                                                                                                                                |");
@@ -199,6 +203,7 @@ public class Librarian extends User{
 
     // Display returned list
     public void displayReturn(){
+        Database.GetDataFromBorrow();
         int count = 0;
         System.out.println("#--------------------------------------------------------------------------------------------------------------------------------#");
         System.out.println("|                                                                                                                                |");
@@ -228,6 +233,7 @@ public class Librarian extends User{
     
     // Display student
     public void displayStudent(){
+        Database.GetDataFromUser();
         System.out.println("#----------------------------------------------------------------------------------------------------------------#");
         System.out.println("|                                                                                                                |");
         System.out.println("#                                         Student list in Library Management System                              #");
@@ -357,6 +363,7 @@ public class Librarian extends User{
 
     //Delete book
     public void deleteBook(){
+        Database.GetDataFromBook();
         String ISBN;
         while(true){
             try{
@@ -370,7 +377,6 @@ public class Librarian extends User{
         }
         for(Book b : Database.bookList){
             if(b.isbn.equals(ISBN)){ {
-                Database.bookList.remove(b);
                 String Delete = "DELETE FROM Book WHERE ISBN = '" + ISBN + "'";
                 MySQLConnection.executeUpdate(Delete);
                 break;
@@ -381,6 +387,7 @@ public class Librarian extends User{
 
     //Add book qty
     public void addBookQuantityByISBN(){
+        Database.GetDataFromBook();
         String ISBN;
         while(true){
             try{
@@ -397,8 +404,8 @@ public class Librarian extends User{
                 System.out.println("How many books do you want to add?");
                 System.out.print("Enter quantity: ");
                 int newQuantity = scanner.nextInt();
-                b.quantity += newQuantity;
-                String Update = "UPDATE Book SET Qty = '" + b.quantity + "' WHERE ISBN = '" + ISBN + "'";
+                int updateQty = b.quantity + newQuantity;
+                String Update = "UPDATE Book SET Qty = '" + updateQty + "' WHERE ISBN = '" + ISBN + "'";
                 MySQLConnection.executeUpdate(Update);
                 break;
             }

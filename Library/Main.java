@@ -2,23 +2,13 @@ package Library;
 
 import java.util.Scanner;
 import Exception.LimitOptionAdminException;
-import Exception.LimitOptionAuthentication;
 import Exception.LimitOptionLibrarianException;
 import Exception.LimitOptionStudentException;
-import Exception.LimitOptionUserException;
+import Exception.LimitOptionUserAndAuthenticationException;
 import Exception.NumberOnlyException;
 import Exception.ExitException;
 public class Main {
     public static void main(String[] args) {
-    //Select data from User and ADD to UserList
-    Database.GetDataFromUser();
-
-    //Select data from Book and ADD to BookList
-    Database.GetDataFromBook();
-
-    //Select data from Borrow and ADD to BorrowList
-    Database.GetDataFromBorrow();
-
         Admin admin = new Admin();
         User student = new Student();
         User librarian = new Librarian();
@@ -40,9 +30,9 @@ public class Main {
                     System.out.print("Please Select Option (1-3) : ");
                     choice = scanner.nextLine();
                     NumberOnlyException test1 = new NumberOnlyException(choice, "^[0-9]+$");
-                    LimitOptionUserException test = new LimitOptionUserException(Integer.parseInt(choice));
+                    LimitOptionUserAndAuthenticationException test = new LimitOptionUserAndAuthenticationException(Integer.parseInt(choice));
                     break;
-                } catch (LimitOptionUserException e) {
+                } catch (LimitOptionUserAndAuthenticationException e) {
                     System.out.println(e.getMessage());
                 } catch (NumberOnlyException e) {
                     System.out.println(e.getMessage());
@@ -62,19 +52,16 @@ public class Main {
                                 System.out.println("4. Add Book");
                                 System.out.println("5. Add Book Quantity By ISBN");
                                 System.out.println("6. Remove Book By ISBN");
-                                System.out.println("7. Search Book By ISBN");
-                                System.out.println("8. Search Book By Name");
-                                System.out.println("9. Search Book By Author");
-                                System.out.println("10. Search Book By Category");
-                                System.out.println("11. Display Borrow");
-                                System.out.println("12. Display Return");
-                                System.out.println("13. Search Student By ID");
-                                System.out.println("14. Search Librarian By ID");
-                                System.out.println("15. Logout");
+                                System.out.println("7. Search Book");
+                                System.out.println("8. Display Borrow");
+                                System.out.println("9. Display Return");
+                                System.out.println("10. Search Student By ID");
+                                System.out.println("11. Search Librarian By ID");
+                                System.out.println("12. Logout");
                                 String option;
                                 while (true) {
                                     try {
-                                        System.out.print("Please Select Option (1-15) : ");
+                                        System.out.print("Please Select Option (1-12) : ");
                                         option = scanner.nextLine();
                                         NumberOnlyException test = new NumberOnlyException(option, "^[0-9]+$");
                                         int optionInt = Integer.parseInt(option);
@@ -107,47 +94,29 @@ public class Main {
                                         break;
                                     case 5:
                                         admin.addBookQuantityByISBN();
-                                        
                                         break;
                                     case 6:
                                         admin.deleteBook();
                                         break;
                                     case 7:
-                                        admin.searchBookByISBN();
-                                       
+                                        admin.searchBook();
                                         break;
                                     case 8:
-                                        admin.searchBookByName();
-                                        
+                                        admin.displayBorrow();                
                                         break;
                                     case 9:
-                                        admin.searchBookByAuthor();
-                                        
+                                        admin.displayReturn();
                                         break;
                                     case 10:
-                                        admin.searchBookByCategory();
-                                        
+                                        admin.searchStudentByID(); 
                                         break;
                                     case 11:
-                                        admin.displayBorrow();
-                                        
-                                        break;
-                                    case 12:
-                                        admin.displayReturn();
-                                        
-                                        break;
-                                    case 13:
-                                        admin.searchStudentByID();
-                                        
-                                        break;
-                                    case 14:
                                         admin.searchLibrarianByID();
-                                        String exit13;
-                                        
                                         break;
-                                    case 15:
-                                        loginAttempts = 4;
-                                        break;
+                                }
+                                if(Integer.parseInt(option) == 12){
+                                    loginAttempts = 4;
+                                    break;
                                 }
                                 String exit;
                                 while (true) {
@@ -163,7 +132,6 @@ public class Main {
                                 if (exit.equals("Y") || exit.equals("y")) {
                                     continue;
                                 }
-                                break;
                             }
                         } else {
                             System.out.println("Invalid Username or Password");
@@ -190,9 +158,9 @@ public class Main {
                             System.out.print("Please Select Option (1-3) : ");
                             option1 = scanner.nextLine();
                             NumberOnlyException test1 = new NumberOnlyException(option1, "^[0-9]+$");
-                            LimitOptionAuthentication test = new LimitOptionAuthentication(Integer.parseInt(option1));
+                            LimitOptionUserAndAuthenticationException test = new LimitOptionUserAndAuthenticationException(Integer.parseInt(option1));
                             break;
-                        } catch (LimitOptionAuthentication e) {
+                        } catch (LimitOptionUserAndAuthenticationException e) {
                             System.out.println(e.getMessage());
                         } catch (NumberOnlyException e) {
                             System.out.println(e.getMessage());
@@ -228,15 +196,13 @@ public class Main {
                         System.out.println("3. Add Book");
                         System.out.println("4. Add Book Quantity By ISBN");
                         System.out.println("5. Remove Book By ISBN");
-                        System.out.println("6. Search Book By ISBN");
-                        System.out.println("7. Search Book By Name");
-                        System.out.println("8. Search Book By Author");
-                        System.out.println("9. Search Book By Category");
-                        System.out.println("10. Log out");
+                        System.out.println("6. Search Book");
+                        System.out.println("7. Search Student By ID");
+                        System.out.println("8. Log out");
                         String option2;
                         while (true) {
                             try {
-                                System.out.print("Please Select Option (1-10) : ");
+                                System.out.print("Please Select Option (1-8) : ");
                                 option2 = scanner.nextLine();
                                 NumberOnlyException test = new NumberOnlyException(option2, "^[0-9]+$");
                                 int optionInt = Integer.parseInt(option2);
@@ -271,19 +237,13 @@ public class Main {
                                 librarian.deleteBook();
                                 break;
                             case 6:
-                                librarian.searchBookByISBN();
+                                librarian.searchBook();
                                 break;
                             case 7:
-                                librarian.searchBookByName();
+                                librarian.searchStudentByID();
                                 break;
-                            case 8:
-                                librarian.searchBookByAuthor();
-                                break;
-                            case 9:
-                                librarian.searchBookByCategory();
-                            break;
                         }
-                        if (Integer.parseInt(option2) == 10) break;
+                        if (Integer.parseInt(option2) == 8) break;
                         String exit;
                         while (true) {
                             try {
@@ -312,11 +272,11 @@ public class Main {
                             System.out.print("Please Select Option (1-3) : ");
                             option2 = scanner.nextLine();
                             NumberOnlyException test = new NumberOnlyException(option2, "^[0-9]+$");
-                            LimitOptionAuthentication test2 = new LimitOptionAuthentication(Integer.parseInt(option2));
+                            LimitOptionUserAndAuthenticationException test2 = new LimitOptionUserAndAuthenticationException(Integer.parseInt(option2));
                             break;
                         } catch (NumberOnlyException e) {
                             System.out.println(e.getMessage());
-                        } catch (LimitOptionAuthentication e) {
+                        } catch (LimitOptionUserAndAuthenticationException e) {
                             System.out.println(e.getMessage());
                         }
                     }
@@ -346,17 +306,14 @@ public class Main {
                     while (true) {
                         System.out.println("Welcome to Student function");
                         System.out.println("1. Display Book");
-                        System.out.println("2. Search Book By ISBN");
-                        System.out.println("3. Search Book By Name");
-                        System.out.println("4. Search Book By Author");
-                        System.out.println("5. Search Book By Category");
-                        System.out.println("6. Borrow Book");
-                        System.out.println("7. Return Book");
-                        System.out.println("8. Log out");
+                        System.out.println("2. Search Book");
+                        System.out.println("3. Borrow Book");
+                        System.out.println("4. Return Book");
+                        System.out.println("5. Log out");
                         String option4;
                         while (true) {
                             try {
-                                System.out.print("Please Select Option (1-8) : ");
+                                System.out.print("Please Select Option (1-5) : ");
                                 option4 = scanner.nextLine();
                                 NumberOnlyException test = new NumberOnlyException(option4, "^[0-9]+$");
                                 LimitOptionStudentException test2 = new LimitOptionStudentException(
@@ -373,25 +330,16 @@ public class Main {
                                 student.displayBook();
                                 break;
                             case 2:
-                                student.searchBookByISBN();
+                                student.searchBook();
                                 break;
                             case 3:
-                                student.searchBookByName();
-                                break;
-                            case 4:
-                                student.searchBookByAuthor();
-                                break;
-                            case 5:
-                                student.searchBookByCategory();
-                                break;
-                            case 6:
                                 student.Borrow();
                                 student.DisplayInvoice();
                                 break;
-                            case 7:
+                            case 4:
                                 student.Returned();
                         }
-                        if (Integer.parseInt(option4) == 8) break;
+                        if (Integer.parseInt(option4) == 5) break;
                         String exit;
                         while (true) {
                             try {

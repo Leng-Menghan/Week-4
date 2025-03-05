@@ -61,88 +61,34 @@ public abstract class User implements UserAction{
         System.out.println("Book not found");
     }
 
-    //Search Book by Author
-    public void searchBookByAuthor() {
-        String authorName;
-        while(true){
-            try{
-                System.out.println("Enter author name: ");
-                authorName = scanner.nextLine();
-                CharacterOnlyException test = new CharacterOnlyException(authorName, "^[a-zA-Z ]+$");
-                break;
-            } catch (CharacterOnlyException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        System.out.println("----------------------------------------------------");
-        int checked = 0;
+    public void searchBook() {
+        Database.GetDataFromBook();
+        System.out.print("Enter book Name or ISBN or Author or Category: ");
+        String searchBook = scanner.nextLine();
+        int found = 0;
+        System.out.println("#---------------------------------------------------------------------------------------------------------------------------------#");
+        System.out.println("|                                                                                                                                 |");
+        System.out.println("#                                           Book list in Library Management System                                                #");
+        System.out.println("|                                                                                                                                 |");
+        System.out.println("#---------------------------------------------------------------------------------------------------------------------------------#");
+        String format = "| %-3s | %-6s | %-27s | %-20s | %-20s | %-7s | %-8s | %-15s |\n";
+        System.out.println("+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
+        System.out.printf(format, "ID", "ISBN", "Name", "Author", "Category", "Price", "Quantity", "Publisher");
+        System.out.println("+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
         for(Book b : Database.bookList) {
-            if(b.author.toLowerCase().equals(authorName.toLowerCase())) {
-                System.out.println("(ID : " + b.bookid +") : " + b.bookname + " quantity: " + b.quantity);
-                checked = 1;
+            if(b.bookname.toLowerCase().equals(searchBook.toLowerCase()) || b.isbn.toLowerCase().equals(searchBook.toLowerCase())|| b.author.toLowerCase().equals(searchBook.toLowerCase()) || b.category.toLowerCase().equals(searchBook.toLowerCase())) {
+                System.out.println(b);
+                found = 1;
             }
         }
-        if(checked == 0) {
-            System.out.println("Book not found");
-        }
-        System.out.println("----------------------------------------------------\n");
-    }
-
-    // Search book by category
-    public void searchBookByCategory() {
-        String category;
-        while(true){
-            try{
-                System.out.print("Enter book category: ");
-                category = scanner.nextLine();
-                InputException test = new InputException(category, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        int checked = 0;
-        for(Book b : Database.bookList) {
-            if(b.category.toLowerCase().equals(category.toLowerCase())) {
-                System.out.println("(ID : " + b.bookid +") : " + b.bookname + " quantity: " + b.quantity);
-                checked = 1;
-            }
-        }
-        if(checked == 0) {
+        if(found == 0) {
             System.out.println("Book not found");
         }
     }
-
-    // Search book by ISBN
-    public void searchBookByISBN() {
-        String ISBN;
-        while(true){
-            try{
-                System.out.print("Enter book ISBN: ");
-                ISBN = scanner.nextLine();
-                InputException test = new InputException(ISBN, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        for(Book b : Database.bookList) {
-            if(b.isbn.equals(ISBN)) {
-                System.out.println("ISBN      : " + b.isbn);
-                System.out.println("Book name : " + b.bookname);
-                System.out.println("Author    : " + b.author);
-                System.out.println("Category  : " + b.category);
-                System.out.println("Price     : " + b.price);
-                System.out.println("Quantity  : " + b.quantity);
-                System.out.println("Publisher : " + b.publisher);
-                return;
-            }
-        }
-        System.out.println("Book not found");
-    }
-
+    
     //Display Book
     public void displayBook(){
+        Database.GetDataFromBook();
         System.out.println("#---------------------------------------------------------------------------------------------------------------------------------#");
         System.out.println("|                                                                                                                                 |");
         System.out.println("#                                           Book list in Library Management System                                                #");
@@ -154,7 +100,7 @@ public abstract class User implements UserAction{
         System.out.println("+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
         int count = 0;
         for(Book b : Database.bookList){
-            System.out.println(b.toString());
+            System.out.println(b);
             count++;
         }
         System.out.println("| Total Books : " + count +"   |\n");
