@@ -85,7 +85,7 @@ public class Librarian extends User{
     }
     
     // Login
-        public boolean login() {
+    public boolean login() {
         String email;
         while(true){
             try{
@@ -118,6 +118,7 @@ public class Librarian extends User{
         }
         return false;
     }
+    
     // Search student by ID
     public void searchStudentByID() {
         String studentID;
@@ -370,12 +371,15 @@ public class Librarian extends User{
         for(Book b : Database.bookList){
             if(b.isbn.equals(ISBN)){ {
                 Database.bookList.remove(b);
+                String Delete = "DELETE FROM Book WHERE ISBN = '" + ISBN + "'";
+                MySQLConnection.executeUpdate(Delete);
                 break;
             }
         }
     }
     };
 
+    //Add book qty
     public void addBookQuantityByISBN(){
         String ISBN;
         while(true){
@@ -394,13 +398,15 @@ public class Librarian extends User{
                 System.out.print("Enter quantity: ");
                 int newQuantity = scanner.nextInt();
                 b.quantity += newQuantity;
+                String Update = "UPDATE Book SET Qty = '" + b.quantity + "' WHERE ISBN = '" + ISBN + "'";
+                MySQLConnection.executeUpdate(Update);
                 break;
             }
         }
     }
     };
     
-    //Empty method from Parent(User)'s abstract method
+    //Empty method because Student's Method
     public void Borrow(){};
     public void Returned(){};
     public void DisplayInvoice(){};

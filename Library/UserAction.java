@@ -5,5 +5,4 @@ public interface UserAction {
     void searchBookByCategory();
     void searchBookByISBN();
     void displayBook();
-    //boolean login();
 }

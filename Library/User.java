@@ -24,9 +24,6 @@ public abstract class User implements UserAction{
     //default constructor
     public User() {};
     
-    // login
-
-
     // get password
     public String getPassword() {
         return Password;

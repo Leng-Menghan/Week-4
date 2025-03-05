@@ -9,15 +9,12 @@ import Exception.EmailException;
 
 public class Student extends User {
     Scanner scanner = new Scanner(System.in);
-
     // Constructor
     public Student(String ID, String Name, String Address, String PhoneNumber, String Email, String password) {
         super(ID, Name, Address, PhoneNumber, Email, password);
     }
 
-    public Student() {
-    };
-    // Borrow
+    public Student() {};
 
     // Register
     public void register() {
@@ -119,6 +116,8 @@ public class Student extends User {
         }
         return false;
     }
+    
+    //Borrow
     public void Borrow() {
         HashMap<String, Object> borrowList = new HashMap<>();
         String bookID;
@@ -328,25 +327,19 @@ public class Student extends User {
         Database.TmpBorrow.clear();
     }
 
-    public void searchStudentByID() {
-    };
+    //Empty Method Because of Librarian's method
+    public void searchStudentByID() {};
 
-    public void displayStudent() {
-    };
+    public void displayStudent() {};
 
-    public void displayReturn() {
-    };
+    public void displayReturn() {};
 
-    public void displayBorrow() {
-    };
+    public void displayBorrow() {};
 
-    public void addBookQuantityByISBN() {
-    };
+    public void addBookQuantityByISBN() {};
 
-    public void deleteBook() {
-    };
+    public void deleteBook() {};
 
-    public void addBook() {
-    };
+    public void addBook() {};
 
 }
