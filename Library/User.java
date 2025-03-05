@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 import Exception.CharacterOnlyException;
 import Exception.InputException;
-import Exception.EmailException;
 public abstract class User implements UserAction{
     protected String ID;
     protected String Name;
@@ -26,51 +25,11 @@ public abstract class User implements UserAction{
     public User() {};
     
     // login
-    public boolean login() {
-        String email;
-        while(true){
-            try{
-                System.out.print("Enter email : ");
-                email = scanner.nextLine();
-                EmailException test = new EmailException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
-                break;
-            } catch (EmailException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        String password;
-        while(true){
-            try{
-                System.out.print("Enter password : ");
-                password = scanner.nextLine();
-                InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        for(User u : Database.UserList) {
-            if (u.Email.equals(email) && u.Password.equals(password)) {
-                System.out.println("User logged in");
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     // get password
     public String getPassword() {
         return Password;
-    }
-
-    // change password
-    public void changePassword(String newPassword, String oldPassword) {
-        if (Password.equals(oldPassword)) {
-            Password = newPassword;
-            System.out.println("Password changed successfully");
-        } else {
-            System.out.println("Invalid Password");
-        }
     }
 
     //Search Book by name
@@ -213,6 +172,7 @@ public abstract class User implements UserAction{
 
     //abstract method
     public abstract void register();
+    public abstract boolean login();
         //For student
     public abstract void Borrow();
     public abstract void Returned();

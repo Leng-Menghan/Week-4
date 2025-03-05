@@ -85,6 +85,40 @@ public class Student extends User {
         MySQLConnection.executeUpdate(insertQuery);
     }
 
+    //Login
+    public boolean login() {
+        String email;
+        while(true){
+            try{
+                System.out.print("Enter email : ");
+                email = scanner.nextLine();
+                EmailException test = new EmailException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+                break;
+            } catch (EmailException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        String password;
+        while(true){
+            try{
+                System.out.print("Enter password : ");
+                password = scanner.nextLine();
+                InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        for(User u : Database.UserList) {
+            if(u.ID.startsWith("S")){
+                if (u.Email.equals(email) && u.getPassword().equals(password)) {
+                    System.out.println("User logged in");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public void Borrow() {
         HashMap<String, Object> borrowList = new HashMap<>();
         String bookID;

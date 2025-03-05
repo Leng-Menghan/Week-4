@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import Exception.CharacterOnlyException;
+import Exception.EmailException;
 import Exception.InputException;
 import Exception.NumberOnlyException;
 
@@ -83,6 +84,40 @@ public class Librarian extends User{
         MySQLConnection.executeUpdate(insertQuery);
     }
     
+    // Login
+        public boolean login() {
+        String email;
+        while(true){
+            try{
+                System.out.print("Enter email : ");
+                email = scanner.nextLine();
+                EmailException test = new EmailException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+                break;
+            } catch (EmailException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        String password;
+        while(true){
+            try{
+                System.out.print("Enter password : ");
+                password = scanner.nextLine();
+                InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                break;
+            } catch (InputException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        for(User u : Database.UserList) {
+            if(u.ID.startsWith("L")){
+                if (u.Email.equals(email) && u.getPassword().equals(password)) {
+                    System.out.println("User logged in");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     // Search student by ID
     public void searchStudentByID() {
         String studentID;
@@ -114,10 +149,10 @@ public class Librarian extends User{
                 for (HashMap<String, Object> b : Database.borrowList){
                     if(String.valueOf(b.get("studentId")).equals(s.ID)) {
                         checked = 1;
-                        if(b.get("Returned").equals("None")) {
+                        if(String.valueOf(b.get("Returned")).equals("None")) {
                             System.out.printf(format, b.get("bookId"), b.get("bookName"), b.get("librarianId"), b.get("librarianName"),b.get("borrowDate") + " -> " + b.get("returnDate"), "Not returned");
                         } else {
-                            System.out.printf(format, b.get("bookId"), b.get("bookName"), b.get("librarianId"), b.get("librarianName"),b.get("borrowDate") + " -> " + b.get("returnDate"), b.get("Returned"));
+                            System.out.printf(format, b.get("bookId"), b.get("bookName"), b.get("librarianId"), b.get("librarianName"),b.get("borrowDate") + " -> " + b.get("returnDate"), b.get("ReturnedDate"));
                         }
                         System.out.println("+---------+--------------------------------+---------+--------------------------------+---------------------------+----------------+");
                     }
