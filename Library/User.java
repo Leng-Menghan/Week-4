@@ -1,8 +1,6 @@
 package Library;
 import java.util.Scanner;
 
-import Exception.CharacterOnlyException;
-import Exception.InputException;
 public abstract class User implements UserAction{
     protected String ID;
     protected String Name;
@@ -29,38 +27,7 @@ public abstract class User implements UserAction{
         return Password;
     }
 
-    //Search Book by name
-    public void searchBookByName() {
-        String bookName;
-        while(true){
-            try{
-                System.out.print("Enter book name: ");
-                bookName = scanner.nextLine();
-                InputException test = new InputException(bookName, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        for(Book b : Database.bookList) {
-            if(b.bookname.toLowerCase().equals(bookName.toLowerCase())) {
-                System.out.println("Book found");
-                System.out.println("----------------------------------------------------");
-                System.out.println("Book ID   : " + b.bookid);
-                System.out.println("ISBN      : " + b.isbn);
-                System.out.println("Book name : " + b.bookname);
-                System.out.println("Author    : " + b.author);
-                System.out.println("Category  : " + b.category);
-                System.out.println("Price     : " + b.price + " $");
-                System.out.println("Quantity  : " + b.quantity);
-                System.out.println("Publisher : " + b.publisher);
-                System.out.println("----------------------------------------------------\n");
-                return;
-            }
-        }
-        System.out.println("Book not found");
-    }
-
+    //Searh Book
     public void searchBook() {
         Database.GetDataFromBook();
         System.out.print("Enter book Name or ISBN or Author or Category: ");
