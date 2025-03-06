@@ -54,7 +54,7 @@ public class Admin extends Librarian{
                 for (HashMap<String, Object> b : Database.borrowList){
                     if(b.get("librarianId").equals(l.ID)) {
                         checked = 1;
-                        if(b.get("Returned").equals("None")) {
+                        if(b.get("ReturnedDate").equals("None")) {
                             System.out.printf(format, b.get("studentId"), b.get("studentName"), b.get("bookId"), b.get("bookName"),b.get("borrowDate") + " -> " + b.get("returnDate"),"Not Returned");
                         }else{
                             System.out.printf(format, b.get("studentId"), b.get("studentName"), b.get("bookId"), b.get("bookName"),b.get("borrowDate") + " -> " + b.get("returnDate"), b.get("Returned"));
@@ -64,15 +64,7 @@ public class Admin extends Librarian{
                     
                 }
                 System.out.println("+------------+----------------------+---------+--------------------------------+---------------------------+----------------+");
-                System.out.println("2. Return activity : ");
-                for (HashMap<String, Object> b : Database.borrowList){
-                    if(b.get("LibrarianReturnId").equals(String.valueOf(librarianID))) {
-                        System.out.println("Student ID  : " + b.get("studentId") + " Name : " + b.get("studentName"));
-                        System.out.println("Book ID     : " + b.get("bookId") + " Name : " + b.get("bookName"));
-                        System.out.println("Returned Date: " + b.get("Returned"));
-                        checked = 1;
-                    }
-                }
+
 
                 if(checked == 0) {
                     System.out.println("No activity");

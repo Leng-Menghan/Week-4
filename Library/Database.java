@@ -40,9 +40,9 @@ public class Database {
         String selectQuery2 = "SELECT * FROM Book";
         ResultSet rs2 = MySQLConnection.executeQuery(selectQuery2);
         Database.bookList.clear();
-        int inc2 = 0;
         try {
             while (rs2 != null && rs2.next()) {
+                int ID = rs2.getInt("ID");
                 String ISBN = rs2.getString("ISBN");
                 String category = rs2.getString("Category");
                 String bookname = rs2.getString("Name");
@@ -50,7 +50,7 @@ public class Database {
                 double price = rs2.getDouble("Price");
                 int quantity = rs2.getInt("Qty");
                 String publisher = rs2.getString("Publisher");
-                Database.bookList.add(new Book(++inc2,ISBN, category, bookname, author, price, quantity, publisher));
+                Database.bookList.add(new Book(ID,ISBN, category, bookname, author, price, quantity, publisher));
             }
         } catch (SQLException e) {
             e.printStackTrace();

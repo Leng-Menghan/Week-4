@@ -356,7 +356,7 @@ public class Librarian extends User{
             }
         }
 
-        String insertQuery = String.format("INSERT INTO Book VALUES ( '%s', '%s', '%s', '%s', '%s','%s', '%s')",
+        String insertQuery = String.format("INSERT INTO Book (ISBN, Category, Name, Author, Price, Qty, Publisher) VALUES ('%s', '%s', '%s', '%s', '%s','%s', '%s')",
         ISBN, category, bookName, author, price, quantity, publisher);
         MySQLConnection.executeUpdate(insertQuery);
     };

@@ -191,6 +191,7 @@ public class Main {
                     }
                     while (true) {
                         System.out.println("Welcome to Librarian function");
+                        //System.out.println("Your ID : " + librarian.ID);
                         System.out.println("1. Display Student");
                         System.out.println("2. Display Book");
                         System.out.println("3. Add Book");
@@ -305,6 +306,7 @@ public class Main {
                     }
                     while (true) {
                         System.out.println("Welcome to Student function");
+                        //System.out.println("Your ID is: " + student.getID());
                         System.out.println("1. Display Book");
                         System.out.println("2. Search Book");
                         System.out.println("3. Borrow Book");
