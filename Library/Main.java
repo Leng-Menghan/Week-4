@@ -7,6 +7,7 @@ import Exception.LimitOptionStudentException;
 import Exception.LimitOptionUserAndAuthenticationException;
 import Exception.NumberOnlyException;
 import Exception.ExitException;
+
 public class Main {
     public static void main(String[] args) {
         Admin admin = new Admin();
@@ -359,6 +360,8 @@ public class Main {
                     }
                 break;
             }
+            scanner.close();
         }
     }
+    
 }

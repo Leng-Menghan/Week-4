@@ -7,11 +7,9 @@ import java.sql.Statement;
 
 import com.mysql.cj.exceptions.CJCommunicationsException;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
-
 import java.sql.ResultSet;
 
 public class MySQLConnection {
-
     private static Connection connection = null;
     private static final String URL = "jdbc:mysql://localhost:3306/Library";
     private static final String USERNAME = "root";

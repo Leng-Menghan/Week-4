@@ -79,6 +79,7 @@ public class Librarian extends User{
                 System.out.println(e.getMessage());
             }
         }
+        
         String insertQuery = String.format("INSERT INTO User (ID, Name, Address, PhoneNumber, Email, Password) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
                 "L", name, address, phoneNumber, email,password);
         MySQLConnection.executeUpdate(insertQuery);
@@ -144,27 +145,6 @@ public class Librarian extends User{
                 System.out.println("Email     : " + s.Email);
                 System.out.println("Password  : " + s.getPassword());
                 System.out.println("___________________________________________________");
-                System.out.println("\nRecord student activity : ");
-                int checked = 0;
-                String format = "| %-7s | %-30s | %-7s | %-30s | %-25s | %-14s |\n";
-                System.out.println("+---------+--------------------------------+---------+--------------------------------+---------------------------+----------------+");
-                System.out.printf(format, "Book ID", "Book Name", "Lib ID" , "Librarian Name", "Borrow Date", "Return Status");
-                System.out.println("+---------+--------------------------------+---------+--------------------------------+---------------------------+----------------+");
-                for (HashMap<String, Object> b : Database.borrowList){
-                    if(String.valueOf(b.get("studentId")).equals(s.ID)) {
-                        checked = 1;
-                        if(String.valueOf(b.get("Returned")).equals("None")) {
-                            System.out.printf(format, b.get("bookId"), b.get("bookName"), b.get("librarianId"), b.get("librarianName"),b.get("borrowDate") + " -> " + b.get("returnDate"), "Not returned");
-                        } else {
-                            System.out.printf(format, b.get("bookId"), b.get("bookName"), b.get("librarianId"), b.get("librarianName"),b.get("borrowDate") + " -> " + b.get("returnDate"), b.get("ReturnedDate"));
-                        }
-                        System.out.println("+---------+--------------------------------+---------+--------------------------------+---------------------------+----------------+");
-                    }
-                    
-                }
-                if(checked == 0) {
-                    System.out.println("No activity");
-                }
                 return;
             }
         }

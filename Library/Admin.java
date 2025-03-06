@@ -44,31 +44,6 @@ public class Admin extends Librarian{
                 System.out.println("Phone     : " + l.PhoneNumber);
                 System.out.println("Email     : " + l.Email);
                 System.out.println("___________________________________________________");
-                System.out.println("\nRecord librarian activity : ");
-                System.out.println("1. Borrow activity : ");
-                int checked = 0;
-                String format = "| %-10s | %-20s | %-7s | %-30s | %-25s | %-14s |\n";
-                System.out.println("+------------+----------------------+---------+--------------------------------+---------------------------+----------------+");
-                System.out.printf(format, "Student ID", "Name", "Book ID" , "Book Name", "Borrow Date", "Returned Status");
-                System.out.println("+------------+----------------------+---------+--------------------------------+---------------------------+----------------+");
-                for (HashMap<String, Object> b : Database.borrowList){
-                    if(b.get("librarianId").equals(l.ID)) {
-                        checked = 1;
-                        if(b.get("ReturnedDate").equals("None")) {
-                            System.out.printf(format, b.get("studentId"), b.get("studentName"), b.get("bookId"), b.get("bookName"),b.get("borrowDate") + " -> " + b.get("returnDate"),"Not Returned");
-                        }else{
-                            System.out.printf(format, b.get("studentId"), b.get("studentName"), b.get("bookId"), b.get("bookName"),b.get("borrowDate") + " -> " + b.get("returnDate"), b.get("Returned"));
-                        }
-                        
-                    }
-                    
-                }
-                System.out.println("+------------+----------------------+---------+--------------------------------+---------------------------+----------------+");
-
-
-                if(checked == 0) {
-                    System.out.println("No activity");
-                }
                 return;
             }
         }
