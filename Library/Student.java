@@ -2,10 +2,8 @@ package Library;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import Exception.CharacterOnlyException;
 import Exception.InputException;
 import Exception.NumberOnlyException;
-import Exception.EmailException;
 
 public class Student extends User {
     Scanner scanner = new Scanner(System.in);
@@ -16,110 +14,8 @@ public class Student extends User {
 
     public Student() {};
 
-    // Register
-    public void register() {
-        System.out.println("Please Register as Librarian");
-        String name;
-        while (true) {
-            try {
-                System.out.print("Enter name : ");
-                name = scanner.nextLine();
-                CharacterOnlyException test = new CharacterOnlyException(name, "^[a-zA-Z ]+$");
-                break;
-            } catch (CharacterOnlyException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        String address;
-        while (true) {
-            try {
-                System.out.print("Enter address : ");
-                address = scanner.nextLine();
-                InputException test = new InputException(address, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        String phoneNumber;
-        while (true) {
-            try {
-                System.out.print("Enter phone number : ");
-                phoneNumber = scanner.nextLine();
-                NumberOnlyException test = new NumberOnlyException(phoneNumber, "^[0-9 ]+$");
-                break;
-            } catch (NumberOnlyException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        String email;
-        while (true) {
-            try {
-                System.out.print("Enter email : ");
-                email = scanner.nextLine();
-                EmailException test = new EmailException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
-                break;
-            } catch (EmailException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        String password;
-        while (true) {
-            try {
-                System.out.print("Enter password : ");
-                password = scanner.nextLine();
-                InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        String insertQuery = String.format(
-                "INSERT INTO User (ID, Name, Address, PhoneNumber, Email, Password) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
-                "S", name, address, phoneNumber, email, password);
-        MySQLConnection.executeUpdate(insertQuery);
-    }
-
-    //Login
-    public boolean login() {
-        Database.GetDataFromUser();
-        String email;
-        while(true){
-            try{
-                System.out.print("Enter email : ");
-                email = scanner.nextLine();
-                EmailException test = new EmailException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
-                break;
-            } catch (EmailException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        String password;
-        while(true){
-            try{
-                System.out.print("Enter password : ");
-                password = scanner.nextLine();
-                InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        for(User u : Database.UserList) {
-            if(u.ID.startsWith("S")){
-                if (u.Email.equals(email) && u.getPassword().equals(password)) {
-                    System.out.println("User logged in");
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    
     //Borrow
-    public void Borrow() {
+    public void Borrow(String studentID) {
         Database.GetDataFromUser();
         Database.GetDataFromBook();
         Database.GetDataFromBorrow();
@@ -137,18 +33,6 @@ public class Student extends User {
             } catch (InputException e) {
                 System.out.println(e.getMessage());
             } catch (NumberOnlyException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        String studentID;
-        while (true) {
-            try {
-                System.out.print("Enter student ID : ");
-                studentID = scanner.nextLine();
-                InputException test = new InputException(studentID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (InputException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -192,7 +76,7 @@ public class Student extends User {
                 break;
             }
         }
-        //double price = 0;
+
         for (Book b : Database.bookList) {
             if (Integer.parseInt(bookID) == b.bookid) {
                 borrow.put("payForBorrow", b.price * 0.1);
@@ -214,7 +98,7 @@ public class Student extends User {
                 return;
             }
         }
-        Database.TmpBorrow.add(borrow);
+        
         //Add to database
         for (Book b : Database.bookList) {
             if (b.bookid == Integer.parseInt(bookID)) {
@@ -227,6 +111,7 @@ public class Student extends User {
                 break;
             }
         }
+        Database.TmpBorrow.add(borrow);
         String insertQuery = String.format(
         "INSERT INTO BorrowList VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s','%s')",
         bookID, bookName, studentID, studentName, librarianID, librarianName, borrowDate, returnDate, "None", "None", "None");

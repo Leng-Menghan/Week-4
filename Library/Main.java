@@ -170,12 +170,12 @@ public class Main {
                     int loginAttemptsLibrarian = 0;
                     switch (Integer.parseInt(option1)) {
                         case 1:
-                            librarian.register();
+                            librarian.register("L");
                             break;
                         case 2:
                             System.out.println("Please Login as Librarian");
                             while (loginAttemptsLibrarian < 3) {
-                                if (librarian.login()) {
+                                if (librarian.login("L")) {
                                     break;
                                 }else {
                                     System.out.println("Invalid Password");
@@ -192,7 +192,6 @@ public class Main {
                     }
                     while (true) {
                         System.out.println("Welcome to Librarian function");
-                        //System.out.println("Your ID : " + librarian.ID);
                         System.out.println("1. Display Student");
                         System.out.println("2. Display Book");
                         System.out.println("3. Add Book");
@@ -285,12 +284,12 @@ public class Main {
                     int loginAttemptsStudent = 0;
                     switch (Integer.parseInt(option2)) {
                         case 1:
-                            student.register();
+                            student.register("S");
                             break;
                         case 2:
                             System.out.println("Please Login as Student");
                             while (loginAttemptsStudent < 3) {
-                                if (student.login()) {
+                                if (student.login("S")) {
                                     break;
                                 }else {
                                     System.out.println("Invalid Password");
@@ -336,7 +335,7 @@ public class Main {
                                 student.searchBook();
                                 break;
                             case 3:
-                                student.Borrow();
+                                student.Borrow(student.ID);
                                 student.DisplayInvoice();
                                 break;
                             case 4:
@@ -360,8 +359,12 @@ public class Main {
                     }
                 break;
             }
-            scanner.close();
+            if(Integer.parseInt(choice)==4){
+                break;
+            }
         }
+        scanner.close();
     }
+    
     
 }

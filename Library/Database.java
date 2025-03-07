@@ -11,23 +11,21 @@ public class Database {
     public static ArrayList<HashMap<String, Object>> TmpBorrow = new ArrayList<>();
 
     public static void GetDataFromUser() {
-        String selectQuery = "SELECT * FROM User";
+        String selectQuery = "select concat(role, ID) UserID, Name, Address, PhoneNumber, Email, Password from user;";
         ResultSet rs = MySQLConnection.executeQuery(selectQuery);
         Database.UserList.clear();
-        int inc = 1;
-        int inc1 = 1;
         try {
             while (rs != null && rs.next()) {
-                String id = rs.getString("ID");
+                String id = rs.getString("UserID");
                 String name = rs.getString("Name");
                 String address = rs.getString("Address");
                 String phoneNumber = rs.getString("PhoneNumber");
                 String email = rs.getString("Email");
                 String password = rs.getString("Password");
-                if (id.equals("S")) {
-                    Database.UserList.add(new Student("S" + inc++, name, address, phoneNumber, email, password));
+                if (id.startsWith("S")) {
+                    Database.UserList.add(new Student(id, name, address, phoneNumber, email, password));
                 } else {
-                    Database.UserList.add(new Librarian("L" + inc1++, name, address, phoneNumber, email, password));
+                    Database.UserList.add(new Librarian(id, name, address, phoneNumber, email, password));
                 }
             }
         } catch (SQLException e) {

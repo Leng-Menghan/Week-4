@@ -18,73 +18,6 @@ public class Librarian extends User{
     //default constructor
     public Librarian() {};
 
-    //Register
-    public void register() {
-        System.out.println("Please Register as Librarian");
-        String name;
-        while(true){
-            try{
-                System.out.print("Enter name : ");
-                name = scanner.nextLine();
-                CharacterOnlyException test = new CharacterOnlyException(name, "^[a-zA-Z ]+$");
-                break;
-            } catch (CharacterOnlyException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        String address;
-        while(true){
-            try{
-                System.out.print("Enter address : ");
-                address = scanner.nextLine();
-                InputException test = new InputException(address, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        
-        String phoneNumber;
-        while(true){
-            try{
-                System.out.print("Enter phone number : ");
-                phoneNumber = scanner.nextLine();
-                NumberOnlyException test = new NumberOnlyException(phoneNumber, "^[0-9 ]+$");
-                break;
-            } catch (NumberOnlyException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        
-        String email;
-        while(true){
-            try{
-                System.out.print("Enter email : ");
-                email = scanner.nextLine();
-                InputException test = new InputException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        
-        String password;
-        while(true){
-            try{
-                System.out.print("Enter password : ");
-                password = scanner.nextLine();
-                InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        
-        String insertQuery = String.format("INSERT INTO User (ID, Name, Address, PhoneNumber, Email, Password) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
-                "L", name, address, phoneNumber, email,password);
-        MySQLConnection.executeUpdate(insertQuery);
-    }
-    
     // Login
     public boolean login() {
         Database.GetDataFromUser();
@@ -394,7 +327,7 @@ public class Librarian extends User{
     };
     
     //Empty method because Student's Method
-    public void Borrow(){};
+    public void Borrow(String studentID){};
     public void Returned(){};
     public void DisplayInvoice(){};
 }
