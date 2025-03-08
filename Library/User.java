@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import Exception.CharacterOnlyException;
 import Exception.EmailException;
-import Exception.InputException;
+import Exception.AtLeastOneCharacter;
 import Exception.NumberOnlyException;
 
 public abstract class User implements UserAction {
@@ -59,9 +59,9 @@ public abstract class User implements UserAction {
                 try {
                     System.out.print("Enter address : ");
                     address = scanner.nextLine();
-                    InputException test = new InputException(address, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                    AtLeastOneCharacter test = new AtLeastOneCharacter(address, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
                     break;
-                } catch (InputException e) {
+                } catch (AtLeastOneCharacter e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -93,9 +93,9 @@ public abstract class User implements UserAction {
                 try {
                     System.out.print("Enter password : ");
                     password = scanner.nextLine();
-                    InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                    AtLeastOneCharacter test = new AtLeastOneCharacter(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
                     break;
-                } catch (InputException e) {
+                } catch (AtLeastOneCharacter e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -151,9 +151,9 @@ public abstract class User implements UserAction {
             try{
                 System.out.print("Enter password : ");
                 password = scanner.nextLine();
-                InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                AtLeastOneCharacter test = new AtLeastOneCharacter(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
                 break;
-            } catch (InputException e) {
+            } catch (AtLeastOneCharacter e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -179,9 +179,9 @@ public abstract class User implements UserAction {
             try{
                 System.out.print("Enter current password: ");
                 currentPassword = scanner.nextLine();
-                InputException test = new InputException(currentPassword, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                AtLeastOneCharacter test = new AtLeastOneCharacter(currentPassword, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
                 break;
-            } catch (InputException e) {
+            } catch (AtLeastOneCharacter e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -191,9 +191,9 @@ public abstract class User implements UserAction {
            try{
                 System.out.print("Enter new password: ");
                newPassword = scanner.nextLine();
-               InputException test = new InputException(newPassword, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+               AtLeastOneCharacter test = new AtLeastOneCharacter(newPassword, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
                break;
-           } catch (InputException e) {
+           } catch (AtLeastOneCharacter e) {
                System.out.println(e.getMessage());
            }
         }
@@ -240,7 +240,11 @@ public abstract class User implements UserAction {
     // Searh Book
     public void searchBook() {
         Database.GetDataFromBook();
-        System.out.print("Enter book Name or ISBN or Author or Category: ");
+        if(Database.bookList.isEmpty()) {
+            System.out.println("Book list is empty.");
+            return;
+        }
+        System.out.print("Enter book Name or ID or Author or Category: ");
         String searchBook = scanner.nextLine();
         int found = 0;
         System.out.println(
@@ -261,7 +265,7 @@ public abstract class User implements UserAction {
                 "+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
         for (Book b : Database.bookList) {
             if (b.bookname.toLowerCase().equals(searchBook.toLowerCase())
-                    || b.isbn.toLowerCase().equals(searchBook.toLowerCase())
+                    || b.bookid == Integer.parseInt(searchBook)
                     || b.author.toLowerCase().equals(searchBook.toLowerCase())
                     || b.category.toLowerCase().equals(searchBook.toLowerCase())) {
                 System.out.println(b);
@@ -276,6 +280,10 @@ public abstract class User implements UserAction {
     // Display Book
     public void displayBook() {
         Database.GetDataFromBook();
+        if(Database.bookList.isEmpty()){
+            System.out.println("Book list is empty.");
+            return;
+        }
         System.out.println(
                 "#---------------------------------------------------------------------------------------------------------------------------------#");
         System.out.println(
@@ -286,12 +294,12 @@ public abstract class User implements UserAction {
                 "|                                                                                                                                 |");
         System.out.println(
                 "#---------------------------------------------------------------------------------------------------------------------------------#");
-        String format = "| %-3s | %-6s | %-27s | %-20s | %-20s | %-7s | %-8s | %-15s |\n";
+        String format = "| %-3s |  %-27s | %-20s | %-20s | %-7s | %-8s | %-15s |\n";
         System.out.println(
-                "+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
-        System.out.printf(format, "ID", "ISBN", "Name", "Author", "Category", "Price", "Quantity", "Publisher");
+                "+-----+------------------------------+----------------------+----------------------+---------+----------+-----------------+");
+        System.out.printf(format, "ID",  "Name", "Author", "Category", "Price", "Quantity", "Publisher");
         System.out.println(
-                "+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
+                "+-----+------------------------------+----------------------+----------------------+---------+----------+-----------------+");
         int count = 0;
         for (Book b : Database.bookList) {
             System.out.println(b);
@@ -304,6 +312,7 @@ public abstract class User implements UserAction {
     public String toString() {
         String format = "| %-5s | %-20s | %-20s | %-15s | %-20s | %-15s |";
         String result = String.format(format, ID, Name, Address, PhoneNumber, Email, Password);
+        System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
         return result;
     }
 
@@ -328,5 +337,5 @@ public abstract class User implements UserAction {
 
     public abstract void deleteBook();
 
-    public abstract void addBookQuantityByISBN();
+    public abstract void addBookQuantityByID();
 }

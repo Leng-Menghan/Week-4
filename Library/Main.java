@@ -1,10 +1,7 @@
 package Library;
 
 import java.util.Scanner;
-import Exception.LimitOptionAdminException;
-import Exception.LimitOptionLibrarianException;
-import Exception.LimitOptionStudentException;
-import Exception.LimitOptionUserAndAuthenticationException;
+import Exception.LimitOptionException;
 import Exception.NumberOnlyException;
 import Exception.ExitException;
 
@@ -31,9 +28,9 @@ public class Main {
                     System.out.print("Please Select Option (1-3) : ");
                     choice = scanner.nextLine();
                     NumberOnlyException test1 = new NumberOnlyException(choice, "^[0-9]+$");
-                    LimitOptionUserAndAuthenticationException test = new LimitOptionUserAndAuthenticationException(Integer.parseInt(choice));
+                    LimitOptionException test = new LimitOptionException(Integer.parseInt(choice), 3, 1);
                     break;
-                } catch (LimitOptionUserAndAuthenticationException e) {
+                } catch (LimitOptionException e) {
                     System.out.println(e.getMessage());
                 } catch (NumberOnlyException e) {
                     System.out.println(e.getMessage());
@@ -66,9 +63,9 @@ public class Main {
                                         option = scanner.nextLine();
                                         NumberOnlyException test = new NumberOnlyException(option, "^[0-9]+$");
                                         int optionInt = Integer.parseInt(option);
-                                        LimitOptionAdminException test1 = new LimitOptionAdminException(optionInt);
+                                        LimitOptionException test1 = new LimitOptionException(optionInt, 12, 1);
                                         break;
-                                    } catch (LimitOptionAdminException e) {
+                                    } catch (LimitOptionException e) {
                                         System.out.println(e.getMessage());
                                     } catch (NumberOnlyException e) {
                                         System.out.println(e.getMessage());
@@ -94,7 +91,7 @@ public class Main {
                                         }
                                         break;
                                     case 5:
-                                        admin.addBookQuantityByISBN();
+                                        admin.addBookQuantityByID();
                                         break;
                                     case 6:
                                         admin.deleteBook();
@@ -159,9 +156,9 @@ public class Main {
                             System.out.print("Please Select Option (1-3) : ");
                             option1 = scanner.nextLine();
                             NumberOnlyException test1 = new NumberOnlyException(option1, "^[0-9]+$");
-                            LimitOptionUserAndAuthenticationException test = new LimitOptionUserAndAuthenticationException(Integer.parseInt(option1));
+                            LimitOptionException test = new LimitOptionException(Integer.parseInt(option1), 3, 1);
                             break;
-                        } catch (LimitOptionUserAndAuthenticationException e) {
+                        } catch (LimitOptionException e) {
                             System.out.println(e.getMessage());
                         } catch (NumberOnlyException e) {
                             System.out.println(e.getMessage());
@@ -199,7 +196,9 @@ public class Main {
                         System.out.println("5. Remove Book By ISBN");
                         System.out.println("6. Search Book");
                         System.out.println("7. Search Student By ID");
-                        System.out.println("8. Log out");
+                        System.out.println("8. Change Password");
+                        System.out.println("9. Change Name");
+                        System.out.println("10. Log out");
                         String option2;
                         while (true) {
                             try {
@@ -207,9 +206,9 @@ public class Main {
                                 option2 = scanner.nextLine();
                                 NumberOnlyException test = new NumberOnlyException(option2, "^[0-9]+$");
                                 int optionInt = Integer.parseInt(option2);
-                                LimitOptionLibrarianException test1 = new LimitOptionLibrarianException(optionInt);
+                                LimitOptionException test1 = new LimitOptionException(optionInt, 10, 1);
                                 break;
-                            } catch (LimitOptionLibrarianException e) {
+                            } catch (LimitOptionException e) {
                                 System.out.println(e.getMessage());
                             } catch (NumberOnlyException e) {
                                 System.out.println(e.getMessage());
@@ -232,7 +231,7 @@ public class Main {
                                 }
                                 break;
                             case 4:
-                                librarian.addBookQuantityByISBN();
+                                librarian.addBookQuantityByID();
                                 break;
                             case 5:
                                 librarian.deleteBook();
@@ -243,8 +242,14 @@ public class Main {
                             case 7:
                                 librarian.searchStudentByID();
                                 break;
+                            case 8:
+                                librarian.changePassword();
+                                break;
+                            case 9:
+                                librarian.changeName();
+                                break;
                         }
-                        if (Integer.parseInt(option2) == 8) break;
+                        if (Integer.parseInt(option2) == 10) break;
                         String exit;
                         while (true) {
                             try {
@@ -273,11 +278,11 @@ public class Main {
                             System.out.print("Please Select Option (1-3) : ");
                             option2 = scanner.nextLine();
                             NumberOnlyException test = new NumberOnlyException(option2, "^[0-9]+$");
-                            LimitOptionUserAndAuthenticationException test2 = new LimitOptionUserAndAuthenticationException(Integer.parseInt(option2));
+                            LimitOptionException test2 = new LimitOptionException(Integer.parseInt(option2), 3, 1);
                             break;
                         } catch (NumberOnlyException e) {
                             System.out.println(e.getMessage());
-                        } catch (LimitOptionUserAndAuthenticationException e) {
+                        } catch (LimitOptionException e) {
                             System.out.println(e.getMessage());
                         }
                     }
@@ -306,24 +311,25 @@ public class Main {
                     }
                     while (true) {
                         System.out.println("Welcome to Student function");
-                        //System.out.println("Your ID is: " + student.getID());
+                        System.out.println("Your ID is: " + student.ID);
                         System.out.println("1. Display Book");
                         System.out.println("2. Search Book");
                         System.out.println("3. Borrow Book");
                         System.out.println("4. Return Book");
-                        System.out.println("5. Log out");
+                        System.out.println("5. Change Password");
+                        System.out.println("6. Change Name");
+                        System.out.println("7. Log out");
                         String option4;
                         while (true) {
                             try {
                                 System.out.print("Please Select Option (1-5) : ");
                                 option4 = scanner.nextLine();
                                 NumberOnlyException test = new NumberOnlyException(option4, "^[0-9]+$");
-                                LimitOptionStudentException test2 = new LimitOptionStudentException(
-                                        Integer.parseInt(option4));
+                                LimitOptionException test2 = new LimitOptionException(Integer.parseInt(option4), 7, 1);
                                 break;
                             } catch (NumberOnlyException e) {
                                 System.out.println(e.getMessage());
-                            } catch (LimitOptionStudentException e) {
+                            } catch (LimitOptionException e) {
                                 System.out.println(e.getMessage());
                             }
                         }
@@ -340,8 +346,15 @@ public class Main {
                                 break;
                             case 4:
                                 student.Returned();
+                                break;
+                            case 5:
+                                student.changePassword();
+                                break;
+                            case 6:
+                                student.changeName();
+                                break;
                         }
-                        if (Integer.parseInt(option4) == 5) break;
+                        if (Integer.parseInt(option4) == 7) break;
                         String exit;
                         while (true) {
                             try {

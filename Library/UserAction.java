@@ -7,5 +7,4 @@ public interface UserAction {
     void changeName();
     void changePassword();
     String toString();
-    //void changePassword();
 }

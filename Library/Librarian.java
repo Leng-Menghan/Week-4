@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import Exception.CharacterOnlyException;
 import Exception.EmailException;
-import Exception.InputException;
+import Exception.AtLeastOneCharacter;
 import Exception.NumberOnlyException;
 
 public class Librarian extends User{
@@ -37,9 +37,9 @@ public class Librarian extends User{
             try{
                 System.out.print("Enter password : ");
                 password = scanner.nextLine();
-                InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                AtLeastOneCharacter test = new AtLeastOneCharacter(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
                 break;
-            } catch (InputException e) {
+            } catch (AtLeastOneCharacter e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -57,15 +57,18 @@ public class Librarian extends User{
     // Search student by ID
     public void searchStudentByID() {
         Database.GetDataFromUser();
-        Database.GetDataFromBorrow();
+        if(Database.UserList.isEmpty()){
+            System.out.println("User list is empty.");
+            return;
+        }
         String studentID;
         while(true){
             try{
                 System.out.print("Enter student ID     : ");
                 studentID = scanner.nextLine();
-                InputException test = new InputException(studentID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                AtLeastOneCharacter test = new AtLeastOneCharacter(studentID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
                 break;
-            } catch (InputException e) {
+            } catch (AtLeastOneCharacter e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -88,6 +91,9 @@ public class Librarian extends User{
     // Display borrowed list
     public void displayBorrow(){
         Database.GetDataFromBorrow();
+        if(Database.borrowList.isEmpty()){
+            System.out.println("Borrow list is empty.");
+        }
         int count = 0;
         System.out.println("#--------------------------------------------------------------------------------------------------------------------------------#");
         System.out.println("|                                                                                                                                |");
@@ -117,6 +123,10 @@ public class Librarian extends User{
     // Display returned list
     public void displayReturn(){
         Database.GetDataFromBorrow();
+        if(Database.borrowList.isEmpty()) {
+            System.out.println("No data in borrow list");
+            return;
+        }
         int count = 0;
         System.out.println("#--------------------------------------------------------------------------------------------------------------------------------#");
         System.out.println("|                                                                                                                                |");
@@ -147,6 +157,10 @@ public class Librarian extends User{
     // Display student
     public void displayStudent(){
         Database.GetDataFromUser();
+        if(Database.UserList.isEmpty()){
+            System.out.println("No data in student list");
+            return;
+        }
         System.out.println("#----------------------------------------------------------------------------------------------------------------#");
         System.out.println("|                                                                                                                |");
         System.out.println("#                                         Student list in Library Management System                              #");
@@ -169,19 +183,26 @@ public class Librarian extends User{
     
     //Add book
     public void addBook(){
+        Database.GetDataFromBook();
         System.out.println("#---------------------------------------#");
         System.out.println("|          Enter Book Details           |");
         System.out.println("#---------------------------------------#");
-        
-        String ISBN;
+
+        String bookName;
         while(true){
             try{
-                System.out.print("ISBN          : ");
-                ISBN = scanner.nextLine();
-                InputException test = new InputException(ISBN, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                System.out.print("Book Name     : ");
+                bookName = scanner.nextLine();
+                AtLeastOneCharacter test = new AtLeastOneCharacter(bookName, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
                 break;
-            } catch (InputException e) {
+            } catch (AtLeastOneCharacter e) {
                 System.out.println(e.getMessage());
+            }
+        }
+        for(Book b : Database.bookList){
+            if(b.bookname.equals(bookName)){
+                System.out.println("Book already exists");
+                return;
             }
         }
 
@@ -190,21 +211,9 @@ public class Librarian extends User{
             try{
                 System.out.print("Category      : ");
                 category = scanner.nextLine();
-                InputException test = new InputException(category, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                AtLeastOneCharacter test = new AtLeastOneCharacter(category, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
                 break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        String bookName;
-        while(true){
-            try{
-                System.out.print("Book Name     : ");
-                bookName = scanner.nextLine();
-                InputException test = new InputException(bookName, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (InputException e) {
+            } catch (AtLeastOneCharacter e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -212,7 +221,7 @@ public class Librarian extends User{
         String author;
         while(true){
             try{
-                System.out.print("Author name : ");
+                System.out.print("Author name   : ");
                 author = scanner.nextLine();
                 CharacterOnlyException test = new CharacterOnlyException(author, "^[a-zA-Z ]+$");
                 break;
@@ -227,13 +236,8 @@ public class Librarian extends User{
                 System.out.print("Price of Book : $ ");
                 price = scanner.nextLine();
                 NumberOnlyException test = new NumberOnlyException(price, "^-?[0-9]+(\\.[0-9]+)?$");
-
-                double priceDouble = Double.parseDouble(price);
-                InputException test2 = new InputException(priceDouble);
-
+                NumberOnlyException test2 = new NumberOnlyException(Double.parseDouble(price));
                 break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
             } catch (NumberOnlyException e) {
                 System.out.println(e.getMessage());
             }
@@ -245,15 +249,11 @@ public class Librarian extends User{
                 System.out.print("Quantity      : ");
                 quantity = scanner.nextLine();
                 NumberOnlyException test1 = new NumberOnlyException(quantity, "^-?[0-9]+(\\.[0-9]+)?$");
-
-                Double qty = Double.parseDouble(quantity);
-                InputException test2 = new InputException(qty);
+                NumberOnlyException test2 = new NumberOnlyException(Double.parseDouble(quantity));
                 break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
             } catch (NumberOnlyException e) {
                 System.out.println(e.getMessage());
-            }
+            } 
         }
 
         
@@ -262,66 +262,87 @@ public class Librarian extends User{
             try{
                 System.out.print("Publisher     : ");
                 publisher = scanner.nextLine();
-                InputException test = new InputException(publisher, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                AtLeastOneCharacter test = new AtLeastOneCharacter(publisher, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
                 break;
-            } catch (InputException e) {
+            } catch (AtLeastOneCharacter e) {
                 System.out.println(e.getMessage());
             }
         }
 
-        String insertQuery = String.format("INSERT INTO Book (ISBN, Category, Name, Author, Price, Qty, Publisher) VALUES ('%s', '%s', '%s', '%s', '%s','%s', '%s')",
-        ISBN, category, bookName, author, price, quantity, publisher);
+
+        String insertQuery = String.format("INSERT INTO Book (Category, Name, Author, Price, Qty, Publisher) VALUES ( '%s', '%s', '%s', '%s','%s', '%s')",
+        category, bookName, author, price, quantity, publisher);
         MySQLConnection.executeUpdate(insertQuery);
     };
 
     //Delete book
     public void deleteBook(){
         Database.GetDataFromBook();
-        String ISBN;
+        if(Database.bookList.isEmpty()){
+            System.out.println("Book list is empty.");
+            return;
+        }
+        int ID;
         while(true){
             try{
-                System.out.print("ISBN : ");
-                ISBN = scanner.nextLine();
-                InputException test = new InputException(ISBN, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                System.out.print("ID : ");
+                ID = scanner.nextInt();
+                NumberOnlyException test = new NumberOnlyException(String.valueOf(ID), "^?[0-9]+$");
+                NumberOnlyException test2 = new NumberOnlyException(ID);
                 break;
-            } catch (InputException e) {
+            } catch (NumberOnlyException e) {
                 System.out.println(e.getMessage());
             }
         }
+        int foundBook = 0;
         for(Book b : Database.bookList){
-            if(b.isbn.equals(ISBN)){ {
-                String Delete = "DELETE FROM Book WHERE ISBN = '" + ISBN + "'";
+            if(b.bookid == ID){ {
+                String Delete = "DELETE FROM Book WHERE ID = '" + ID + "'";
                 MySQLConnection.executeUpdate(Delete);
+                foundBook = 1;
                 break;
             }
+        }
+        if(foundBook == 0){
+            System.out.println("Book not found.");
         }
     }
     };
 
     //Add book qty
-    public void addBookQuantityByISBN(){
+    public void addBookQuantityByID(){
         Database.GetDataFromBook();
-        String ISBN;
+        if(Database.bookList.isEmpty()){
+            System.out.println("Book list is empty.");
+            return;
+        }
+        int ID;
         while(true){
             try{
-                System.out.print("ISBN : ");
-                ISBN = scanner.nextLine();
-                InputException test = new InputException(ISBN, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                System.out.print("ID : ");
+                ID = scanner.nextInt();
+                NumberOnlyException test = new NumberOnlyException(String.valueOf(ID), "^?[0-9]+$");
+                NumberOnlyException test2 = new NumberOnlyException(ID);
                 break;
-            } catch (InputException e) {
+            } catch (NumberOnlyException e) {
                 System.out.println(e.getMessage());
             }
         }
+        int foundBook = 0;
         for(Book b : Database.bookList){
-            if(b.isbn.equals(ISBN)){ {
+            if(b.bookid == ID){ {
                 System.out.println("How many books do you want to add?");
                 System.out.print("Enter quantity: ");
                 int newQuantity = scanner.nextInt();
                 int updateQty = b.quantity + newQuantity;
-                String Update = "UPDATE Book SET Qty = '" + updateQty + "' WHERE ISBN = '" + ISBN + "'";
+                String Update = "UPDATE Book SET Qty = '" + updateQty + "' WHERE ID = '" + ID + "'";
                 MySQLConnection.executeUpdate(Update);
+                foundBook = 1;
                 break;
             }
+        }
+        if(foundBook == 0){
+            System.out.println("Book not found.");
         }
     }
     };

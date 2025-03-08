@@ -2,7 +2,7 @@ package Library;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import Exception.InputException;
+import Exception.AtLeastOneCharacter;
 
 public class Admin extends Librarian{
     private String adminUsername = "admin";
@@ -22,15 +22,18 @@ public class Admin extends Librarian{
     // Search Librarian by id
     public void searchLibrarianByID() {
         Database.GetDataFromUser();
-        Database.GetDataFromBorrow();
+        if(Database.UserList.isEmpty()){
+            System.out.println("User list is empty.");
+            return;
+        }
         String librarianID;
         while(true){
             try{
                 System.out.print("Enter Librarian ID     : ");
                 librarianID = scanner.nextLine();
-                InputException test = new InputException(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                AtLeastOneCharacter test = new AtLeastOneCharacter(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
                 break;
-            } catch (InputException e) {
+            } catch (AtLeastOneCharacter e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -54,6 +57,10 @@ public class Admin extends Librarian{
     //Display Librarian
     public void displayLibrarain(){
         Database.GetDataFromUser();
+        if(Database.UserList.isEmpty()){
+            System.out.println("No data in Librarain list");   
+            return;
+        }
         System.out.println("#-----------------------------------------------------------------------------------------------------------------#");
         System.out.println("|                                                                                                                 |");
         System.out.println("#                                      Librarain list in Library Management System                                #");

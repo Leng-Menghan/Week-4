@@ -2,7 +2,7 @@ package Library;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import Exception.InputException;
+import Exception.AtLeastOneCharacter;
 import Exception.NumberOnlyException;
 
 public class Student extends User {
@@ -27,26 +27,28 @@ public class Student extends User {
                 System.out.print("Enter book ID : ");
                 bookID = scanner.nextLine();
                 NumberOnlyException test1 = new NumberOnlyException(bookID, "^-?[0-9]+$");
-
-                int qty = Integer.parseInt(bookID);
-                InputException test2 = new InputException(qty);
+                NumberOnlyException test2 = new NumberOnlyException(Integer.parseInt(bookID));
                 break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
             } catch (NumberOnlyException e) {
                 System.out.println(e.getMessage());
             }
         }
         
         String bookName = "";
+        int foundBook = 0;
         for (Book b : Database.bookList) {
             if (Integer.parseInt(bookID) == b.bookid) {
                 borrow.put("bookName", b.bookname);
                 bookName = b.bookname;
+                foundBook = 1;
                 break;
             }
         }
-
+        if (foundBook == 0) {
+            System.out.println("Book doesn't exist.");
+            Database.TmpBorrow.clear();
+            return;
+        }
         for (Book b : Database.bookList) {
             if (Integer.parseInt(bookID) == b.bookid) {
                 borrow.put("payForBorrow", b.price * 0.1);
@@ -59,19 +61,26 @@ public class Student extends User {
             try {
                 System.out.print("Enter librarian ID : ");
                 librarianID = scanner.nextLine();
-                InputException test = new InputException(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                AtLeastOneCharacter test = new AtLeastOneCharacter(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
                 break;
-            } catch (InputException e) {
+            } catch (AtLeastOneCharacter e) {
                 System.out.println(e.getMessage());
             }
         }
         String librarianName = "";
+        int foundLibrarian = 0;
         for (User l : Database.UserList) {
             if (librarianID.equals(l.ID)) {
                 borrow.put("librarianName", l.Name);
                 librarianName = l.Name;
+                foundLibrarian = 1;
                 break;
             }
+        }
+        if (foundLibrarian == 0) {
+            System.out.println("Librarian doesn't exist.");
+            Database.TmpBorrow.clear();
+            return;
         }
 
         System.out.print("Enter borrow Date : ");
@@ -95,7 +104,7 @@ public class Student extends User {
                     System.out.println("The book is out of stock.");
                     return;
                 };
-                String Update = "Update Book set Qty=Qty-1 where ISBN='" + b.isbn + "'";
+                String Update = "Update Book set Qty=Qty-1 where ID='" + b.bookid + "'";
                 MySQLConnection.executeUpdate(Update);
                 break;
             }
@@ -130,12 +139,8 @@ public class Student extends User {
                 System.out.print("Enter book ID : ");
                 bookID = scanner.nextLine();
                 NumberOnlyException test1 = new NumberOnlyException(bookID, "^-?[0-9]+$");
-
-                int qty = Integer.parseInt(bookID);
-                InputException test2 = new InputException(qty);
+                NumberOnlyException test2 = new NumberOnlyException(Integer.parseInt(bookID));
                 break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
             } catch (NumberOnlyException e) {
                 System.out.println(e.getMessage());
             }
@@ -146,41 +151,35 @@ public class Student extends User {
             try {
                 System.out.print("Enter librarian ID : ");
                 librarianID = scanner.nextLine();
-                InputException test = new InputException(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                AtLeastOneCharacter test = new AtLeastOneCharacter(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
                 break;
-            } catch (InputException e) {
+            } catch (AtLeastOneCharacter e) {
                 System.out.println(e.getMessage());
             }
         }
 
+        String LirbrarianReturnName = "";
+        for (User l : Database.UserList) {
+            if (librarianID.equals(l.ID)) {
+                LirbrarianReturnName = l.Name;
+                break;
+            }
+        }
         System.out.print("Enter return Date : ");
         String returnedDate = scanner.nextLine();
         int IsReturned = 0;
         for (HashMap<String, Object> b : Database.borrowList) {
             if(String.valueOf(b.get("ReturnedDate")).equals("None")){
                 if (String.valueOf(b.get("bookId")).equals(bookID) && String.valueOf(b.get("studentId")).equals(ID)) {
-                    b.put("ReturnedDate", returnedDate);
-                    b.put("LibrarianReturnId", librarianID);
-                    String LirbrarianReturnName = "";
-                    for (User l : Database.UserList) {
-                        if (librarianID.equals(l.ID)) {
-                            b.put("LibrarianReturnName", l.Name);
-                            LirbrarianReturnName = l.Name;
-                            break;
-                        }
-                    }
-    
                     String Update = ("Update BorrowList set LibrarianReturnId='"+ librarianID +"', LibrarianReturnName='"+ LirbrarianReturnName +"', ReturnedDate='"+ returnedDate +"' where BookId='"+ bookID +"' and StudentId='"+ ID +"'");
                     MySQLConnection.executeUpdate(Update);
-    
                     for (Book B : Database.bookList) {
                         if (B.bookid == Integer.parseInt(bookID)) {
-                            String UpdateB = "Update Book set Qty=Qty+1 where ISBN='" + B.isbn + "'";
+                            String UpdateB = "Update Book set Qty=Qty+1 where ID='" + B.bookid + "'";
                             MySQLConnection.executeUpdate(UpdateB);
                             break;
                         }
                     }
-
                     IsReturned = 1;
                     break;
                 } else IsReturned = 2;
@@ -191,13 +190,13 @@ public class Student extends User {
         }else if(IsReturned == 1){
             System.out.println("Returned Success");
         }else if(IsReturned == 2){
-            System.out.println("You haven't returned this Book!!");
+            System.out.println("You haven't borrow this Book!!");
         }
     }
 
     // Invoice
     public void DisplayInvoice() {
-        if(Database.TmpBorrow.size() == 0){
+        if(Database.TmpBorrow.isEmpty()){
             return;
         }
         double payment = 0;
@@ -236,7 +235,7 @@ public class Student extends User {
 
     public void displayBorrow() {};
 
-    public void addBookQuantityByISBN() {};
+    public void addBookQuantityByID() {};
 
     public void deleteBook() {};
 

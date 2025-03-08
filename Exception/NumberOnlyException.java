@@ -9,4 +9,11 @@ public class NumberOnlyException extends NumberFormatException {
             throw new NumberOnlyException("Number only");
         }
     }
+
+    public NumberOnlyException(double input) throws NumberOnlyException {
+        if(input<=0){
+            throw new NumberOnlyException("Number can not smaller than Zero");
+        }
+    }
+
 }

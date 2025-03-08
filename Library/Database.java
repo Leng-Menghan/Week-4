@@ -41,14 +41,13 @@ public class Database {
         try {
             while (rs2 != null && rs2.next()) {
                 int ID = rs2.getInt("ID");
-                String ISBN = rs2.getString("ISBN");
                 String category = rs2.getString("Category");
                 String bookname = rs2.getString("Name");
                 String author = rs2.getString("Author");
                 double price = rs2.getDouble("Price");
                 int quantity = rs2.getInt("Qty");
                 String publisher = rs2.getString("Publisher");
-                Database.bookList.add(new Book(ID,ISBN, category, bookname, author, price, quantity, publisher));
+                Database.bookList.add(new Book(ID, category, bookname, author, price, quantity, publisher));
             }
         } catch (SQLException e) {
             e.printStackTrace();
