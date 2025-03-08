@@ -15,11 +15,12 @@ public class Student extends User {
     public Student() {};
 
     //Borrow
-    public void Borrow(String studentID) {
+    public void Borrow() {
         Database.GetDataFromUser();
         Database.GetDataFromBook();
         Database.GetDataFromBorrow();
         HashMap<String, Object> borrow = new HashMap<>();
+        
         String bookID;
         while (true) {
             try {
@@ -36,6 +37,22 @@ public class Student extends User {
                 System.out.println(e.getMessage());
             }
         }
+        
+        String bookName = "";
+        for (Book b : Database.bookList) {
+            if (Integer.parseInt(bookID) == b.bookid) {
+                borrow.put("bookName", b.bookname);
+                bookName = b.bookname;
+                break;
+            }
+        }
+
+        for (Book b : Database.bookList) {
+            if (Integer.parseInt(bookID) == b.bookid) {
+                borrow.put("payForBorrow", b.price * 0.1);
+                break;
+            }
+        }
 
         String librarianID;
         while (true) {
@@ -48,26 +65,6 @@ public class Student extends User {
                 System.out.println(e.getMessage());
             }
         }
-        System.out.print("Enter borrow Date : ");
-        String borrowDate = scanner.nextLine();
-        System.out.print("Enter return Date : ");
-        String returnDate = scanner.nextLine();
-        String bookName = "";
-        for (Book b : Database.bookList) {
-            if (Integer.parseInt(bookID) == b.bookid) {
-                borrow.put("bookName", b.bookname);
-                bookName = b.bookname;
-                break;
-            }
-        }
-        String studentName = "";
-        for (User s : Database.UserList) {
-            if (studentID.equals(s.ID)) {
-                borrow.put("studentName", s.Name);
-                studentName = s.Name;
-                break;
-            }
-        }
         String librarianName = "";
         for (User l : Database.UserList) {
             if (librarianID.equals(l.ID)) {
@@ -77,29 +74,21 @@ public class Student extends User {
             }
         }
 
-        for (Book b : Database.bookList) {
-            if (Integer.parseInt(bookID) == b.bookid) {
-                borrow.put("payForBorrow", b.price * 0.1);
-                break;
-            }
-        }
-        
+        System.out.print("Enter borrow Date : ");
+        String borrowDate = scanner.nextLine();
+        System.out.print("Enter return Date : ");
+        String returnDate = scanner.nextLine();
+
         borrow.put("bookId", bookID);
-        borrow.put("studentId", studentID);
+        borrow.put("studentId", ID);
+        borrow.put("studentName", Name);
         borrow.put("librarianId", librarianID);
         borrow.put("returnDate", returnDate);
         borrow.put("borrowDate", borrowDate);
         borrow.put("LibrarianReturnId", "None");
         borrow.put("LibrarianReturnName", "None");
         borrow.put("Returned", "None");
-        for (HashMap<String, Object> b : Database.borrowList) {
-            if (String.valueOf(b.get("bookId")).equals(bookID) && String.valueOf(b.get("studentId")).equals(studentID) && String.valueOf(b.get("ReturnedDate")).equals("None")) {
-                System.out.println("You have already borrowed this book");
-                return;
-            }
-        }
-        
-        //Add to database
+
         for (Book b : Database.bookList) {
             if (b.bookid == Integer.parseInt(bookID)) {
                 if(b.quantity <= 0){
@@ -111,12 +100,22 @@ public class Student extends User {
                 break;
             }
         }
+
+        for (HashMap<String, Object> b : Database.borrowList) {
+            if(String.valueOf(b.get("ReturnedDate")).equals("None")){
+                if (String.valueOf(b.get("bookId")).equals(bookID) && String.valueOf(b.get("studentId")).equals(ID)) {
+                    System.out.println("You have already borrowed this book and it is not returned yet.");
+                    return;
+                }
+            }
+        }
+        
+        //Add to database
         Database.TmpBorrow.add(borrow);
         String insertQuery = String.format(
         "INSERT INTO BorrowList VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s','%s')",
-        bookID, bookName, studentID, studentName, librarianID, librarianName, borrowDate, returnDate, "None", "None", "None");
+        bookID, bookName, ID, Name, librarianID, librarianName, borrowDate, returnDate, "None", "None", "None");
         MySQLConnection.executeUpdate(insertQuery);
-
     }
 
     // Return
@@ -142,18 +141,6 @@ public class Student extends User {
             }
         }
 
-        String studentID;
-        while (true) {
-            try {
-                System.out.print("Enter student ID : ");
-                studentID = scanner.nextLine();
-                InputException test = new InputException(studentID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
         String librarianID;
         while (true) {
             try {
@@ -170,42 +157,42 @@ public class Student extends User {
         String returnedDate = scanner.nextLine();
         int IsReturned = 0;
         for (HashMap<String, Object> b : Database.borrowList) {
-            if (String.valueOf(b.get("bookId")).equals(bookID) && String.valueOf(b.get("studentId")).equals(studentID) && String.valueOf(b.get("ReturnedDate")).equals("None")) {
-                b.put("ReturnedDate", returnedDate);
-                b.put("LibrarianReturnId", librarianID);
-                String LirbrarianReturnName = "";
-
-                for (User l : Database.UserList) {
-                    if (librarianID.equals(l.ID)) {
-                        b.put("LibrarianReturnName", l.Name);
-                        LirbrarianReturnName = l.Name;
-                        break;
+            if(String.valueOf(b.get("ReturnedDate")).equals("None")){
+                if (String.valueOf(b.get("bookId")).equals(bookID) && String.valueOf(b.get("studentId")).equals(ID)) {
+                    b.put("ReturnedDate", returnedDate);
+                    b.put("LibrarianReturnId", librarianID);
+                    String LirbrarianReturnName = "";
+                    for (User l : Database.UserList) {
+                        if (librarianID.equals(l.ID)) {
+                            b.put("LibrarianReturnName", l.Name);
+                            LirbrarianReturnName = l.Name;
+                            break;
+                        }
                     }
-                }
-
-                String Update = ("Update BorrowList set LibrarianReturnId='"+ librarianID +"', LibrarianReturnName='"+ LirbrarianReturnName +"', ReturnedDate='"+ returnedDate +"' where BookId='"+ bookID +"' and StudentId='"+ studentID +"'");
-                MySQLConnection.executeUpdate(Update);
-
-                for (Book B : Database.bookList) {
-                    if (B.bookid == Integer.parseInt(bookID)) {
-                        String UpdateB = "Update Book set Qty=Qty+1 where ISBN='" + B.isbn + "'";
-                        MySQLConnection.executeUpdate(UpdateB);
-                        break;
+    
+                    String Update = ("Update BorrowList set LibrarianReturnId='"+ librarianID +"', LibrarianReturnName='"+ LirbrarianReturnName +"', ReturnedDate='"+ returnedDate +"' where BookId='"+ bookID +"' and StudentId='"+ ID +"'");
+                    MySQLConnection.executeUpdate(Update);
+    
+                    for (Book B : Database.bookList) {
+                        if (B.bookid == Integer.parseInt(bookID)) {
+                            String UpdateB = "Update Book set Qty=Qty+1 where ISBN='" + B.isbn + "'";
+                            MySQLConnection.executeUpdate(UpdateB);
+                            break;
+                        }
                     }
-                }
-                IsReturned = 1;
-                break;
+
+                    IsReturned = 1;
+                    break;
+                } else IsReturned = 2;
             }
-            if (!(String.valueOf(b.get("bookId")).equals(bookID) && String.valueOf(b.get("studentId")).equals(studentID))) IsReturned = 2;
         }
         if(IsReturned == 0){
-            System.out.println("You have already returned!!");
+            System.out.println("You have already returned this book !!");
         }else if(IsReturned == 1){
             System.out.println("Returned Success");
         }else if(IsReturned == 2){
             System.out.println("You haven't returned this Book!!");
         }
-
     }
 
     // Invoice

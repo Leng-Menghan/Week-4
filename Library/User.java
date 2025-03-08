@@ -37,74 +37,94 @@ public abstract class User implements UserAction {
 
     //Register
     public void register(String role) {
-        System.out.println("Please Register as Librarian");
+        Database.GetDataFromUser();
         String name;
-        while (true) {
-            try {
-                System.out.print("Enter name : ");
-                name = scanner.nextLine();
-                CharacterOnlyException test = new CharacterOnlyException(name, "^[a-zA-Z ]+$");
-                break;
-            } catch (CharacterOnlyException e) {
-                System.out.println(e.getMessage());
-            }
-        }
         String address;
-        while (true) {
-            try {
-                System.out.print("Enter address : ");
-                address = scanner.nextLine();
-                InputException test = new InputException(address, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
         String phoneNumber;
-        while (true) {
-            try {
-                System.out.print("Enter phone number : ");
-                phoneNumber = scanner.nextLine();
-                NumberOnlyException test = new NumberOnlyException(phoneNumber, "^[0-9 ]+$");
-                break;
-            } catch (NumberOnlyException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
         String email;
-        while (true) {
-            try {
-                System.out.print("Enter email : ");
-                email = scanner.nextLine();
-                EmailException test = new EmailException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
-                break;
-            } catch (EmailException e) {
-                System.out.println(e.getMessage());
+        String password;
+            System.out.println("Please Register as Librarian");
+            while (true) {
+                try {
+                    System.out.print("Enter name : ");
+                    name = scanner.nextLine();
+                    CharacterOnlyException test = new CharacterOnlyException(name, "^[a-zA-Z ]+$");
+                    break;
+                } catch (CharacterOnlyException e) {
+                    System.out.println(e.getMessage());
+                }
             }
+
+            while (true) {
+                try {
+                    System.out.print("Enter address : ");
+                    address = scanner.nextLine();
+                    InputException test = new InputException(address, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                    break;
+                } catch (InputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+
+            while (true) {
+                try {
+                    System.out.print("Enter phone number : ");
+                    phoneNumber = scanner.nextLine();
+                    NumberOnlyException test = new NumberOnlyException(phoneNumber, "^[0-9 ]+$");
+                    break;
+                } catch (NumberOnlyException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+    
+        while(true){
+            while (true) {
+                try {
+                    System.out.print("Enter email : ");
+                    email = scanner.nextLine();
+                    EmailException test = new EmailException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+                    break;
+                } catch (EmailException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+    
+            while (true) {
+                try {
+                    System.out.print("Enter password : ");
+                    password = scanner.nextLine();
+                    InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                    break;
+                } catch (InputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            
+            int found = 0;
+            for (User u : Database.UserList) {
+                if(u.ID.startsWith(role)) {
+                    if (u.Email.equals(email) && u.getPassword().equals(password)) {
+                        System.out.println("User already exists. Please try again.");
+                        found = 1;
+                        break;
+                    }
+                };
+            }
+            if(found == 0) break;
         }
 
-        String password;
-        while (true) {
-            try {
-                System.out.print("Enter password : ");
-                password = scanner.nextLine();
-                InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
         String insertQuery = String.format(
                 "INSERT INTO User (role, Name, Address, PhoneNumber, Email, Password) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
                 role, name, address, phoneNumber, email, password);
         MySQLConnection.executeUpdate(insertQuery);
         Database.GetDataFromUser();
-        String GetID = "select concat(user.role, user.ID) as userID from user where user.Email = '"+ email +"' and user.Password = '"+ password +"'";
+        
+        String GetID = "select concat(user.role, user.ID) as userID, user.Name from user where user.Email = '"+ email +"' and user.Password = '"+ password +"'";
         ResultSet rs = MySQLConnection.executeQuery(GetID);
         try {
             while (rs != null && rs.next()) {
                 ID = rs.getString("userID");
+                Name = rs.getString("Name");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -142,6 +162,7 @@ public abstract class User implements UserAction {
                 if (u.Email.equals(email) && u.getPassword().equals(password)) {
                     System.out.println("User logged in.");
                     ID = u.ID;
+                    Name = u.Name;
                     return true;
                 }
             }
@@ -175,16 +196,45 @@ public abstract class User implements UserAction {
            } catch (InputException e) {
                System.out.println(e.getMessage());
            }
-       }
-        for (User u : Database.UserList) {
-            if (u.getPassword().equals(currentPassword)) {
-                String upDatePassword = "update user set Password =" + "'" + newPassword + "'" + " where concat(user.role,user.ID) = '" + u.ID + "'";
-                MySQLConnection.executeUpdate(upDatePassword);
-                System.out.println("Password changed successfully.");
+        }
+        
+        for(User u : Database.UserList) {
+            if(ID.equals(u.ID)) {
+                if (u.getPassword().equals(currentPassword)) {
+                    String updateQuery = String.format("UPDATE User SET Password = '%s' WHERE ID = '%s'", newPassword, ID);
+                    MySQLConnection.executeUpdate(updateQuery);
+                    System.out.println("Password changed successfully.");
+                    return;
+                }
                 break;
             }
         }
-        
+
+        System.out.println("Invalid current password.");        
+    }
+    
+    //Change Name
+    public void changeName() {
+        Database.GetDataFromUser();
+        String newName;
+        while(true){
+            try{
+                System.out.print("Enter new name: ");
+                newName = scanner.nextLine();
+                CharacterOnlyException test = new CharacterOnlyException(newName, "^[a-zA-Z ]+$");
+                break;
+            } catch (CharacterOnlyException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        for(User u : Database.UserList) {
+            if(ID.equals(u.ID)) {
+                String updateQuery = String.format("UPDATE User SET Name = '%s' WHERE ID = '%s'", newName, ID);
+                MySQLConnection.executeUpdate(updateQuery);
+                System.out.println("Name changed successfully.");
+                return;
+            }
+        }
     }
     
     // Searh Book
@@ -259,7 +309,7 @@ public abstract class User implements UserAction {
 
     // abstract method
     // For student
-    public abstract void Borrow(String studentID);
+    public abstract void Borrow();
 
     public abstract void Returned();
 
