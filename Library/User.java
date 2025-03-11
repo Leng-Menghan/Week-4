@@ -3,9 +3,7 @@ package Library;
 import java.util.Scanner;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import Exception.CharacterOnlyException;
-import Exception.EmailException;
-import Exception.AtLeastOneCharacter;
+import Exception.InputException;
 import Exception.NumberOnlyException;
 
 public abstract class User implements UserAction {
@@ -43,14 +41,14 @@ public abstract class User implements UserAction {
         String phoneNumber;
         String email;
         String password;
-            System.out.println("Please Register as Librarian");
+            System.out.println("Please Register");
             while (true) {
                 try {
                     System.out.print("Enter name : ");
                     name = scanner.nextLine();
-                    CharacterOnlyException test = new CharacterOnlyException(name, "^[a-zA-Z ]+$");
+                    InputException test = new InputException(name, "^[a-zA-Z ]+$", "Characters only");
                     break;
-                } catch (CharacterOnlyException e) {
+                } catch (InputException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -59,9 +57,9 @@ public abstract class User implements UserAction {
                 try {
                     System.out.print("Enter address : ");
                     address = scanner.nextLine();
-                    AtLeastOneCharacter test = new AtLeastOneCharacter(address, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                    InputException test = new InputException(address, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
                     break;
-                } catch (AtLeastOneCharacter e) {
+                } catch (InputException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -82,9 +80,9 @@ public abstract class User implements UserAction {
                 try {
                     System.out.print("Enter email : ");
                     email = scanner.nextLine();
-                    EmailException test = new EmailException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+                    InputException test = new InputException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", "Invalid email format");
                     break;
-                } catch (EmailException e) {
+                } catch (InputException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -93,9 +91,9 @@ public abstract class User implements UserAction {
                 try {
                     System.out.print("Enter password : ");
                     password = scanner.nextLine();
-                    AtLeastOneCharacter test = new AtLeastOneCharacter(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                    InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
                     break;
-                } catch (AtLeastOneCharacter e) {
+                } catch (InputException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -136,13 +134,13 @@ public abstract class User implements UserAction {
     public boolean login(String role) {
         Database.GetDataFromUser();
         String email;
-        while(true){
-            try{
+        while (true) {
+            try {
                 System.out.print("Enter email : ");
                 email = scanner.nextLine();
-                EmailException test = new EmailException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+                InputException test = new InputException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", "Invalid email format");
                 break;
-            } catch (EmailException e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -151,9 +149,9 @@ public abstract class User implements UserAction {
             try{
                 System.out.print("Enter password : ");
                 password = scanner.nextLine();
-                AtLeastOneCharacter test = new AtLeastOneCharacter(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                InputException test = new InputException(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
                 break;
-            } catch (AtLeastOneCharacter e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -179,9 +177,9 @@ public abstract class User implements UserAction {
             try{
                 System.out.print("Enter current password: ");
                 currentPassword = scanner.nextLine();
-                AtLeastOneCharacter test = new AtLeastOneCharacter(currentPassword, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                InputException test = new InputException(currentPassword, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
                 break;
-            } catch (AtLeastOneCharacter e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -191,9 +189,9 @@ public abstract class User implements UserAction {
            try{
                 System.out.print("Enter new password: ");
                newPassword = scanner.nextLine();
-               AtLeastOneCharacter test = new AtLeastOneCharacter(newPassword, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+               InputException test = new InputException(newPassword, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
                break;
-           } catch (AtLeastOneCharacter e) {
+           } catch (InputException e) {
                System.out.println(e.getMessage());
            }
         }
@@ -221,18 +219,32 @@ public abstract class User implements UserAction {
             try{
                 System.out.print("Enter new name: ");
                 newName = scanner.nextLine();
-                CharacterOnlyException test = new CharacterOnlyException(newName, "^[a-zA-Z ]+$");
+                InputException test = new InputException(newName, "^[a-zA-Z ]+$","Characters only");
                 break;
-            } catch (CharacterOnlyException e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
             }
         }
+        String Password;
+        while(true){
+           try{
+                System.out.print("Enter password: ");
+               Password = scanner.nextLine();
+               InputException test = new InputException(Password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
+               break;
+           } catch (InputException e) {
+               System.out.println(e.getMessage());
+           }
+        }
         for(User u : Database.UserList) {
             if(ID.equals(u.ID)) {
-                String updateQuery = String.format("UPDATE User SET Name = '%s' WHERE ID = '%s'", newName, ID);
-                MySQLConnection.executeUpdate(updateQuery);
-                System.out.println("Name changed successfully.");
-                return;
+                if (u.getPassword().equals(Password)) {
+                    String updateQuery = String.format("UPDATE User SET Name = '%s' WHERE concat(role, ID) = '%s'", newName, ID);
+                    MySQLConnection.executeUpdate(updateQuery);
+                    System.out.println("Name changed successfully.");
+                    return;
+                }
+                break;
             }
         }
     }
@@ -312,7 +324,6 @@ public abstract class User implements UserAction {
     public String toString() {
         String format = "| %-5s | %-20s | %-20s | %-15s | %-20s | %-15s |";
         String result = String.format(format, ID, Name, Address, PhoneNumber, Email, Password);
-        System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
         return result;
     }
 

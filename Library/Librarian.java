@@ -1,10 +1,7 @@
 package Library;
 import java.util.HashMap;
 import java.util.Scanner;
-
-import Exception.CharacterOnlyException;
-import Exception.EmailException;
-import Exception.AtLeastOneCharacter;
+import Exception.InputException;
 import Exception.NumberOnlyException;
 
 public class Librarian extends User{
@@ -18,42 +15,116 @@ public class Librarian extends User{
     //default constructor
     public Librarian() {};
 
-    // Login
-    public boolean login() {
-        Database.GetDataFromUser();
-        String email;
+    //Update Book By ID
+    public void updateBookByID(){
+        Database.GetDataFromBook();
+        if(Database.bookList.isEmpty()){
+            System.out.println("Book list is empty.");
+            return;
+        }
+        String bookID;
         while(true){
             try{
-                System.out.print("Enter email : ");
-                email = scanner.nextLine();
-                EmailException test = new EmailException(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+                System.out.print("Enter book ID     : ");
+                bookID = scanner.nextLine();
+                NumberOnlyException test = new NumberOnlyException(bookID, "^-?[0-9]+$");
+                NumberOnlyException test2 = new NumberOnlyException(Integer.parseInt(bookID));
                 break;
-            } catch (EmailException e) {
+            } catch (NumberOnlyException e) {
                 System.out.println(e.getMessage());
             }
         }
-        String password;
-        while(true){
-            try{
-                System.out.print("Enter password : ");
-                password = scanner.nextLine();
-                AtLeastOneCharacter test = new AtLeastOneCharacter(password, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
-                break;
-            } catch (AtLeastOneCharacter e) {
-                System.out.println(e.getMessage());
+
+        for(Book b : Database.bookList) {
+            if(b.bookid == Integer.parseInt(bookID)) {
+                String format = "| %-3s |  %-27s | %-20s | %-20s | %-7s | %-8s | %-15s |\n";
+                System.out.println(
+                    "+-----+------------------------------+----------------------+----------------------+---------+----------+-----------------+");
+            System.out.printf(format, "ID",  "Name", "Author", "Category", "Price", "Quantity", "Publisher");
+            System.out.println(
+                    "+-----+------------------------------+----------------------+----------------------+---------+----------+-----------------+");
+                System.out.println(b);
+                    String bookName;
+                    while(true){
+                        try{
+                            System.out.print("Book Name     : ");
+                            bookName = scanner.nextLine();
+                            InputException test = new InputException(bookName, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
+                            break;
+                        } catch (InputException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+
+                    String category;
+                    while(true){
+                        try{
+                            System.out.print("Category      : ");
+                            category = scanner.nextLine();
+                            InputException test = new InputException(category, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
+                            break;
+                        } catch (InputException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+
+                    String author;
+                    while(true){
+                        try{
+                            System.out.print("Author name   : ");
+                            author = scanner.nextLine();
+                            InputException test = new InputException(author, "^[a-zA-Z ]+$", "Characters only");
+                            break;
+                        } catch (InputException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+
+                    String price;
+                    while(true){
+                        try{
+                            System.out.print("Price of Book : $ ");
+                            price = scanner.nextLine();
+                            NumberOnlyException test = new NumberOnlyException(price, "^-?[0-9]+(\\.[0-9]+)?$");
+                            NumberOnlyException test2 = new NumberOnlyException(Double.parseDouble(price));
+                            break;
+                        } catch (NumberOnlyException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+
+                    String quantity;
+                    while(true){
+                        try{
+                            System.out.print("Quantity      : ");
+                            quantity = scanner.nextLine();
+                            NumberOnlyException test1 = new NumberOnlyException(quantity, "^-?[0-9]+(\\.[0-9]+)?$");
+                            NumberOnlyException test2 = new NumberOnlyException(Double.parseDouble(quantity));
+                            break;
+                        } catch (NumberOnlyException e) {
+                            System.out.println(e.getMessage());
+                        } 
+                    }
+
+                    
+                    String publisher;
+                    while(true){
+                        try{
+                            System.out.print("Publisher     : ");
+                            publisher = scanner.nextLine();
+                            InputException test = new InputException(publisher, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
+                            break;
+                        } catch (InputException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    String UpdateBook = "update Book set Name = '"+bookName+"', Category = '"+category+"', Publisher = '"+publisher+"' , Author = '"+author+"', price = "+price+", Qty = "+quantity+" where ID = "+bookID+"";
+                    MySQLConnection.executeUpdate(UpdateBook);
+                return;
             }
         }
-        for(User u : Database.UserList) {
-            if(u.ID.startsWith("L")){
-                if (u.Email.equals(email) && u.getPassword().equals(password)) {
-                    System.out.println("User logged in");
-                    return true;
-                }
-            }
-        }
-        return false;
+        System.out.println("Book doesn't exist.");	
     }
-    
     // Search student by ID
     public void searchStudentByID() {
         Database.GetDataFromUser();
@@ -66,13 +137,13 @@ public class Librarian extends User{
             try{
                 System.out.print("Enter student ID     : ");
                 studentID = scanner.nextLine();
-                AtLeastOneCharacter test = new AtLeastOneCharacter(studentID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                InputException test = new InputException(studentID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
                 break;
-            } catch (AtLeastOneCharacter e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
             }
         }
-        System.out.println("___________________________________________________\n");
+        System.out.println("___________________________________________________n");
         for(User s : Database.UserList) {
             if(studentID.equals(s.ID)) {
                 System.out.println("Name      : " + s.Name);
@@ -174,10 +245,11 @@ public class Librarian extends User{
         for(User s : Database.UserList){
             if(s.ID.charAt(0)=='S'){
                 System.out.println(s);
+                System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
                 count++; 
             } 
         }
-        System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
+        
         System.out.println("--------------- Total students : " + count +" --------------- ");
     }
     
@@ -193,12 +265,14 @@ public class Librarian extends User{
             try{
                 System.out.print("Book Name     : ");
                 bookName = scanner.nextLine();
-                AtLeastOneCharacter test = new AtLeastOneCharacter(bookName, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                InputException test = new InputException(bookName, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
                 break;
-            } catch (AtLeastOneCharacter e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
             }
         }
+        
+        //Check if book already exists
         for(Book b : Database.bookList){
             if(b.bookname.equals(bookName)){
                 System.out.println("Book already exists");
@@ -211,9 +285,9 @@ public class Librarian extends User{
             try{
                 System.out.print("Category      : ");
                 category = scanner.nextLine();
-                AtLeastOneCharacter test = new AtLeastOneCharacter(category, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                InputException test = new InputException(category, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
                 break;
-            } catch (AtLeastOneCharacter e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -223,9 +297,9 @@ public class Librarian extends User{
             try{
                 System.out.print("Author name   : ");
                 author = scanner.nextLine();
-                CharacterOnlyException test = new CharacterOnlyException(author, "^[a-zA-Z ]+$");
+                InputException test = new InputException(author, "^[a-zA-Z ]+$", "Characters only");
                 break;
-            } catch (CharacterOnlyException e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -262,9 +336,9 @@ public class Librarian extends User{
             try{
                 System.out.print("Publisher     : ");
                 publisher = scanner.nextLine();
-                AtLeastOneCharacter test = new AtLeastOneCharacter(publisher, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                InputException test = new InputException(publisher, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
                 break;
-            } catch (AtLeastOneCharacter e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
             }
         }

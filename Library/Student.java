@@ -3,7 +3,7 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import Exception.AtLeastOneCharacter;
+import Exception.InputException;
 import Exception.NumberOnlyException;
 
 public class Student extends User {
@@ -62,9 +62,9 @@ public class Student extends User {
             try {
                 System.out.print("Enter librarian ID : ");
                 librarianID = scanner.nextLine();
-                AtLeastOneCharacter test = new AtLeastOneCharacter(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                InputException test = new InputException(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
                 break;
-            } catch (AtLeastOneCharacter e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -152,9 +152,9 @@ public class Student extends User {
             try {
                 System.out.print("Enter librarian ID : ");
                 librarianID = scanner.nextLine();
-                AtLeastOneCharacter test = new AtLeastOneCharacter(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                InputException test = new InputException(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
                 break;
-            } catch (AtLeastOneCharacter e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
             }
         }

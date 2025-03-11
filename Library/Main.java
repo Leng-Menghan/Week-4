@@ -3,7 +3,7 @@ package Library;
 import java.util.Scanner;
 import Exception.LimitOptionException;
 import Exception.NumberOnlyException;
-import Exception.ExitException;
+import Exception.InputException;
 
 public class Main {
     public static void main(String[] args) {
@@ -121,9 +121,9 @@ public class Main {
                                     try {
                                         System.out.print("Exit (Y/y) : ");
                                         exit = scanner.nextLine();
-                                        ExitException test = new ExitException(exit, "^[Yy]");
+                                        InputException test = new InputException(exit, "^[Yy]", "Allowed input only Y/y");
                                         break;
-                                    } catch (ExitException e) {
+                                    } catch (InputException e) {
                                         System.out.println(e.getMessage());
                                     }
                                 }
@@ -255,9 +255,9 @@ public class Main {
                             try {
                                 System.out.print("Exit (Y/y) : ");
                                 exit = scanner.nextLine();
-                                ExitException test = new ExitException(exit, "^[Yy]");
+                                InputException test = new InputException(exit, "^[Yy]", "Allowed input only Y/y");
                                 break;
-                            } catch (ExitException e) {
+                            } catch (InputException e) {
                                 System.out.println(e.getMessage());
                             }
                         }
@@ -360,9 +360,9 @@ public class Main {
                             try {
                                 System.out.print("Exit (Y/y) : ");
                                 exit = scanner.nextLine();
-                                ExitException test = new ExitException(exit, "^[Yy]");
+                                InputException test = new InputException(exit, "^[Yy]", "Allowed input only Y/y");
                                 break;
-                            } catch (ExitException e) {
+                            } catch (InputException e) {
                                 System.out.println(e.getMessage());
                             }
                         }

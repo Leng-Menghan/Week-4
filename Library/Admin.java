@@ -1,7 +1,8 @@
 package Library;
 import java.util.Scanner;
 
-import Exception.AtLeastOneCharacter;
+import Exception.InputException;
+
 
 public class Admin extends Librarian{
     private String adminUsername = "admin";
@@ -30,9 +31,9 @@ public class Admin extends Librarian{
             try{
                 System.out.print("Enter Librarian ID     : ");
                 librarianID = scanner.nextLine();
-                AtLeastOneCharacter test = new AtLeastOneCharacter(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$");
+                InputException test = new InputException(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$","Must has at least one character");
                 break;
-            } catch (AtLeastOneCharacter e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -73,10 +74,11 @@ public class Admin extends Librarian{
         for(User l : Database.UserList){
             if(l.ID.charAt(0)=='L'){
                 System.out.println(l);
+                System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
                 count++;
             }
         }
-        System.out.println("+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
+       
         System.out.println("--------------- Total librarain : " + count +" --------------- ");
     }
 
