@@ -11,7 +11,6 @@ public class Main {
         User student = new Student();
         User librarian = new Librarian();
         Scanner scanner = new Scanner(System.in);
-        librarian.searchBook();
         while (true) {
             System.out.println("#---------------------------------------------------#");
             System.out.println("|                                                   |");
