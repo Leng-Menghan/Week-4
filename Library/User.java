@@ -257,15 +257,15 @@ public abstract class User implements UserAction {
                 "|                                                                                                                                 |");
         System.out.println(
                 "#---------------------------------------------------------------------------------------------------------------------------------#");
-        String format = "| %-3s | %-6s | %-27s | %-20s | %-20s | %-7s | %-8s | %-15s |\n";
+        String format = "| %-3s |%-29s | %-20s | %-20s | %-7s | %-8s | %-15s |\n";
         System.out.println(
-                "+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
-        System.out.printf(format, "ID", "ISBN", "Name", "Author", "Category", "Price", "Quantity", "Publisher");
+                "+-----+------------------------------+----------------------+----------------------+---------+----------+-----------------+");
+        System.out.printf(format, "ID", "Name", "Author", "Category", "Price", "Quantity", "Publisher");
         System.out.println(
-                "+-----+--------+-----------------------------+----------------------+----------------------+---------+----------+-----------------+");
+                "+-----+------------------------------+----------------------+----------------------+---------+----------+-----------------+");
         for (Book b : Database.bookList) {
             if (b.bookname.toLowerCase().equals(searchBook.toLowerCase())
-                    || b.bookid == Integer.parseInt(searchBook)
+                    || String.valueOf(b.bookid).equals(searchBook)
                     || b.author.toLowerCase().equals(searchBook.toLowerCase())
                     || b.category.toLowerCase().equals(searchBook.toLowerCase())) {
                 System.out.println(b);

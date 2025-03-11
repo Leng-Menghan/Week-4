@@ -1,5 +1,4 @@
 package Library;
-import java.util.HashMap;
 import java.util.Scanner;
 
 import Exception.AtLeastOneCharacter;

@@ -1,4 +1,5 @@
 package Library;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -219,8 +220,10 @@ public class Student extends User {
             System.out.println("(ID: " + b.get("bookId") + ") - " + b.get("bookName"));
             payment += Double.parseDouble(b.get("payForBorrow").toString());
         }
+        DecimalFormat df = new DecimalFormat("#.##");
+
         System.out.println("---------------------------------------------------");
-        System.out.println("             Total payment : " + payment + " $");
+        System.out.println("             Total payment : " + df.format(payment) + " $");
         System.out.println("                   books : " + count);
         System.out.println("---------------------------------------------------\n");
         Database.TmpBorrow.clear();

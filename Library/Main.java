@@ -11,6 +11,7 @@ public class Main {
         User student = new Student();
         User librarian = new Librarian();
         Scanner scanner = new Scanner(System.in);
+        librarian.searchBook();
         while (true) {
             System.out.println("#---------------------------------------------------#");
             System.out.println("|                                                   |");
@@ -202,7 +203,7 @@ public class Main {
                         String option2;
                         while (true) {
                             try {
-                                System.out.print("Please Select Option (1-8) : ");
+                                System.out.print("Please Select Option (1-10) : ");
                                 option2 = scanner.nextLine();
                                 NumberOnlyException test = new NumberOnlyException(option2, "^[0-9]+$");
                                 int optionInt = Integer.parseInt(option2);
