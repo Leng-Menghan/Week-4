@@ -41,7 +41,8 @@ public class Main {
                     int loginAttempts = 0;
                     System.out.println("Please Login as Admin");
                     while (loginAttempts < 3) {
-                        if (admin.adminlogin()) {
+                        LoginForm loginForm = new LoginForm();
+                        if (loginForm.adminLogin()) {
                             while (true) {
                                 System.out.println("Welcome to Admin function");
                                 System.out.println("1. Display Librarian");
@@ -377,7 +378,5 @@ public class Main {
             }
         }
         scanner.close();
-    }
-    
-    
+    }    
 }
