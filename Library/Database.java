@@ -61,6 +61,7 @@ public class Database {
         ResultSet rs3 = MySQLConnection.executeQuery(selectQuery3);
         try {
             while (rs3 != null && rs3.next()) {
+                int borrowId = rs3.getInt("borrowId");
                 int BookId = rs3.getInt("BookId");
                 String BookName = rs3.getString("BookName");
                 String StudentId = rs3.getString("StudentId");
@@ -69,10 +70,12 @@ public class Database {
                 String LibrarianName = rs3.getString("LibrarianName");  
                 String BorrowDate = rs3.getString("BorrowDate");
                 String ReturnDate = rs3.getString("ReturnDate");
+                double payment = rs3.getDouble("payment");
                 String LibrarianReturnId = rs3.getString("LibrarianReturnId");
                 String LibrarianReturnName = rs3.getString("LibrarianReturnName");
                 String Returned = rs3.getString("ReturnedDate");
                 HashMap<String, Object> borrowRecord = new HashMap<>();
+                borrowRecord.put("borrowId", borrowId);
                 borrowRecord.put("bookId", BookId);
                 borrowRecord.put("bookName", BookName);
                 borrowRecord.put("studentId", StudentId);
@@ -81,6 +84,7 @@ public class Database {
                 borrowRecord.put("librarianName", LibrarianName);
                 borrowRecord.put("borrowDate", BorrowDate);
                 borrowRecord.put("returnDate", ReturnDate);
+                borrowRecord.put("payment", payment);
                 borrowRecord.put("librarianReturnId", LibrarianReturnId);
                 borrowRecord.put("librarianReturnName", LibrarianReturnName);
                 borrowRecord.put("ReturnedDate", Returned);
