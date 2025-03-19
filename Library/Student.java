@@ -20,8 +20,7 @@ public class Student extends User {
         super(ID, Name, Address, PhoneNumber, Email, password);
     }
 
-    public Student() {
-    };
+    public Student() {};
 
     public void StudentFeatures() {
         JFrame frame = new JFrame();
@@ -75,6 +74,7 @@ public class Student extends User {
                 ReturnAction();
             }
         });
+        
         panelButton.add(button1);
         panelButton.add(button2);
         panelButton.add(button3);
@@ -87,104 +87,46 @@ public class Student extends User {
         Database.GetDataFromUser();
         Database.GetDataFromBook();
 
-        JFrame frame = new JFrame();
-        frame.setSize(500, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-        frame.setLayout(null);
+        // Create frame
+        JFrame frame = GUI.createFrame("Add Borrow", 500, 300);
 
         // Create Button Back
-        JButton Back = new JButton("Back");
-        Back.setFont(new Font("Arial", Font.BOLD, 15));
-        Back.setForeground(Color.WHITE);
+        JButton Back = GUI.createButtonBack(frame);
+        Back.addActionListener(e -> frame.dispose());
 
-        Back.setBounds(10, 10, 80, 30);
-        Back.setBackground(Color.RED);
-        Back.setLayout(null);
+        // Create Title
+        GUI.createTitle(frame, 0, 10, 500, "Borrow Action");
+        
+        // Create Input Panel
+        JPanel panelInput = GUI.createInputPanel(frame, 0, 60, 500, 350);
 
-        frame.add(Back);
+        GUI.createLabel("Book ID : ", 20, 0, panelInput);
+        JTextField bookid = GUI.createTextField(160, 3, panelInput);
 
-        JPanel panelTitle = new JPanel();
-        panelTitle.setBounds(0, 10, 500, 40);
-        frame.add(panelTitle);
+        GUI.createLabel("Librarian ID : ", 20, 40, panelInput);
+        JTextField librarianid = GUI.createTextField(160, 43, panelInput);
 
-        JLabel label = new JLabel("Borrow Action");
-        label.setFont(new Font("Arial", Font.BOLD, 25));
-        panelTitle.add(label);
+        GUI.createLabel("Borrow Date : ", 20, 80, panelInput);
+        JTextField borrowdate = GUI.createTextField(160, 83, panelInput);
 
-        JPanel panelInput = new JPanel();
-        panelInput.setBounds(0, 60, 500, 250);
-        panelInput.setLayout(null);
-        frame.add(panelInput);
+        GUI.createLabel("Return Date : ", 20, 120, panelInput);
+        JTextField returndate = GUI.createTextField(160, 123, panelInput);
 
-        JLabel BookID = new JLabel("Book ID : ");
-        BookID.setBounds(20, 0, 150, 30);
-        BookID.setFont(new Font("Arial", Font.BOLD, 15));
-        panelInput.add(BookID);
-        JTextField bookid = new JTextField(20);
-        bookid.setBounds(160, 3, 300, 30);
-        bookid.setFont(new Font("Arial", Font.PLAIN, 15));
-        bookid.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.BLACK), // Outer black border
-                BorderFactory.createEmptyBorder(0, 10, 0, 10) // Inner padding (top, left, bottom, right)
-        ));
-        panelInput.add(bookid);
-
-        JLabel LibrarianID = new JLabel("Librarian ID : ");
-        LibrarianID.setBounds(20, 40, 150, 30);
-        LibrarianID.setFont(new Font("Arial", Font.BOLD, 15));
-        panelInput.add(LibrarianID);
-        JTextField librarianid = new JTextField(20);
-        librarianid.setBounds(160, 43, 300, 30);
-        librarianid.setFont(new Font("Arial", Font.PLAIN, 15));
-        librarianid.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.BLACK), // Outer black border
-                BorderFactory.createEmptyBorder(0, 10, 0, 10) // Inner padding (top, left, bottom, right)
-        ));
-        panelInput.add(librarianid);
-
-        JLabel BorrowDate = new JLabel("Borrow Date : ");
-        BorrowDate.setBounds(20, 80, 150, 30);
-        BorrowDate.setFont(new Font("Arial", Font.BOLD, 15));
-        panelInput.add(BorrowDate);
-        JTextField borrowdate = new JTextField(20);
-        borrowdate.setBounds(160, 83, 300, 30);
-        borrowdate.setFont(new Font("Arial", Font.PLAIN, 15));
-        borrowdate.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.BLACK), // Outer black border
-                BorderFactory.createEmptyBorder(0, 10, 0, 10) // Inner padding (top, left, bottom, right)
-        ));
-        panelInput.add(borrowdate);
-
-        JLabel ReturnDate = new JLabel("Return Date: ");
-        ReturnDate.setBounds(20, 120, 150, 30);
-        ReturnDate.setFont(new Font("Arial", Font.BOLD, 15));
-        panelInput.add(ReturnDate);
-        JTextField returndate = new JTextField(20);
-        returndate.setBounds(160, 123, 300, 30);
-        returndate.setFont(new Font("Arial", Font.PLAIN, 15));
-        returndate.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.BLACK), // Outer black border
-                BorderFactory.createEmptyBorder(0, 10, 0, 10) // Inner padding (top, left, bottom, right)
-        ));
-        panelInput.add(returndate);
-
-        JButton BorrowButton = new JButton("Borrow");
-        BorrowButton.setFont(new Font("Arial", Font.BOLD, 15));
-        BorrowButton.setBounds(200, 163, 100, 30);
-        panelInput.add(BorrowButton);
-
-        Back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-            }
-        });
+        JButton BorrowButton = GUI.createButton("Borrow", 200, 163, 100, 30, panelInput); 
 
         BorrowButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Database.GetDataFromBorrow();
+                for (HashMap<String, Object> b : Database.borrowList) {
+                    if (String.valueOf(b.get("ReturnedDate")).equals("None")) {
+                        if (String.valueOf(b.get("bookId")).equals(bookid.getText()) && String.valueOf(b.get("studentId")).equals(ID)) {
+                            JOptionPane.showMessageDialog(null, "You haven't Return This book yet.", "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+                }
+
                 String studentName = "";
                 String librarianName = "";
                 String bookName = "";
@@ -206,6 +148,7 @@ public class Student extends User {
                         librarianName = user.Name;
                     }
                 }
+
                 DisplayInvoice(bookid.getText(), bookName, ID, studentName, librarianid.getText(), librarianName,
                         borrowdate.getText(), returndate.getText(), payment);
                 frame.dispose();
@@ -215,89 +158,30 @@ public class Student extends User {
 
     public void ReturnAction() {
         Database.GetDataFromBorrow();
-        JFrame frame = new JFrame();
-        frame.setSize(500, 260);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-        frame.setLayout(null);
+        JFrame frame = GUI.createFrame("Return Action", 500, 260);
 
         // Create Button Back
-        JButton Back = new JButton("Back");
-        Back.setFont(new Font("Arial", Font.BOLD, 15));
-        Back.setForeground(Color.WHITE);
+        JButton Back = GUI.createButtonBack(frame);
+        Back.addActionListener(e -> frame.dispose());
 
-        Back.setBounds(10, 10, 80, 30);
-        Back.setBackground(Color.RED);
-        Back.setLayout(null);
+        // Create Title
+        GUI.createTitle(frame, 0, 10, 500, "Return Action");
+        
+        // Create Input Panel
+        JPanel panelInput = GUI.createInputPanel(frame, 0, 60, 500, 250);
 
-        frame.add(Back);
+        GUI.createLabel("Book ID : ", 20, 0, panelInput);
+        JTextField bookid = GUI.createTextField(160, 3, panelInput);
 
-        JPanel panelTitle = new JPanel();
-        panelTitle.setBounds(0, 10, 500, 40);
-        frame.add(panelTitle);
+        GUI.createLabel("Librarian ID : ", 20, 40, panelInput);
+        JTextField librarianid = GUI.createTextField(160, 43, panelInput);
 
-        JLabel label = new JLabel("Return Action");
-        label.setFont(new Font("Arial", Font.BOLD, 25));
-        panelTitle.add(label);
+        GUI.createLabel("Return Date : ", 20, 80, panelInput);
+        JTextField returneddate = GUI.createTextField(160, 83, panelInput);
 
-        JPanel panelInput = new JPanel();
-        panelInput.setBounds(0, 60, 500, 250);
-        panelInput.setLayout(null);
-        frame.add(panelInput);
+        JButton ReturnButton = GUI.createButton("Borrow", 200, 123, 100, 30, panelInput); 
 
-        JLabel BookID = new JLabel("Book ID : ");
-        BookID.setBounds(20, 0, 150, 30);
-        BookID.setFont(new Font("Arial", Font.BOLD, 15));
-        panelInput.add(BookID);
-        JTextField bookid = new JTextField(20);
-        bookid.setBounds(160, 3, 300, 30);
-        bookid.setFont(new Font("Arial", Font.PLAIN, 15));
-        bookid.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.BLACK), // Outer black border
-                BorderFactory.createEmptyBorder(0, 10, 0, 10) // Inner padding (top, left, bottom, right)
-        ));
-        panelInput.add(bookid);
-
-        JLabel LibrarianID = new JLabel("Librarian ID : ");
-        LibrarianID.setBounds(20, 40, 150, 30);
-        LibrarianID.setFont(new Font("Arial", Font.BOLD, 15));
-        panelInput.add(LibrarianID);
-        JTextField librarianid = new JTextField(20);
-        librarianid.setBounds(160, 43, 300, 30);
-        librarianid.setFont(new Font("Arial", Font.PLAIN, 15));
-        librarianid.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.BLACK), // Outer black border
-                BorderFactory.createEmptyBorder(0, 10, 0, 10) // Inner padding (top, left, bottom, right)
-        ));
-        panelInput.add(librarianid);
-
-        JLabel ReturnedDate = new JLabel("Return Date : ");
-        ReturnedDate.setBounds(20, 80, 150, 30);
-        ReturnedDate.setFont(new Font("Arial", Font.BOLD, 15));
-        panelInput.add(ReturnedDate);
-        JTextField returneddate = new JTextField(20);
-        returneddate.setBounds(160, 83, 300, 30);
-        returneddate.setFont(new Font("Arial", Font.PLAIN, 15));
-        returneddate.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.BLACK), // Outer black border
-                BorderFactory.createEmptyBorder(0, 10, 0, 10) // Inner padding (top, left, bottom, right)
-        ));
-        panelInput.add(returneddate);
-
-        JButton registerButton = new JButton("Borrow");
-        registerButton.setFont(new Font("Arial", Font.BOLD, 15));
-        registerButton.setBounds(200, 123, 100, 30);
-        panelInput.add(registerButton);
-
-        Back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-            }
-        });
-
-        registerButton.addActionListener(new ActionListener() {
+        ReturnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Database.GetDataFromUser();
@@ -308,14 +192,26 @@ public class Student extends User {
                         break;
                     }
                 }
-                String InsertQuery = String.format(
-                        "UPDATE borrowlist SET ReturnedDate = '%s', LibrarianReturnID = '%s', LibrarianReturnName = '%s' WHERE BookID = '%s' and StudentId = '%s'",
-                        returneddate.getText(), librarianid.getText(), librarianReturnName, bookid.getText(), ID);
-                MySQLConnection.executeUpdate(InsertQuery);
-                
-                String updateQty = "UPDATE Book SET Qty = Qty + 1 WHERE ID = '" + bookid.getText() + "'";
-                MySQLConnection.executeUpdate(updateQty);
-                frame.dispose();
+                int IsReturned = 0;
+                for (HashMap<String, Object> b : Database.borrowList) {
+                    if (String.valueOf(b.get("ReturnedDate")).equals("None")) {
+                        if (String.valueOf(b.get("bookId")).equals(bookid.getText()) && String.valueOf(b.get("studentId")).equals(ID)) {
+                            String Update = ("Update BorrowList set LibrarianReturnId='" +  librarianid.getText()
+                                    + "', LibrarianReturnName='" + librarianReturnName + "', ReturnedDate='" + returneddate.getText()
+                                    + "' where BookId='" + bookid.getText() + "' and StudentId='" + ID + "'");
+                            MySQLConnection.executeUpdate(Update);
+                            String UpdateB = "Update Book set Qty=Qty+1 where ID='" + bookid.getText() + "'";
+                            MySQLConnection.executeUpdate(UpdateB);
+                            IsReturned = 1;
+                            break;
+                        } else IsReturned = 2;
+                    }
+                }
+                if (IsReturned == 1) {
+                    JOptionPane.showMessageDialog(null, "Returned Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else if (IsReturned == 2) {
+                    JOptionPane.showMessageDialog(null, "You haven't borrow this Book!!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     };
@@ -323,29 +219,28 @@ public class Student extends User {
     public void DisplayAction() {
         Database.GetDataFromBook();
         // Create frame
-        JFrame frame = new JFrame("JTable with ArrayList");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(730, 400);
-        frame.setLayout(null);
+        JFrame frame = GUI.createFrame("Display Action", 730, 400);
 
         // Create Button Back
-        JButton Back = new JButton("Back");
-        Back.setFont(new Font("Arial", Font.BOLD, 15));
-        Back.setForeground(Color.WHITE);
+        JButton Back = GUI.createButtonBack(frame);
+        Back.addActionListener(e -> frame.dispose());
 
-        Back.setBounds(10, 10, 100, 30);
-        Back.setBackground(Color.RED);
-
-        frame.add(Back);
         // Create Button Refresh
         JButton Refresh = new JButton("Refresh");
         Refresh.setFont(new Font("Arial", Font.BOLD, 15));
         Refresh.setForeground(Color.WHITE);
-
         Refresh.setBounds(610, 10, 100, 30);
         Refresh.setBackground(Color.RED);
-
         frame.add(Refresh);
+
+        // Add action listener to Refresh button
+        Refresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                DisplayAction();
+            }
+        });
 
         JPanel Title = new JPanel();
         Title.setBounds(0, 10, 700, 50);
@@ -387,65 +282,16 @@ public class Student extends User {
         // Column names
         String[] columnNames = { "ID", "Name", "Category", "Author", "Price", "Quantity", "Publisher" };
 
-        // Convert ArrayList of objects to 2D array
-        String[][] data = new String[Database.bookList.size()][7]; // 3 columns
-        for (int i = 0; i < Database.bookList.size(); i++) {
-            Book p = Database.bookList.get(i);
-            data[i][0] = String.valueOf(p.bookid);
-            data[i][1] = p.bookname;
-            data[i][2] = p.category;
-            data[i][3] = p.author;
-            data[i][4] = String.valueOf(p.price);
-            data[i][5] = String.valueOf(p.quantity);
-            data[i][6] = p.publisher;
+        // Create DefaultTableModel
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        
+        // Add rows directly from bookList
+        for (Book book : Database.bookList) {
+                Object[] row = { book.bookid, book.bookname, book.category, book.author, book.price, book.quantity, book.publisher };
+                model.addRow(row);
         }
-        // Create JTable with DefaultTableModel
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-        JTable table = new JTable(model);
 
-        // Set font and row height
-        table.setFont(new Font("Arial", Font.PLAIN, 14));
-        table.setRowHeight(25);
-
-        // Set header font and background color
-        JTableHeader header = table.getTableHeader();
-        header.setFont(new Font("Arial", Font.BOLD, 14));
-        header.setBackground(Color.LIGHT_GRAY);
-        header.setForeground(Color.BLACK);
-
-        // Set grid color and selection background
-        table.setGridColor(Color.GRAY);
-        table.setSelectionBackground(Color.BLUE);
-        table.setSelectionForeground(Color.WHITE);
-
-        // Remove column reordering
-        header.setReorderingAllowed(false);
-
-        // Add table to a scroll pane
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10, 145, 700, 200);
-
-        // Add scroll pane to frame
-        frame.add(scrollPane, BorderLayout.CENTER);
-
-        frame.setVisible(true);
-
-        // Add action listener to Back button
-        Back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-            }
-        });
-
-        // Add action listener to Refresh button
-        Refresh.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                DisplayAction();
-            }
-        });
+        JTable table = GUI.createTable(frame, model, 10, 145, 700, 200);
 
         // Add action listener to Borrow button
         BorrowButton.addActionListener(new ActionListener() {
@@ -469,6 +315,7 @@ public class Student extends User {
         SearchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                frame.dispose();
                 searchBook(Search.getText());
             }
         });
@@ -478,19 +325,13 @@ public class Student extends User {
     public void DisplayInvoice(String bookId, String bookName, String studentId, String studentName, String librarianId,
             String Librarianname, String borrowDate, String returnDate, String payment) {
         // Create frame
-        JFrame frame = new JFrame("Library Invoice");
-        frame.setSize(500, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setLayout(null);
+        JFrame frame = GUI.createFrame("Display Invoice", 500, 500);
 
-        JPanel panelTitle = new JPanel();
-        panelTitle.setBounds(0, 10, 500, 40);
-        frame.add(panelTitle);
+        GUI.createTitle(frame, 0, 10, 500, "Invoice Details Borrowing");
 
-        JLabel label = new JLabel("Invoice Details Borrowing");
-        label.setFont(new Font("Arial", Font.BOLD, 25));
-        panelTitle.add(label);
+        // Create Button Back
+        JButton Back = GUI.createButtonBack(frame);
+        Back.addActionListener(e -> frame.dispose());
 
         // Invoice Content Panel
         JPanel invoicePanel = new JPanel();
@@ -568,194 +409,6 @@ public class Student extends User {
             MySQLConnection.executeUpdate(updateQty);
             frame.dispose();
         });
-
-        // Display Frame
-        frame.setVisible(true);
     }
 
-    // Return
-    public void Returned() {
-        Database.GetDataFromUser();
-        Database.GetDataFromBorrow();
-        Database.GetDataFromBook();
-
-        String bookID;
-        while (true) {
-            try {
-                System.out.print("Enter book ID : ");
-                bookID = scanner.nextLine();
-                NumberOnlyException test1 = new NumberOnlyException(bookID, "^-?[0-9]+$");
-                NumberOnlyException test2 = new NumberOnlyException(Integer.parseInt(bookID));
-                break;
-            } catch (NumberOnlyException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        String librarianID;
-        while (true) {
-            try {
-                System.out.print("Enter librarian ID : ");
-                librarianID = scanner.nextLine();
-                InputException test = new InputException(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$",
-                        "Must has at least one character");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        String LirbrarianReturnName = "";
-        for (User l : Database.UserList) {
-            if (librarianID.equals(l.ID)) {
-                LirbrarianReturnName = l.Name;
-                break;
-            }
-        }
-        System.out.print("Enter return Date : ");
-        String returnedDate = scanner.nextLine();
-        int IsReturned = 0;
-        for (HashMap<String, Object> b : Database.borrowList) {
-            if (String.valueOf(b.get("ReturnedDate")).equals("None")) {
-                if (String.valueOf(b.get("bookId")).equals(bookID) && String.valueOf(b.get("studentId")).equals(ID)) {
-                    String Update = ("Update BorrowList set LibrarianReturnId='" + librarianID
-                            + "', LibrarianReturnName='" + LirbrarianReturnName + "', ReturnedDate='" + returnedDate
-                            + "' where BookId='" + bookID + "' and StudentId='" + ID + "'");
-                    MySQLConnection.executeUpdate(Update);
-                    for (Book B : Database.bookList) {
-                        if (B.bookid == Integer.parseInt(bookID)) {
-                            String UpdateB = "Update Book set Qty=Qty+1 where ID='" + B.bookid + "'";
-                            MySQLConnection.executeUpdate(UpdateB);
-                            break;
-                        }
-                    }
-                    IsReturned = 1;
-                    break;
-                } else
-                    IsReturned = 2;
-            }
-        }
-        if (IsReturned == 0) {
-            System.out.println("You have already returned this book !!");
-        } else if (IsReturned == 1) {
-            System.out.println("Returned Success");
-        } else if (IsReturned == 2) {
-            System.out.println("You haven't borrow this Book!!");
-        }
-    }
-
-    // Borrow
-    public void Borrow() {
-        Database.GetDataFromUser();
-        Database.GetDataFromBook();
-        Database.GetDataFromBorrow();
-        HashMap<String, Object> borrow = new HashMap<>();
-
-        String bookID;
-        while (true) {
-            try {
-                System.out.print("Enter book ID : ");
-                bookID = scanner.nextLine();
-                NumberOnlyException test1 = new NumberOnlyException(bookID, "^-?[0-9]+$");
-                NumberOnlyException test2 = new NumberOnlyException(Integer.parseInt(bookID));
-                break;
-            } catch (NumberOnlyException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        String bookName = "";
-        int foundBook = 0;
-        for (Book b : Database.bookList) {
-            if (Integer.parseInt(bookID) == b.bookid) {
-                borrow.put("bookName", b.bookname);
-                bookName = b.bookname;
-                foundBook = 1;
-                break;
-            }
-        }
-        if (foundBook == 0) {
-            System.out.println("Book doesn't exist.");
-            Database.TmpBorrow.clear();
-            return;
-        }
-        for (Book b : Database.bookList) {
-            if (Integer.parseInt(bookID) == b.bookid) {
-                borrow.put("payForBorrow", b.price * 0.1);
-                break;
-            }
-        }
-
-        String librarianID;
-        while (true) {
-            try {
-                System.out.print("Enter librarian ID : ");
-                librarianID = scanner.nextLine();
-                InputException test = new InputException(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$",
-                        "Must has at least one character");
-                break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        String librarianName = "";
-        int foundLibrarian = 0;
-        for (User l : Database.UserList) {
-            if (librarianID.equals(l.ID)) {
-                borrow.put("librarianName", l.Name);
-                librarianName = l.Name;
-                foundLibrarian = 1;
-                break;
-            }
-        }
-        if (foundLibrarian == 0) {
-            System.out.println("Librarian doesn't exist.");
-            Database.TmpBorrow.clear();
-            return;
-        }
-
-        System.out.print("Enter borrow Date : ");
-        String borrowDate = scanner.nextLine();
-        System.out.print("Enter return Date : ");
-        String returnDate = scanner.nextLine();
-
-        borrow.put("bookId", bookID);
-        borrow.put("studentId", ID);
-        borrow.put("studentName", Name);
-        borrow.put("librarianId", librarianID);
-        borrow.put("returnDate", returnDate);
-        borrow.put("borrowDate", borrowDate);
-        borrow.put("LibrarianReturnId", "None");
-        borrow.put("LibrarianReturnName", "None");
-        borrow.put("Returned", "None");
-
-        for (Book b : Database.bookList) {
-            if (b.bookid == Integer.parseInt(bookID)) {
-                if (b.quantity <= 0) {
-                    System.out.println("The book is out of stock.");
-                    return;
-                }
-                ;
-                String Update = "Update Book set Qty=Qty-1 where ID='" + b.bookid + "'";
-                MySQLConnection.executeUpdate(Update);
-                break;
-            }
-        }
-
-        for (HashMap<String, Object> b : Database.borrowList) {
-            if (String.valueOf(b.get("ReturnedDate")).equals("None")) {
-                if (String.valueOf(b.get("bookId")).equals(bookID) && String.valueOf(b.get("studentId")).equals(ID)) {
-                    System.out.println("You have already borrowed this book and it is not returned yet.");
-                    return;
-                }
-            }
-        }
-
-        // Add to database
-        Database.TmpBorrow.add(borrow);
-        String insertQuery = String.format(
-                "INSERT INTO BorrowList VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s','%s')",
-                bookID, bookName, ID, Name, librarianID, librarianName, borrowDate, returnDate, "None", "None", "None");
-        MySQLConnection.executeUpdate(insertQuery);
-    }
 }

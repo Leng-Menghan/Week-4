@@ -10,7 +10,6 @@ import Exception.InputException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
 public class Admin extends Librarian {
     private String adminUsername = "admin";
     private String adminPassword = "123";
@@ -126,7 +125,6 @@ public class Admin extends Librarian {
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
                 manageBook();
             }
         });
@@ -134,7 +132,6 @@ public class Admin extends Librarian {
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
                 manageBorrow();
             }
         });
@@ -151,26 +148,11 @@ public class Admin extends Librarian {
         Database.GetDataFromUser();
 
         // Create frame
-        JFrame frame = new JFrame("JTable with ArrayList");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(730, 400);
-        frame.setLayout(null);
+        JFrame frame = GUI.createFrame("Manage All User", 730, 400);
 
         // Create Button Back
-        JButton Back = new JButton("Back");
-        Back.setFont(new Font("Arial", Font.BOLD, 15));
-        Back.setForeground(Color.WHITE);
-
-        Back.setBounds(10, 10, 100, 30);
-        Back.setBackground(Color.RED);
-
-        frame.add(Back);
-
-        // Column names
-        String[] columnNames = { "ID", "Name", "Address", "Phone Number", "Email", "Password" };
-
-        // Convert ArrayList of objects to 2D array
-        String[][] data = new String[Database.UserList.size()][6]; // 3 columns
+        JButton Back = GUI.createButtonBack(frame);
+        Back.addActionListener(e -> frame.dispose());
 
         JPanel Title = new JPanel();
         Title.setBounds(0, 10, 700, 50);
@@ -182,13 +164,17 @@ public class Admin extends Librarian {
         JPanel ActionPanel = new JPanel();
         ActionPanel.setBounds(0, 100, 700, 40);
 
-        JButton FilterStudent = new JButton("Filter Student");
-        FilterStudent.setFont(new Font("Arial", Font.BOLD, 15));
-        ActionPanel.add(FilterStudent);
+        JButton Add = new JButton("Add");
+        Add.setFont(new Font("Arial", Font.BOLD, 15));
+        ActionPanel.add(Add);
 
-        JButton FilterLibrarian = new JButton("Filter Librarian");
-        FilterLibrarian.setFont(new Font("Arial", Font.BOLD, 15));
-        ActionPanel.add(FilterLibrarian);
+        JButton Update = new JButton("Update");
+        Update.setFont(new Font("Arial", Font.BOLD, 15));
+        ActionPanel.add(Update);
+
+        JButton Delete = new JButton("Delete");
+        Delete.setFont(new Font("Arial", Font.BOLD, 15));
+        ActionPanel.add(Delete);
 
         JPanel SearchPanel = new JPanel();
         SearchPanel.setBounds(0, 60, 700, 50);
@@ -208,55 +194,18 @@ public class Admin extends Librarian {
 
         frame.add(ActionPanel);
         frame.add(SearchPanel);
-        for (int i = 0; i < Database.UserList.size(); i++) {
-            User p = Database.UserList.get(i);
-            data[i][0] = p.ID;
-            data[i][1] = p.Name;
-            data[i][2] = p.Address;
-            data[i][3] = p.PhoneNumber;
-            data[i][4] = p.Email;
-            data[i][5] = p.getPassword();
+
+        // Column names
+        String[] columnNames = { "ID", "Name", "Address", "Phone Number", "Email", "Password" };
+        // Create table model
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+        // Loop through userList and add rows directly to the table model
+        for (User user : Database.UserList) {
+            model.addRow(new Object[] { user.ID, user.Name, user.Address, user.PhoneNumber, user.Email, user.getPassword() });
         }
-        // Create JTable with DefaultTableModel
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-        JTable table = new JTable(model);
 
-        // Set font and row height
-        table.setFont(new Font("Arial", Font.PLAIN, 14));
-        table.setRowHeight(25);
-
-        // Set header font and background color
-        JTableHeader header = table.getTableHeader();
-        header.setFont(new Font("Arial", Font.BOLD, 14));
-        header.setBackground(Color.LIGHT_GRAY);
-        header.setForeground(Color.BLACK);
-
-        // Set grid color and selection background
-        table.setGridColor(Color.GRAY);
-        table.setSelectionBackground(Color.BLUE);
-        table.setSelectionForeground(Color.WHITE);
-
-        // Remove column reordering
-        header.setReorderingAllowed(false);
-
-        // Add table to a scroll pane
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10, 145, 700, 200);
-
-        // Add scroll pane to frame
-        frame.add(scrollPane, BorderLayout.CENTER);
-
-        // Set frame visibility
-        frame.setVisible(true);
-
-        // Add action listener to Back button
-        Back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                AdminFeatures();
-            }
-        });
+        JTable table = GUI.createTable(frame, model, 10, 145, 700, 200);
 
         // Create Button Refresh
         JButton Refresh = new JButton("Refresh");
@@ -276,110 +225,218 @@ public class Admin extends Librarian {
             }
         });
 
-
-        // Add action listener to FilterStudent button
-        FilterStudent.addActionListener(new ActionListener() {
+        // Add action listener to Add button
+        Add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                JFrame frame1 = GUI.createFrame("Add User", 500, 200);
+                GUI.createTitle(frame1, 0, 10, 500, "Please select Type of User");
 
-                manageUser("S");
+                 // Create Button Back
+                JButton Back = GUI.createButtonBack(frame1);
+                Back.addActionListener(a -> frame1.dispose());
+                JPanel panelInput1 = GUI.createInputPanel(frame1, 0, 60, 500, 250);
+
+                JRadioButton Librarian = new JRadioButton("Librairan");
+                Librarian.setBounds(100, 0, 150, 30);
+                Librarian.setFont(new Font("Arial", Font.BOLD, 15));
+                panelInput1.add(Librarian);
+
+                JRadioButton Student = new JRadioButton("Student");
+                Student.setBounds(310, 0, 150, 30);
+                Student.setFont(new Font("Arial", Font.BOLD, 15));
+                panelInput1.add(Student);
+
+                ButtonGroup group = new ButtonGroup();
+                group.add(Librarian);
+                group.add(Student);
+
+                JButton goButton = GUI.createButton("Go", 150, 43, 200, 30, panelInput1);
+                goButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (Librarian.isSelected()) {
+                            UserRegister("L");
+                        } else if (Student.isSelected()) {
+                            UserRegister("S");
+                        }
+                    }
+                });
             }
         });
 
-        // Add action listener to FilterLibrarian button
-        FilterLibrarian.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                manageUser("L");
+        // Add action listener to update button
+        Update.addActionListener(e -> {
+            UpdateUser();
             }
+        );
+
+        // Add action listener to delete button
+        Delete.addActionListener(e -> {
+            DeleteUser();
         });
 
         // Add action listener to Search button
-        SearchButton.addActionListener(new ActionListener() {
+        SearchButton.addActionListener(e -> {
+                SearchUser(Search.getText());
+            }
+        );
+    }
+
+    public void UpdateUser(){
+        Database.GetDataFromUser();
+        JFrame frame1 = GUI.createFrame("Update User", 500, 200);
+
+        GUI.createTitle(frame1, 0, 10, 500, "Update User By ID");
+        // Create Button Back
+        JButton Back = GUI.createButtonBack(frame1);
+        Back.addActionListener(e -> frame1.dispose());
+        JPanel panelInput1 = GUI.createInputPanel(frame1, 0, 60, 500, 250);
+        
+        GUI.createLabel("Enter User ID", 20, 0, panelInput1);
+
+        JTextField studentid = GUI.createTextField(160, 3, panelInput1);
+
+        JButton goButton = GUI.createButton("Go'", 150, 43, 200, 30, panelInput1);
+
+        goButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Search.getText().startsWith("S")){
-                    searchUser(Search.getText(), "S");
-                }if(Search.getText().startsWith("L")){
-                    searchUser(Search.getText(), "L");
+                frame1.dispose();
+                JFrame frame = GUI.createFrame("Update User", 500, 350);
+
+                GUI.createTitle(frame, 0, 10, 500,"Update User Information");
+                JPanel panelInput = GUI.createInputPanel(frame, 0, 60, 500, 250);
+                // Create Button Back
+                JButton Back = GUI.createButtonBack(frame);
+                Back.addActionListener(a -> frame.dispose());
+
+                GUI.createLabel("Name : ", 20, 0, panelInput);
+                JTextField name = GUI.createTextField(160, 3, panelInput);
+
+                GUI.createLabel("Address : ", 20, 40, panelInput);
+                JTextField address = GUI.createTextField(160, 43, panelInput);
+
+                GUI.createLabel("Phone Number : ", 20, 80, panelInput);
+                JTextField phone = GUI.createTextField(160, 83, panelInput);
+
+                GUI.createLabel("Email : ", 20, 120, panelInput);
+                JTextField email = GUI.createTextField(160, 123, panelInput);
+
+                GUI.createLabel("Password : ", 20, 160, panelInput);
+                JTextField password = GUI.createTextField(160, 163, panelInput);
+
+                int found = 0;
+                for (User u : Database.UserList) {
+                    if (u.ID.equals(studentid.getText())) {
+                        name.setText(u.Name);
+                        address.setText(u.Address);
+                        phone.setText(u.PhoneNumber);
+                        email.setText(u.Email);
+                        password.setText(u.getPassword());
+                        found = 1;
+                        break;
+                    }
+                };
+
+                if(found == 0){
+                    frame.dispose();
+                    JOptionPane.showMessageDialog(frame, "User Not found!!");
+                    return;
                 }
+
+                JButton registerButton = GUI.createButton("Update", 200, 205, 100, 30, panelInput);
+                registerButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String Name = name.getText();
+                        String Address = address.getText();
+                        String Phone = phone.getText();
+                        String Email = email.getText();
+                        String Password = password.getText();
+
+                        if (Name.isEmpty() || Address.isEmpty() || Phone.isEmpty() || Email.isEmpty() || Password.isEmpty()) {
+                            JOptionPane.showMessageDialog(frame, "Please fill in all fields.");
+                        } else {
+                            String insertQuery = String.format(
+                                    "Update User SET Name = '%s', Address = '%s', PhoneNumber = '%s', Email = '%s', Password = '%s' WHERE concat(role, ID) = '%s'",
+                                    Name, Address, Phone, Email, Password, studentid.getText());
+                            MySQLConnection.executeUpdate(insertQuery);
+                            JOptionPane.showMessageDialog(frame, "Update successful!");
+                            frame.dispose();
+                        }
+                    }
+                });
             }
         });
     }
 
-    // Search Librarian by id
-    public void searchLibrarianByID() {
+    public void DeleteUser(){
         Database.GetDataFromUser();
-        if (Database.UserList.isEmpty()) {
-            System.out.println("User list is empty.");
-            return;
-        }
-        String librarianID;
-        while (true) {
-            try {
-                System.out.print("Enter Librarian ID     : ");
-                librarianID = scanner.nextLine();
-                InputException test = new InputException(librarianID, "^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$",
-                        "Must has at least one character");
+        JFrame frame1 = GUI.createFrame("Delete Student", 500, 200);
+
+        GUI.createTitle(frame1, 0, 10, 500, "Delete Student by ID");
+        // Create Button Back
+        JButton Back = GUI.createButtonBack(frame1);
+        Back.addActionListener(e -> frame1.dispose());
+        JPanel panelInput1 = GUI.createInputPanel(frame1, 0, 60, 500, 250);
+
+        GUI.createLabel("Enter Student ID : ", 20, 0 , panelInput1);
+
+        JTextField StudentID = GUI.createTextField(160, 3, panelInput1);
+        
+        JButton goButton = GUI.createButton("Go", 150, 43, 200, 30, panelInput1);
+
+        goButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (User u : Database.UserList) {
+                    if (u.ID.equals(StudentID.getText())) {
+                        String deleteQuery = String.format("DELETE FROM User WHERE concat(role, ID) = '%s'", StudentID.getText());
+                        MySQLConnection.executeUpdate(deleteQuery);
+                        JOptionPane.showMessageDialog(frame1, "User deleted successfully!");
+                        frame1.dispose();
+                        return;
+                    }
+                }
+                frame1.dispose();
+                JOptionPane.showMessageDialog(frame1, "User Not found!!");
+            }
+        });
+    }
+
+    public void SearchUser(String keyword){
+        // Create frame
+        JFrame frame = GUI.createFrame("Search User", 730, 150);
+
+        GUI.createTitle(frame, 0, 0, 730, "Result of " + keyword);
+
+        //Create Button Back
+        JButton Back = GUI.createButtonBack(frame);
+        Back.addActionListener(e -> frame.dispose());
+        
+        // Column names
+        String[] columnNames = { "ID", "Name", "Address", "Phone Number", "Email", "Password" };
+        
+        // Create table model
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+        // Loop through userList and add rows directly to the table model
+        int found = 0;
+        for (User user : Database.UserList) {
+            if (user.ID.equals(keyword)) {
+                model.addRow(new Object[] { user.ID, user.Name, user.Address, user.PhoneNumber, user.Email, user.getPassword() });
+                found = 1;
                 break;
-            } catch (InputException e) {
-                System.out.println(e.getMessage());
             }
         }
-        System.out.println("Result of librarian with ID : " + librarianID);
-        System.out.println("___________________________________________________\n");
-        for (User l : Database.UserList) {
-            if (librarianID.equals(l.ID)) {
-                System.out.println("ID        : " + l.ID);
-                System.out.println("Name      : " + l.Name);
-                System.out.println("Address   : " + l.Address);
-                System.out.println("Phone     : " + l.PhoneNumber);
-                System.out.println("Email     : " + l.Email);
-                System.out.println("___________________________________________________");
-                return;
-            }
-        }
-        System.out.println("                Librarian not found");
-        System.out.println("___________________________________________________");
-    }
 
-    // Display Librarian
-    public void displayLibrarain() {
-        Database.GetDataFromUser();
-        if (Database.UserList.isEmpty()) {
-            System.out.println("No data in Librarain list");
+        JTable table = GUI.createTable(frame, model, 10, 50, 700, 50);
+
+        if (found == 0) {
+            frame.dispose();
+            JOptionPane.showMessageDialog(frame, "User not found!");
             return;
         }
-        System.out.println(
-                "#-----------------------------------------------------------------------------------------------------------------#");
-        System.out.println(
-                "|                                                                                                                 |");
-        System.out.println(
-                "#                                      Librarain list in Library Management System                                #");
-        System.out.println(
-                "|                                                                                                                 |");
-        System.out.println(
-                "#-----------------------------------------------------------------------------------------------------------------#");
-        int count = 0;
-        String format = "| %-5s | %-20s | %-20s | %-15s | %-20s | %-15s |\n";
-        System.out.println(
-                "+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
-        System.out.printf(format, " ID", "Name", "Address", "Phone Number", "Email", "Password");
-        System.out.println(
-                "+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
-        for (User l : Database.UserList) {
-            if (l.ID.charAt(0) == 'L') {
-                System.out.println(l);
-                System.out.println(
-                        "+-------+----------------------+----------------------+-----------------+----------------------+-----------------+");
-                count++;
-            }
-        }
-
-        System.out.println("--------------- Total librarain : " + count + " --------------- ");
     }
-
-    
-
 }

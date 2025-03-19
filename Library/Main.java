@@ -10,6 +10,12 @@ public class Main {
         Admin admin = new Admin();
         Librarian librarian = new Librarian();
         Student student = new Student();
-        if(admin.adminLogin()) admin.AdminFeatures();
+        //admin.manageAllUser();
+        //librarian.manageStudent();
+
+        //librarian.manageBook();
+        //librarian.manageBorrow();
+
+        if(student.userLogin("S")) student.StudentFeatures();
     }
 }
