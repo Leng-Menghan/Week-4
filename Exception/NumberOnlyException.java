@@ -4,17 +4,12 @@ public class NumberOnlyException extends NumberFormatException {
         super(message);
     }
 
-    public NumberOnlyException(String inpuString, String formaString) throws NumberOnlyException {
+    public NumberOnlyException(String inpuString, String formaString, String message) throws NumberOnlyException {
         if(!inpuString.matches(formaString))
         {
-            throw new NumberOnlyException("Number only");
+            throw new NumberOnlyException(message);
         }
     }
-    
-    public NumberOnlyException(double input) throws NumberOnlyException {
-        if(input<=0){
-            throw new NumberOnlyException("Number can not smaller than Zero");
-        }
-    }
+
 
 }

@@ -1,5 +1,5 @@
 package Library;
 public interface UserAction {
-    void changeName();
-    void changePassword();
+    boolean userLogin(String role);
+    void searchBook(String keyword);
 }

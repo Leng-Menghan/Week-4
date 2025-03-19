@@ -1,62 +1,33 @@
 package Library;
 
 import java.util.HashMap;
-import java.util.Scanner;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.xml.crypto.Data;
-
-import Exception.InputException;
-import Exception.NumberOnlyException;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import Exception.NumberOnlyException;
+import Exception.InputException;
 public class Librarian extends User {
-    Scanner scanner = new Scanner(System.in);
-
     // constructor for register
     public Librarian(String ID, String Name, String Address, String PhoneNumber, String Email, String password) {
         super(ID, Name, Address, PhoneNumber, Email, password);
     }
 
     // default constructor
-    public Librarian() {
-    };
+    public Librarian() {};
 
     public void LibrarianFeatures() {
-        JFrame frame = new JFrame();
-        frame.setSize(500, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-        frame.setLayout(null);
+        JFrame frame = GUI.createFrame("Librarian Feature", 500, 300);
 
-        JPanel panelTitle = new JPanel();
-        panelTitle.setBounds(0, 10, 500, 40);
-        JLabel label = new JLabel("Welcome to Librarian Features");
-        label.setFont(new Font("Arial", Font.BOLD, 25));
-        panelTitle.add(label);
+        GUI.createTitle(frame, 0, 10, 500, "Welcome to Librarian Features");
+        
+        JPanel panelButton = GUI.createInputPanel(frame, 0, 60, 500, 650);
 
-        JPanel panelButton = new JPanel();
-        panelButton.setBounds(0, 60, 500, 650);
-        panelButton.setLayout(null);
-
-        JButton button1 = new JButton("Manage Student");
-        button1.setFont(new Font("Arial", Font.BOLD, 15));
-        button1.setBounds(150, 0, 200, 40);
-        JButton button2 = new JButton("Manage Book");
-        button2.setFont(new Font("Arial", Font.BOLD, 15));
-        button2.setBounds(150, 50, 200, 40);
-        JButton button3 = new JButton("Manage Borrowed");
-        button3.setFont(new Font("Arial", Font.BOLD, 15));
-        button3.setBounds(150, 100, 200, 40);
-
-        JButton button4 = new JButton("Log out");
-        button4.setFont(new Font("Arial", Font.BOLD, 15));
-        button4.setBounds(150, 150, 200, 40);
+        JButton button1 = GUI.createButton("Manage Student", 150, 0, 200, 40, panelButton);
+        JButton button2 = GUI.createButton("Manage Book", 150, 50, 200, 40, panelButton);
+        JButton button3 = GUI.createButton("Manage Borrow", 150, 100, 200, 40, panelButton);
+        JButton button4 = GUI.createButton("Log out", 150, 150, 200, 40, panelButton);
 
         button1.addActionListener(new ActionListener() {
             @Override
@@ -78,12 +49,12 @@ public class Librarian extends User {
             }
         });
 
-        panelButton.add(button1);
-        panelButton.add(button2);
-        panelButton.add(button3);
-        panelButton.add(button4);
-        frame.add(panelButton);
-        frame.add(panelTitle);
+        button4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
     }
 
     public void manageStudent() {
@@ -200,6 +171,80 @@ public class Librarian extends User {
         });
     }
 
+    public void UserRegister(String role){
+        String roleName = null;
+        if(role == "S"){
+            roleName = "Student";
+        }else if(role == "L"){
+            roleName = "Librarian";
+        }
+        JFrame frame = GUI.createFrame("User Register", 500, 350);
+
+        GUI.createTitle(frame, 0, 10, 500, roleName + " Register");
+        // Create Button Back
+        JButton Back = GUI.createButtonBack(frame);
+        Back.addActionListener(e -> frame.dispose());
+
+        JPanel panelInput = GUI.createInputPanel(frame, 0, 60, 500, 250);
+
+        GUI.createLabel("Name : ", 20, 0, panelInput);
+        JTextField name = GUI.createTextField(160, 3, panelInput);
+
+        GUI.createLabel("Address : ", 20, 40, panelInput);
+        JTextField address = GUI.createTextField(160, 43, panelInput);
+
+        GUI.createLabel("Phone Number : ", 20, 80, panelInput);
+        JTextField phone = GUI.createTextField(160, 83, panelInput);
+
+        GUI.createLabel("Email : ", 20, 120, panelInput);
+        JTextField email = GUI.createTextField(160, 123, panelInput);
+
+        GUI.createLabel("Password : ", 20, 160, panelInput);
+        JTextField password = GUI.createTextField(160, 163, panelInput);
+        
+        JButton registerButton = GUI.createButton("Register", 200, 205, 100, 30, panelInput);
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Database.GetDataFromUser();
+                String Name = name.getText();
+                try {
+                    InputException exception1 = new InputException(Name.trim(), "^[A-Za-z]+$");
+                }catch (InputException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
+                String Address = address.getText();
+                String Phone = phone.getText();
+                try {
+                    NumberOnlyException exception1 = new NumberOnlyException(Phone.trim(), "^[0-9]+$","Phone number only");
+                }catch (NumberOnlyException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
+                String Email = email.getText();
+                String Password = password.getText();
+
+                if (Name.isEmpty() || Address.isEmpty() || Phone.isEmpty() || Email.isEmpty() || Password.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Please fill in all fields.");
+                } else {
+                    for(User user : Database.UserList){
+                        if(user.ID.startsWith(role)){
+                            if(user.Email.equals(Email) && user.getPassword().equals(Password)){
+                                JOptionPane.showMessageDialog(frame, "Email already exists.");
+                                return;
+                            }
+                        }
+                    }
+                    String insertQuery = String.format("INSERT INTO User (role ,Name, Address, PhoneNumber, Email, Password) VALUES ('%s','%s', '%s', '%s', '%s', '%s')", role ,Name, Address, Phone, Email, Password);
+                    MySQLConnection.executeUpdate(insertQuery);
+                    JOptionPane.showMessageDialog(frame, "Registration successful!");
+                    frame.dispose();
+                }
+            }
+        });
+    };
+
     public void updateStudent() {
         Database.GetDataFromUser();
         JFrame frame1 = GUI.createFrame("Update Student", 500, 200);
@@ -266,15 +311,37 @@ public class Librarian extends User {
                 UpdateButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        Database.GetDataFromUser();
                         String Name = name.getText();
+                        try {
+                            InputException exception1 = new InputException(Name.trim(), "^[A-Za-z]+$");
+                        }catch (InputException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                            return;
+                        }
                         String Address = address.getText();
                         String Phone = phone.getText();
+                        try {
+                            NumberOnlyException exception1 = new NumberOnlyException(Phone.trim(), "^[0-9]+$","Phone number only");
+                        }catch (NumberOnlyException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                            return;
+                        }
+
                         String Email = email.getText();
                         String Password = password.getText();
 
                         if (Name.isEmpty() || Address.isEmpty() || Phone.isEmpty() || Email.isEmpty() || Password.isEmpty()) {
                             JOptionPane.showMessageDialog(frame, "Please fill in all fields.");
                         } else {
+                            for(User user : Database.UserList){
+                                if(user.ID.startsWith("S")){
+                                    if(user.Email.equals(Email) && user.getPassword().equals(Password)){
+                                        JOptionPane.showMessageDialog(frame, "Email already exists.");
+                                        return;
+                                    }
+                                }
+                            }
                             String insertQuery = String.format(
                                     "Update User SET Name = '%s', Address = '%s', PhoneNumber = '%s', Email = '%s', Password = '%s' WHERE concat(role, ID) = '%s'",
                                     Name, Address, Phone, Email, Password, studentid.getText());
@@ -443,7 +510,16 @@ public class Librarian extends User {
 
         Back.addActionListener(e -> frame.dispose());
 
-        SearchButton.addActionListener(e -> searchBook(Search.getText()));
+        SearchButton.addActionListener(e -> {
+            try {
+                NumberOnlyException exception1 = new NumberOnlyException(Search.getText().trim(), "^[1-9]+$","Number positive interger only");
+                searchBook(Search.getText());
+            }catch (NumberOnlyException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+                return;
+            }
+            }
+        );
 
     }
 
@@ -465,6 +541,12 @@ public class Librarian extends User {
 
         goButton.addActionListener(e -> {
             frame1.dispose();
+            try {
+                NumberOnlyException exception1 = new NumberOnlyException(bookid.getText().trim(), "^[1-9]+$","Number positive interger only");
+            }catch (NumberOnlyException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+                return;
+            }
             JFrame frame = GUI.createFrame("Update Book", 500, 420);
 
             JButton Back = GUI.createButtonBack(frame);
@@ -485,7 +567,7 @@ public class Librarian extends User {
             GUI.createLabel("Qty : ",20, 160, panelInput);
             GUI.createLabel("Publisher : ",20, 200, panelInput);
 
-            JButton AddButton = GUI.createButton("Update", 150, 243, 200, 30, panelInput);
+            JButton UpdateButton = GUI.createButton("Update", 150, 243, 200, 30, panelInput);
 
             int found = 0;
             for (Book b : Database.bookList) {
@@ -506,7 +588,14 @@ public class Librarian extends User {
                 return;
             }
 
-            AddButton.addActionListener(a -> {
+            UpdateButton.addActionListener(a -> {
+                Database.GetDataFromBook();
+                for(Book b : Database.bookList){
+                    if(b.bookname.equals(bookname.getText())){
+                        JOptionPane.showMessageDialog(frame, "Book already exists.");
+                        return;
+                    }
+                }
                 String insertQuery = String.format(
                         "UPDATE Book SET Category = '%s', Name = '%s', Author = '%s', Price = '%s', Qty = '%s', Publisher = '%s' WHERE ID = '%s'",
                         category.getText(), bookname.getText(), author.getText(), price.getText(), qty.getText(),
@@ -547,8 +636,27 @@ public class Librarian extends User {
                 String bookname1 = bookname.getText();
                 String category1 = category.getText();
                 String author1 = author.getText();
+                try {
+                    InputException exception1 = new InputException(author1.trim(), "^[A-Za-z]+$");
+                }catch (InputException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
                 String price1 = price.getText();
+                try {
+                    NumberOnlyException exception1 = new NumberOnlyException(price1.trim(), "^([1-9][0-9]*|0\\.[0-9]+|[1-9][0-9]*\\.[0-9]+)$","Number positive only");
+                }catch (NumberOnlyException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
+
                 String quantity1 = qty.getText();
+                try {
+                    NumberOnlyException exception1 = new NumberOnlyException(quantity1.trim(), "^[1-9]+$","Number positive interger only");
+                }catch (NumberOnlyException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
                 String publisher1 = publisher.getText();
                 for (Book b : Database.bookList) {
                     if (b.bookname.equals(bookname1)) {
@@ -582,6 +690,12 @@ public class Librarian extends User {
         goButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    NumberOnlyException exception1 = new NumberOnlyException(bookid.getText().trim(), "^[1-9]+$","Number positive interger only");
+                }catch (NumberOnlyException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
                 for(Book b : Database.bookList){
                     if(String.valueOf(b.bookid).equals(bookid.getText())){
                         String deleteQuery = String.format("DELETE FROM Book WHERE ID = '%s'", bookid.getText());
@@ -644,15 +758,15 @@ public class Librarian extends User {
         JPanel ActionPanel = new JPanel();
         ActionPanel.setBounds(0, 100, 1400, 40);
 
-        JButton Add = new JButton("Add");
-        Add.setFont(new Font("Arial", Font.BOLD, 15));
-        ActionPanel.add(Add);
+        JButton AddBorrow = new JButton("Add Borrow");
+        AddBorrow.setFont(new Font("Arial", Font.BOLD, 15));
+        ActionPanel.add(AddBorrow);
 
-        JButton Update = new JButton("Update");
-        Update.setFont(new Font("Arial", Font.BOLD, 15));
-        ActionPanel.add(Update);
+        JButton addReturn = new JButton("Add Return");
+        addReturn.setFont(new Font("Arial", Font.BOLD, 15));
+        ActionPanel.add(addReturn);
 
-        JButton Delete = new JButton("Delete");
+        JButton Delete = new JButton("Delete Return");
         Delete.setFont(new Font("Arial", Font.BOLD, 15));
         ActionPanel.add(Delete);
 
@@ -672,6 +786,7 @@ public class Librarian extends User {
                 "Borrow Date", "Return Date", "Payment", "Librarian ID", "Librarian Name", "Returned Date" };
         
         // Create DefaultTableModel
+        //For all
         DefaultTableModel modelAll = new DefaultTableModel(columnNames, 0);
         for (HashMap<String, Object> p : Database.borrowList) {
             Object[] row = {p.get("borrowId").toString(), p.get("bookId").toString(), p.get("bookName").toString()
@@ -683,7 +798,7 @@ public class Librarian extends User {
         }
         JTable tableAll = GUI.createTable(frame, modelAll, 10, 145, 1370, 200);
         
-
+        //Only borrow hasn't returned yet
         DefaultTableModel modelBorrow = new DefaultTableModel(columnNames, 0);
         for (HashMap<String, Object> p : Database.borrowList) {
             if (String.valueOf(p.get("librarianReturnId")).equals("None")
@@ -700,18 +815,18 @@ public class Librarian extends User {
         tableBorrow.setVisible(false);
 
 
-        Update.addActionListener(new ActionListener() {
+        addReturn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame1 = GUI.createFrame("Update Borrow", 500, 200);
+                JFrame frame1 = GUI.createFrame("Return Book", 500, 200);
 
-                GUI.createTitle(frame1,0,10,500,"Update Borrow status By ID");
+                GUI.createTitle(frame1,0,10,500,"Return Book");
                 // Create Button Back
                 JButton Back = GUI.createButtonBack(frame1);
                 Back.addActionListener(a -> frame1.dispose());
                 JPanel panelInput1 = GUI.createInputPanel(frame1, 0, 60, 500, 250);
                 GUI.createLabel("Enter Borrow ID : ",20, 0, panelInput1);
-                JTextField bookid = GUI.createTextField(160, 3, panelInput1);
+                JTextField borrowid = GUI.createTextField(160, 3, panelInput1);
 
                 JButton goButton = GUI.createButton("Go", 150, 43, 200, 30, panelInput1);
 
@@ -719,13 +834,19 @@ public class Librarian extends User {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         frame1.dispose();
-                        updateBorrow(Integer.parseInt(bookid.getText()));
+                        try {
+                            NumberOnlyException exception1 = new NumberOnlyException(borrowid.getText().trim(), "^[1-9]+$","Number positive interger only");
+                            AddReturn(Integer.parseInt(borrowid.getText()));
+                        }catch (NumberOnlyException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                            return;
+                        }
                     }
                 });
             }
         });
 
-        Add.addActionListener(new ActionListener() {
+        AddBorrow.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addBorrow();
@@ -743,7 +864,7 @@ public class Librarian extends User {
                 Back.addActionListener(a -> frame1.dispose());
                 JPanel panelInput1 = GUI.createInputPanel(frame1, 0, 60, 500, 250);
                 GUI.createLabel("Enter Borrow ID : ",20, 0, panelInput1);
-                JTextField bookid = GUI.createTextField(160, 3, panelInput1);
+                JTextField borrowid = GUI.createTextField(160, 3, panelInput1);
 
                 JButton goButton = GUI.createButton("Go", 150, 43, 200, 30, panelInput1);
 
@@ -751,7 +872,13 @@ public class Librarian extends User {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         frame1.dispose();
-                        deleteReturned(Integer.parseInt(bookid.getText()));
+                        try {
+                            NumberOnlyException exception1 = new NumberOnlyException(borrowid.getText().trim(), "^[1-9]+$","Number positive interger only");
+                            deleteReturned(Integer.parseInt(borrowid.getText()));
+                        }catch (NumberOnlyException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                            return;
+                        }
                     }
                 });
             }
@@ -761,10 +888,11 @@ public class Librarian extends User {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    NumberOnlyException exception1 = new NumberOnlyException(Search.getText().trim(), "^[1-9]+$","Number positive interger only");
                     int borrowID = Integer.parseInt(Search.getText().trim());
                     searchBorrow(borrowID);
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Please enter a valid Borrow ID.");
+                }catch (NumberOnlyException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
         });
@@ -802,7 +930,7 @@ public class Librarian extends User {
 
         GUI.createLabel("Book ID : ", 20, 0, panelInput);
         JTextField bookid = GUI.createTextField(160, 3, panelInput);
-
+        
         GUI.createLabel("Student ID : ", 20, 40, panelInput);
         JTextField studentid = GUI.createTextField(160, 43, panelInput);
 
@@ -821,34 +949,56 @@ public class Librarian extends User {
             public void actionPerformed(ActionEvent e) {
                 Database.GetDataFromBook();
                 Database.GetDataFromUser();
+                frame.dispose();
                 String payment = "";
                 String bookname = "";
                 String studentname = "";
                 String librarianname = "";
-                int found = 0;
+                try {
+                    NumberOnlyException exception1 = new NumberOnlyException(bookid.getText().trim(), "^[1-9]+$","Number positive interger only");
+                }catch (NumberOnlyException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
+                //Check for exist
+                int foundBook = 0;
                 for (Book b : Database.bookList) {
                     if (String.valueOf(b.bookid).equals(bookid.getText())) {
-                        payment = String.valueOf(b.price);
                         bookname = b.bookname;
-                        found = 1;
+                        payment = String.valueOf(b.price * 0.1);
+                        foundBook = 1;
                         break;
                     }
                 }
+                if (foundBook == 0) {
+                    JOptionPane.showMessageDialog(null, "Book not found!");
+                    return;
+                }
+                int foundStudent = 0;
+                int foundLibrarian = 0;
                 for (User u : Database.UserList) {
                     if (String.valueOf(u.ID).equals(studentid.getText())) {
                         studentname = u.Name;
-                        found = 1;
+                        foundStudent = 1;
                     }
-                    if (String.valueOf(u.ID).equals(librarianid.getText())) {
+                    if(String.valueOf(u.ID).equals(librarianid.getText())) {
                         librarianname = u.Name;
-                        found = 1;
+                        foundLibrarian = 1;
                     }
                 }
-                if (found == 0) {
-                    JOptionPane.showMessageDialog(null, "Not found", "Error", JOptionPane.ERROR_MESSAGE);
+                if(foundStudent == 0 || foundLibrarian ==0) {
+                    JOptionPane.showMessageDialog(null, "User not found!");
                     return;
                 }
-                ;
+
+                for (HashMap<String, Object> b : Database.borrowList) {
+                    if (String.valueOf(b.get("ReturnedDate")).equals("None")) {
+                        if (String.valueOf(b.get("bookId")).equals(bookid.getText()) && String.valueOf(b.get("studentId")).equals(studentid.getText())) {
+                            JOptionPane.showMessageDialog(null, "Student hasn't Return This book yet.", "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+                }
                 String format = "INSERT INTO borrowlist (BookId, BookName, StudentId, StudentName, LibrarianId, LibrarianName, BorrowDate, ReturnDate, payment,LibrarianReturnId, LibrarianReturnName, ReturnedDate) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')";
                 String insertQuery = String.format(format, bookid.getText(), bookname, studentid.getText(), studentname,
                         librarianid.getText(), librarianname, borrowdate.getText(), returndate.getText(), payment,
@@ -861,19 +1011,19 @@ public class Librarian extends User {
         });
     };
 
-    public void updateBorrow(int BorrowID) {
+    public void AddReturn(int BorrowID) {
         // Create frame
-        JFrame frame = GUI.createFrame("Update Borrow Status", 500, 450);
+        JFrame frame = GUI.createFrame("Add Return", 500, 330);
 
         // Create Button Back
         JButton Back = GUI.createButtonBack(frame);
         Back.addActionListener(e -> frame.dispose());
 
         // Create Title
-        GUI.createTitle(frame, 0, 10, 500, "Update Borrow Status By ID");
+        GUI.createTitle(frame, 0, 10, 500, "Add Retun By ID");
 
         // Create Input Panel
-        JPanel panelInput = GUI.createInputPanel(frame, 0, 60, 500, 350);
+        JPanel panelInput = GUI.createInputPanel(frame, 0, 60, 500, 220);
 
         GUI.createLabel("Book ID : ", 20, 0, panelInput);
         JTextField bookid = GUI.createTextField(160, 3, panelInput);
@@ -881,37 +1031,28 @@ public class Librarian extends User {
         GUI.createLabel("Student ID : ", 20, 40, panelInput);
         JTextField studentid = GUI.createTextField(160, 43, panelInput);
 
-        GUI.createLabel("Librarian ID : ", 20, 80, panelInput);
-        JTextField librarianid = GUI.createTextField(160, 83, panelInput);
+        GUI.createLabel("Lib Return ID : ", 20, 80, panelInput);
+        JTextField librarianreturnid = GUI.createTextField(160, 83, panelInput);
 
-        GUI.createLabel("Borrow Date : ", 20, 120, panelInput);
-        JTextField borrowdate = GUI.createTextField(160, 123, panelInput);
+        GUI.createLabel("Returned Date : ", 20, 120, panelInput);
+        JTextField returneddate = GUI.createTextField(160, 123, panelInput);
 
-        GUI.createLabel("Return Date : ", 20, 160, panelInput);
-        JTextField returndate = GUI.createTextField(160, 163, panelInput);
-
-        GUI.createLabel("Lib Return ID : ", 20, 200, panelInput);
-        JTextField librarianreturnid = GUI.createTextField(160, 203, panelInput);
-
-        GUI.createLabel("Returned Date : ", 20, 240, panelInput);
-        JTextField returneddate = GUI.createTextField(160, 243, panelInput);
-
-        JButton UpdateButton = GUI.createButton("Update Borrow", 175, 290, 150, 30, panelInput);   
+        JButton UpdateButton = GUI.createButton("Add Return", 175, 170, 150, 30, panelInput);   
         Database.GetDataFromBorrow();
 
         int found = 0;
         for (HashMap<String, Object> borrow : Database.borrowList) {
-            if (String.valueOf(borrow.get("borrowId")).equals(String.valueOf(BorrowID))) {
-                bookid.setText(borrow.get("bookId").toString());
-                studentid.setText(borrow.get("studentId").toString());
-                librarianid.setText(borrow.get("librarianId").toString());
-                borrowdate.setText(borrow.get("borrowDate").toString());
-                returndate.setText(borrow.get("returnDate").toString());
-                librarianreturnid.setText(borrow.get("librarianReturnId").toString());
-                returneddate.setText(borrow.get("ReturnedDate").toString());
-                bookid.setEditable(false);
-                found =1;
-                break;
+            if (String.valueOf(borrow.get("ReturnedDate")).equals("None") && String.valueOf(borrow.get("librarianReturnId")).equals("None")) {
+                if (String.valueOf(borrow.get("borrowId")).equals(String.valueOf(BorrowID))) {
+                    bookid.setText(borrow.get("bookId").toString());
+                    studentid.setText(borrow.get("studentId").toString());
+                    librarianreturnid.setText(borrow.get("librarianReturnId").toString());
+                    returneddate.setText(borrow.get("ReturnedDate").toString());
+                    bookid.setEditable(false);
+                    studentid.setEditable(false);
+                    found =1;
+                    break;
+                }
             }
         }
 
@@ -927,52 +1068,35 @@ public class Librarian extends User {
                 Database.GetDataFromBook();
                 Database.GetDataFromUser();
                 Database.GetDataFromBorrow();
-                String bookname = "";
-                String studentname = "";
-                String librarianname = "";
+                frame.dispose();
                 String librarianreturnname = "";
-                for (Book b : Database.bookList) {
-                    if (b.bookid == Integer.parseInt(bookid.getText())) {
-                        bookname = b.bookname;
-                        break;
-                    }
-                }
+
+                //Check for exist
+                int foundLibrarian = 0;
                 for (User u : Database.UserList) {
-                    if (u.ID.equals(studentid.getText())) {
-                        studentname = u.Name;
-                    }
-                    if (u.ID.equals(librarianid.getText())) {
-                        librarianname = u.Name;
-                    }
-                    if (u.ID.equals(librarianreturnid.getText())) {
+                    if(String.valueOf(u.ID).equals(librarianreturnid.getText())) {
                         librarianreturnname = u.Name;
+                        foundLibrarian = 1;
                     }
                 }
-
-                String librarianreturnidbefore = "";
-                for (HashMap<String, Object> borrow : Database.borrowList) {
-                    if (String.valueOf(borrow.get("borrowId")).equals(String.valueOf(BorrowID))) {
-                        librarianreturnidbefore = borrow.get("librarianReturnId").toString();
-                        break;
-                    }
+                if(foundLibrarian ==0) {
+                    JOptionPane.showMessageDialog(null, "Librarian not found!");
+                    return;
                 }
-
-                if (!librarianreturnidbefore.equals(librarianreturnid.getText())
-                        && librarianreturnid.getText().equals("None")) {
-                    String updateQty = "UPDATE Book SET Qty = Qty - 1 WHERE ID = '" + bookid.getText() + "'";
-                    MySQLConnection.executeUpdate(updateQty);
-                }
-                if (!librarianreturnidbefore.equals(librarianreturnid.getText())
-                        && !librarianreturnid.getText().equals("None")) {
+                
+                //Change from Borrow to Return
+                if (!librarianreturnid.getText().equals("None") && !returneddate.equals("None")) {
                     String updateQty = "UPDATE Book SET Qty = Qty + 1 WHERE ID = '" + bookid.getText() + "'";
                     MySQLConnection.executeUpdate(updateQty);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Return not successfully");
+                    return;
                 }
 
-                String format = "UPDATE borrowlist SET BookId = '%s', BookName = '%s', StudentId = '%s', StudentName = '%s', LibrarianId = '%s', LibrarianName = '%s', BorrowDate = '%s', ReturnDate = '%s', LibrarianReturnId = '%s', LibrarianReturnName = '%s', ReturnedDate = '%s' WHERE borrowId = '%s'";
-                String UpdateQuery = String.format(format, bookid.getText(), bookname, studentid.getText(), studentname,
-                        librarianid.getText(), librarianname, borrowdate.getText(), returndate.getText(),
-                        librarianreturnid.getText(), librarianreturnname, returneddate.getText(), BorrowID);
+                String format = "UPDATE borrowlist SET LibrarianReturnId = '%s', LibrarianReturnName = '%s', ReturnedDate = '%s' WHERE borrowId = '%s'";
+                String UpdateQuery = String.format(format, librarianreturnid.getText(), librarianreturnname, returneddate.getText(), BorrowID);
                 MySQLConnection.executeUpdate(UpdateQuery);
+                JOptionPane.showMessageDialog(null, "Return successfully");
             }
         });
     }

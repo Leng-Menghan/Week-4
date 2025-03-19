@@ -7,6 +7,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import Exception.InputException;
+import Exception.NumberOnlyException;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -70,49 +72,21 @@ public class Admin extends Librarian {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        // Block execution until login is done
-        while (frame.isVisible()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
 
         return loginAction.execute(usernameField.getText(), String.valueOf(passwordField.getPassword()));
     }
 
     public void AdminFeatures() {
-        JFrame frame = new JFrame();
-        frame.setSize(500, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-        frame.setLayout(null);
+        JFrame frame = GUI.createFrame("Librarian Feature", 500, 300);
 
-        JPanel panelTitle = new JPanel();
-        panelTitle.setBounds(0, 10, 500, 40);
-        JLabel label = new JLabel("Welcome to Admin Features");
-        label.setFont(new Font("Arial", Font.BOLD, 25));
-        panelTitle.add(label);
+        GUI.createTitle(frame, 0, 10, 500, "Welcome to Librarian Features");
+        
+        JPanel panelButton = GUI.createInputPanel(frame, 0, 60, 500, 650);
 
-        JPanel panelButton = new JPanel();
-        panelButton.setBounds(0, 60, 500, 650);
-        panelButton.setLayout(null);
-
-        JButton button1 = new JButton("Manage User");
-        button1.setFont(new Font("Arial", Font.BOLD, 15));
-        button1.setBounds(150, 0, 200, 40);
-        JButton button2 = new JButton("Manage Book");
-        button2.setFont(new Font("Arial", Font.BOLD, 15));
-        button2.setBounds(150, 50, 200, 40);
-        JButton button3 = new JButton("Manage Borrowed");
-        button3.setFont(new Font("Arial", Font.BOLD, 15));
-        button3.setBounds(150, 100, 200, 40);
-
-        JButton button4 = new JButton("Log out");
-        button4.setFont(new Font("Arial", Font.BOLD, 15));
-        button4.setBounds(150, 150, 200, 40);
+        JButton button1 = GUI.createButton("Manage User", 150, 0, 200, 40, panelButton);
+        JButton button2 = GUI.createButton("Manage Book", 150, 50, 200, 40, panelButton);
+        JButton button3 = GUI.createButton("Manage Borrow", 150, 100, 200, 40, panelButton);
+        JButton button4 = GUI.createButton("Log out", 150, 150, 200, 40, panelButton);
 
         button1.addActionListener(new ActionListener() {
             @Override
@@ -136,12 +110,12 @@ public class Admin extends Librarian {
             }
         });
 
-        panelButton.add(button1);
-        panelButton.add(button2);
-        panelButton.add(button3);
-        panelButton.add(button4);
-        frame.add(panelButton);
-        frame.add(panelTitle);
+        button4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
     }
 
     public void manageAllUser() {
@@ -350,8 +324,20 @@ public class Admin extends Librarian {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         String Name = name.getText();
+                        try {
+                            InputException exception1 = new InputException(Name.trim(), "^[A-Za-z]+$");
+                        }catch (InputException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                            return;
+                        }
                         String Address = address.getText();
                         String Phone = phone.getText();
+                        try {
+                            NumberOnlyException exception1 = new NumberOnlyException(Phone.trim(), "^[0-9]+$","Phone number only");
+                        }catch (NumberOnlyException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                            return;
+                        }
                         String Email = email.getText();
                         String Password = password.getText();
 

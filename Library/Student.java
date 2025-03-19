@@ -23,36 +23,16 @@ public class Student extends User {
     public Student() {};
 
     public void StudentFeatures() {
-        JFrame frame = new JFrame();
-        frame.setSize(500, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-        frame.setLayout(null);
+        JFrame frame = GUI.createFrame("Librarian Feature", 500, 300);
 
-        JPanel panelTitle = new JPanel();
-        panelTitle.setBounds(0, 10, 500, 40);
-        JLabel label = new JLabel("Welcome to Student Features");
-        label.setFont(new Font("Arial", Font.BOLD, 25));
-        panelTitle.add(label);
+        GUI.createTitle(frame, 0, 10, 500, "Welcome to Librarian Features");
+        
+        JPanel panelButton = GUI.createInputPanel(frame, 0, 60, 500, 650);
 
-        JPanel panelButton = new JPanel();
-        panelButton.setBounds(0, 60, 500, 650);
-        panelButton.setLayout(null);
-
-        JButton button1 = new JButton("Display Books");
-        button1.setFont(new Font("Arial", Font.BOLD, 15));
-        button1.setBounds(150, 0, 200, 40);
-        JButton button2 = new JButton("Borrow Book");
-        button2.setFont(new Font("Arial", Font.BOLD, 15));
-        button2.setBounds(150, 50, 200, 40);
-        JButton button3 = new JButton("Return Book");
-        button3.setFont(new Font("Arial", Font.BOLD, 15));
-        button3.setBounds(150, 100, 200, 40);
-
-        JButton button4 = new JButton("Log out");
-        button4.setFont(new Font("Arial", Font.BOLD, 15));
-        button4.setBounds(150, 150, 200, 40);
+        JButton button1 = GUI.createButton("Display Book", 150, 0, 200, 40, panelButton);
+        JButton button2 = GUI.createButton("Borrow Book", 150, 50, 200, 40, panelButton);
+        JButton button3 = GUI.createButton("Return Book", 150, 100, 200, 40, panelButton);
+        JButton button4 = GUI.createButton("Log out", 150, 150, 200, 40, panelButton);
 
         button1.addActionListener(new ActionListener() {
             @Override
@@ -74,13 +54,12 @@ public class Student extends User {
                 ReturnAction();
             }
         });
-        
-        panelButton.add(button1);
-        panelButton.add(button2);
-        panelButton.add(button3);
-        panelButton.add(button4);
-        frame.add(panelButton);
-        frame.add(panelTitle);
+        button4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
     }
 
     public void BorrowAction() {
@@ -117,6 +96,12 @@ public class Student extends User {
         BorrowButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    NumberOnlyException exception1 = new NumberOnlyException(bookid.getText().trim(), "^[1-9]+$","Number positive interger only");
+                }catch (NumberOnlyException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
                 Database.GetDataFromBorrow();
                 for (HashMap<String, Object> b : Database.borrowList) {
                     if (String.valueOf(b.get("ReturnedDate")).equals("None")) {
@@ -184,6 +169,12 @@ public class Student extends User {
         ReturnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    NumberOnlyException exception1 = new NumberOnlyException(bookid.getText().trim(), "^[1-9]+$","Number positive interger only");
+                }catch (NumberOnlyException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
                 Database.GetDataFromUser();
                 String librarianReturnName = "";
                 for (User user : Database.UserList) {
@@ -315,8 +306,13 @@ public class Student extends User {
         SearchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                searchBook(Search.getText());
+                try {
+                    NumberOnlyException exception1 = new NumberOnlyException(Search.getText().trim(), "^[1-9]+$","Number positive interger only");
+                    searchBook(Search.getText());
+                }catch (NumberOnlyException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
             }
         });
 
