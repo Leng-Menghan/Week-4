@@ -225,13 +225,12 @@ public class Student extends User {
                             String UpdateB = "Update Book set Qty=Qty+1 where ID='" + bookid.getText() + "'";
                             MySQLConnection.executeUpdate(UpdateB);
                             IsReturned = 1;
+                            JOptionPane.showMessageDialog(null, "Returned Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                             break;
-                        } else IsReturned = 2;
+                        }
                     }
                 }
-                if (IsReturned == 1) {
-                    JOptionPane.showMessageDialog(null, "Returned Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-                } else if (IsReturned == 2) {
+                if (IsReturned == 0) {
                     JOptionPane.showMessageDialog(null, "You haven't borrow this Book!!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
