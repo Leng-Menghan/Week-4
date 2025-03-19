@@ -13,14 +13,6 @@ import Exception.NumberOnlyException;
 import java.awt.*;
 
 public class Student extends User {
-    Scanner scanner = new Scanner(System.in);
-
-    // Constructor
-    public Student(String ID, String Name, String Address, String PhoneNumber, String Email, String password) {
-        super(ID, Name, Address, PhoneNumber, Email, password);
-    }
-
-    public Student() {};
 
     public void StudentFeatures() {
         JFrame frame = GUI.createFrame("Student Feature", 500, 300);
@@ -97,7 +89,7 @@ public class Student extends User {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    NumberOnlyException exception1 = new NumberOnlyException(bookid.getText().trim(), "^[1-9]+$","Number positive interger only");
+                    NumberOnlyException exception1 = new NumberOnlyException(bookid.getText().trim(), "^[0-9]+$","Number positive interger only");
                 }catch (NumberOnlyException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                     return;
@@ -117,21 +109,34 @@ public class Student extends User {
                 String bookName = "";
                 String payment = "";
 
-                for (Book book : Database.bookList) {
-                    if (book.bookid == Integer.parseInt(bookid.getText())) {
-                        bookName = book.bookname;
-                        payment = String.valueOf(book.price * 0.1);
+                //Check for exist
+                int foundBook = 0;
+                for (Book b : Database.bookList) {
+                    if (String.valueOf(b.bookid).equals(bookid.getText())) {
+                        bookName = b.bookname;
+                        payment = String.valueOf(b.price * 0.1);
+                        foundBook = 1;
                         break;
                     }
                 }
+                if (foundBook == 0) {
+                    JOptionPane.showMessageDialog(null, "Book not found!");
+                    return;
+                }
 
-                for (User user : Database.UserList) {
-                    if (user.ID.equals(ID)) {
-                        studentName = user.Name;
+                int foundLibrarian = 0;
+                for (User u : Database.UserList) {
+                    if (String.valueOf(u.ID).equals(ID)) {
+                        studentName = u.Name;
                     }
-                    if (user.ID.equals(librarianid.getText())) {
-                        librarianName = user.Name;
+                    if(String.valueOf(u.ID).equals(librarianid.getText())) {
+                        librarianName = u.Name;
+                        foundLibrarian = 1;
                     }
+                }
+                if(foundLibrarian == 0 || foundLibrarian ==0) {
+                    JOptionPane.showMessageDialog(null, "Librarian not found!");
+                    return;
                 }
 
                 DisplayInvoice(bookid.getText(), bookName, ID, studentName, librarianid.getText(), librarianName,
@@ -169,6 +174,7 @@ public class Student extends User {
         ReturnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                frame.dispose();
                 try {
                     NumberOnlyException exception1 = new NumberOnlyException(bookid.getText().trim(), "^[1-9]+$","Number positive interger only");
                 }catch (NumberOnlyException ex) {

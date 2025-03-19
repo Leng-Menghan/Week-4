@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import Exception.EmailInputException;
 import Exception.InputException;
 import Exception.NumberOnlyException;
 
@@ -67,7 +68,6 @@ public class Admin extends Librarian {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
                 manageAllUser();
             }
         });
@@ -314,6 +314,12 @@ public class Admin extends Librarian {
                             return;
                         }
                         String Email = email.getText();
+                        try {
+                            EmailInputException exception1 = new EmailInputException(Email.trim(), "^[a-zA-Z0-9._%+-]+@gmail\\.com$");
+                        }catch (EmailInputException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                            return;
+                        }
                         String Password = password.getText();
 
                         if (Name.isEmpty() || Address.isEmpty() || Phone.isEmpty() || Email.isEmpty() || Password.isEmpty()) {

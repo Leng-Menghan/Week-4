@@ -1,7 +1,6 @@
 package Library;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,7 +20,6 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(admin.adminLogin()){
-                    frame.dispose();
                     admin.AdminFeatures();
                 }
             }
@@ -31,7 +29,7 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(librarian.userLogin("L")){
-                    frame.dispose();
+
                     librarian.LibrarianFeatures();
                 }
             }
@@ -41,7 +39,7 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(student.userLogin("S")){
-                    frame.dispose();
+
                     student.StudentFeatures();
                 }
             }

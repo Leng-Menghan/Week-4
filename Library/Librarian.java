@@ -7,16 +7,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import Exception.NumberOnlyException;
+import Exception.EmailInputException;
 import Exception.InputException;
 public class Librarian extends User {
-    // constructor for register
-    public Librarian(String ID, String Name, String Address, String PhoneNumber, String Email, String password) {
-        super(ID, Name, Address, PhoneNumber, Email, password);
-    }
-
-    // default constructor
-    public Librarian() {};
-
+    
     public void LibrarianFeatures() {
         JFrame frame = GUI.createFrame("Librarian Feature", 500, 300);
 
@@ -223,6 +217,13 @@ public class Librarian extends User {
                     return;
                 }
                 String Email = email.getText();
+                try {
+                    EmailInputException exception1 = new EmailInputException(Email.trim(), "^[a-zA-Z0-9._%+-]+@gmail\\.com$");
+                }catch (EmailInputException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
+                
                 String Password = password.getText();
 
                 if (Name.isEmpty() || Address.isEmpty() || Phone.isEmpty() || Email.isEmpty() || Password.isEmpty()) {
@@ -330,6 +331,12 @@ public class Librarian extends User {
                         }
 
                         String Email = email.getText();
+                        try {
+                            EmailInputException exception1 = new EmailInputException(Email.trim(), "^[a-zA-Z0-9._%+-]+@gmail\\.com$");
+                        }catch (EmailInputException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                            return;
+                        }
                         String Password = password.getText();
 
                         if (Name.isEmpty() || Address.isEmpty() || Phone.isEmpty() || Email.isEmpty() || Password.isEmpty()) {
@@ -584,8 +591,7 @@ public class Librarian extends User {
             UpdateButton.addActionListener(a -> {
                 Database.GetDataFromBook();
                 try {
-                    InputException exception1 = new InputException(author.getText().trim(), "^[A-Za-z ]+$");
-                    InputException exception2 = new InputException(bookname.getText().trim(), "^[A-Za-z ]+$");
+                    InputException exception1 = new InputException(author.getText().trim(), "^[A-Za-z ]+$");;
                 }catch (InputException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                     return;
@@ -595,6 +601,8 @@ public class Librarian extends User {
                         "UPDATE Book SET Category = '%s', Name = '%s', Author = '%s', Price = '%s', Qty = '%s', Publisher = '%s' WHERE ID = '%s'",
                         category.getText(), bookname.getText(), author.getText(), price.getText(), qty.getText(),publisher.getText(), bookid.getText());
                 MySQLConnection.executeUpdate(insertQuery);
+                JOptionPane.showMessageDialog(null, "Book Updated Successfully");
+                frame.dispose();
             });
 
 
@@ -633,7 +641,6 @@ public class Librarian extends User {
                 String author1 = author.getText();
                 try {
                     InputException exception1 = new InputException(author1.trim(), "^[A-Za-z ]+$");
-                    InputException exception2 = new InputException(bookname1.trim(), "^[A-Za-z ]+$");
                 }catch (InputException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                     return;
@@ -648,7 +655,7 @@ public class Librarian extends User {
 
                 String quantity1 = qty.getText();
                 try {
-                    NumberOnlyException exception1 = new NumberOnlyException(quantity1.trim(), "^[1-9]+$","Number positive interger only");
+                    NumberOnlyException exception1 = new NumberOnlyException(quantity1.trim(), "^[0-9]+$","Number positive interger only");
                 }catch (NumberOnlyException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                     return;
@@ -664,6 +671,8 @@ public class Librarian extends User {
                         "INSERT INTO Book (Category, Name, Author, Price, Qty, Publisher) VALUES ( '%s', '%s', '%s', '%s','%s', '%s')",
                         category1, bookname1, author1, price1, quantity1, publisher1);
                 MySQLConnection.executeUpdate(insertQuery);
+                JOptionPane.showMessageDialog(null, "Book Added Successfully");
+                frame.dispose();
             };
         });
     }
@@ -831,7 +840,7 @@ public class Librarian extends User {
                     public void actionPerformed(ActionEvent e) {
                         frame1.dispose();
                         try {
-                            NumberOnlyException exception1 = new NumberOnlyException(borrowid.getText().trim(), "^[1-9]+$","Number positive interger only");
+                            NumberOnlyException exception1 = new NumberOnlyException(borrowid.getText().trim(), "^[0-9]+$","Number positive interger only");
                             AddReturn(Integer.parseInt(borrowid.getText()));
                         }catch (NumberOnlyException ex) {
                             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -869,7 +878,7 @@ public class Librarian extends User {
                     public void actionPerformed(ActionEvent e) {
                         frame1.dispose();
                         try {
-                            NumberOnlyException exception1 = new NumberOnlyException(borrowid.getText().trim(), "^[1-9]+$","Number positive interger only");
+                            NumberOnlyException exception1 = new NumberOnlyException(borrowid.getText().trim(), "^[0-9]+$","Number positive interger only");
                             deleteReturned(Integer.parseInt(borrowid.getText()));
                         }catch (NumberOnlyException ex) {
                             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -884,7 +893,7 @@ public class Librarian extends User {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    NumberOnlyException exception1 = new NumberOnlyException(Search.getText().trim(), "^[1-9]+$","Number positive interger only");
+                    NumberOnlyException exception1 = new NumberOnlyException(Search.getText().trim(), "^[0-9]+$","Number positive interger only");
                     int borrowID = Integer.parseInt(Search.getText().trim());
                     searchBorrow(borrowID);
                 }catch (NumberOnlyException ex) {
@@ -951,7 +960,7 @@ public class Librarian extends User {
                 String studentname = "";
                 String librarianname = "";
                 try {
-                    NumberOnlyException exception1 = new NumberOnlyException(bookid.getText().trim(), "^[1-9]+$","Number positive interger only");
+                    NumberOnlyException exception1 = new NumberOnlyException(bookid.getText().trim(), "^[0-9]+$","Number positive interger only");
                 }catch (NumberOnlyException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                     return;
@@ -1016,7 +1025,7 @@ public class Librarian extends User {
         Back.addActionListener(e -> frame.dispose());
 
         // Create Title
-        GUI.createTitle(frame, 0, 10, 500, "Add Retun By ID");
+        GUI.createTitle(frame, 0, 10, 500, "Add Return By ID");
 
         // Create Input Panel
         JPanel panelInput = GUI.createInputPanel(frame, 0, 60, 500, 220);

@@ -6,6 +6,8 @@ import javax.swing.table.JTableHeader;
 import java.awt.Font;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import Exception.EmailInputException;
 import Exception.InputException;
 import Exception.NumberOnlyException;
 import java.awt.Color;
@@ -19,8 +21,8 @@ public class User implements UserAction {
     public String PhoneNumber;
     public String Email;
     public String Password;
-
     private boolean isAuthenticated = false; // Tracks login success
+    
     // Constructor
     public User(String ID, String Name, String Address, String PhoneNumber, String Email, String password) {
         this.Name = Name;
@@ -60,6 +62,12 @@ public class User implements UserAction {
         Database.GetDataFromUser();
         loginButton.addActionListener(e -> {
             String email = emailField.getText();
+            try {
+                    EmailInputException exception1 = new EmailInputException(email.trim(), "^[a-zA-Z0-9._%+-]+@gmail\\.com$");
+                }catch (EmailInputException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
             String password = passwordField.getText();
 
             for (User user : Database.UserList) {
