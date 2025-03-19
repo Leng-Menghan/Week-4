@@ -1,19 +1,9 @@
 package Library;
-
 import javax.swing.*;
+import java.awt.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import java.awt.Font;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import Exception.EmailInputException;
 import Exception.InputException;
-import Exception.NumberOnlyException;
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 public class User implements UserAction {
     public String ID;
     public String Name;
@@ -41,6 +31,129 @@ public class User implements UserAction {
         return this.Password;
     }
 
+    public void changePassword() {
+        JFrame frame = GUI.createFrame("Change Password", 520, 230);
+
+        GUI.createTitle(frame, 0, 10, 520,"Change Password");
+        // Create Button Back
+        JButton Back = GUI.createButtonBack(frame);
+        Back.addActionListener(e -> frame.dispose());
+
+        JPanel panelInput = GUI.createInputPanel(frame, 0, 60, 530, 250);
+
+        GUI.createLabel("Current Password : ", 20, 0, panelInput);
+        JTextField currentPassword = GUI.createTextField(180, 3, panelInput);
+
+        GUI.createLabel("New Password : ", 20, 40, panelInput);
+        JTextField newPassword = GUI.createTextField(180, 43, panelInput);
+        
+        JButton changeButton = GUI.createButton("Change", 200, 83, 100, 30, panelInput);
+        changeButton.addActionListener(e -> {
+            if (currentPassword.getText().equals(this.Password)) {
+                String updatePassword = "UPDATE User SET Password = '" + newPassword.getText() + "' WHERE CONCAT(role, ID) = '" + this.ID + "'";
+                MySQLConnection.executeUpdate(updatePassword);
+                JOptionPane.showMessageDialog(frame, "Password changed successfully!");
+                frame.dispose();
+            } else {
+                JOptionPane.showMessageDialog(frame, "Current password is incorrect.");
+            }
+        });
+    }
+
+    public void changeName(){
+        JFrame frame = GUI.createFrame("Change Name", 520, 230);
+
+        GUI.createTitle(frame, 0, 10, 520,"Change Name");
+        // Create Button Back
+        JButton Back = GUI.createButtonBack(frame);
+        Back.addActionListener(e -> frame.dispose());
+
+        JPanel panelInput = GUI.createInputPanel(frame, 0, 60, 530, 250);
+
+        GUI.createLabel("New name : ", 20, 0, panelInput);
+        JTextField newName = GUI.createTextField(180, 3, panelInput);
+
+        GUI.createLabel("Your password : ", 20, 40, panelInput);
+        JTextField currentPassword = GUI.createTextField(180, 43, panelInput);
+        
+        JButton changeButton = GUI.createButton("Change", 200, 83, 100, 30, panelInput);
+        changeButton.addActionListener(e -> {
+            if (currentPassword.getText().equals(this.Password)) {
+                try {
+                    InputException exception1 = new InputException(newName.getText().trim(), "^[A-Za-z ]+$");
+                }catch (InputException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
+                String updateName = "UPDATE User SET Name = '" + newName.getText() + "' WHERE CONCAT(role, ID) = '" + this.ID + "'";
+                MySQLConnection.executeUpdate(updateName);
+                JOptionPane.showMessageDialog(frame, "Name changed successfully!");
+                frame.dispose();
+            } else {
+                JOptionPane.showMessageDialog(frame, "Your password is incorrect.");
+            }
+        });
+    }
+
+    public void showInformation(){
+        // Create frame
+        JFrame frame = GUI.createFrame("Display Information", 500, 350);
+
+        GUI.createTitle(frame, 0, 10, 500, "Your Information");
+
+        // Create Button Back
+        JButton Back = GUI.createButtonBack(frame);
+        Back.addActionListener(e -> frame.dispose());
+
+        // Invoice Content Panel
+        JPanel invoicePanel = new JPanel();
+        invoicePanel.setBounds(20, 60, 450, 220);
+        invoicePanel.setLayout(null);
+        invoicePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        invoicePanel.setBackground(Color.WHITE);
+        frame.add(invoicePanel);
+        Database.GetDataFromUser();
+        for(User u : Database.UserList){
+            if(u.ID.equals(this.ID)){
+                this.Name = u.Name;
+                this.Address = u.Address;
+                this.PhoneNumber = u.PhoneNumber;
+                this.Email = u.Email;
+            }
+        }
+        // Labels for Invoice Details
+        int yPosition = 10;
+        JLabel StudentID = new JLabel("ID: " + this.ID);
+        StudentID.setFont(new Font("Arial", Font.PLAIN, 16));
+        StudentID.setBounds(20, yPosition, 400, 30);
+        invoicePanel.add(StudentID);
+        yPosition += 40;
+
+        JLabel StudentName = new JLabel("Name: " + this.Name);
+        StudentName.setFont(new Font("Arial", Font.PLAIN, 16));
+        StudentName.setBounds(20, yPosition, 400, 30);
+        invoicePanel.add(StudentName);
+        yPosition += 40;
+
+        JLabel LibrarianID = new JLabel("Phone Number: " + this.PhoneNumber);
+        LibrarianID.setFont(new Font("Arial", Font.PLAIN, 16));
+        LibrarianID.setBounds(20, yPosition, 400, 30);
+        invoicePanel.add(LibrarianID);
+        yPosition += 40;
+
+        JLabel LibrarianName = new JLabel("Address: " + this.Address);
+        LibrarianName.setFont(new Font("Arial", Font.PLAIN, 16));
+        LibrarianName.setBounds(20, yPosition, 400, 30);
+        invoicePanel.add(LibrarianName);
+        yPosition += 40;
+
+        JLabel Dates = new JLabel("Email : " + this.Email);
+        Dates.setFont(new Font("Arial", Font.PLAIN, 16));
+        Dates.setBounds(20, yPosition, 400, 30);
+        invoicePanel.add(Dates);
+        yPosition += 40;
+    }
+
     public boolean userLogin(String role){
         JDialog dialog = GUI.createdialog(500, 230); 
 
@@ -62,7 +175,7 @@ public class User implements UserAction {
         Database.GetDataFromUser();
         loginButton.addActionListener(e -> {
             String email = emailField.getText();
-            try {
+                try {
                     EmailInputException exception1 = new EmailInputException(email.trim(), "^[a-zA-Z0-9._%+-]+@gmail\\.com$");
                 }catch (EmailInputException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -72,7 +185,8 @@ public class User implements UserAction {
 
             for (User user : Database.UserList) {
                 if (user.ID.startsWith(role) && user.Email.equals(email) && user.getPassword().equals(password)) {
-                    ID = user.ID;
+                    this.ID = user.ID;
+                    this.Password = user.Password;
                     isAuthenticated = true;
                     JOptionPane.showMessageDialog(dialog, "Login Successful!");
                     dialog.dispose(); 
@@ -89,7 +203,6 @@ public class User implements UserAction {
         return isAuthenticated; 
 }
 
-    // Searh Book
     public void searchBook(String keyword) {
         Database.GetDataFromBook();
 

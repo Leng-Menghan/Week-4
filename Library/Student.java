@@ -13,9 +13,8 @@ import Exception.NumberOnlyException;
 import java.awt.*;
 
 public class Student extends User {
-
     public void StudentFeatures() {
-        JFrame frame = GUI.createFrame("Student Feature", 500, 300);
+        JFrame frame = GUI.createFrame("Student Feature", 500, 450);
 
         GUI.createTitle(frame, 0, 10, 500, "Welcome to Student Features");
         
@@ -25,6 +24,26 @@ public class Student extends User {
         JButton button2 = GUI.createButton("Borrow Book", 150, 50, 200, 40, panelButton);
         JButton button3 = GUI.createButton("Return Book", 150, 100, 200, 40, panelButton);
         JButton button4 = GUI.createButton("Log out", 150, 150, 200, 40, panelButton);
+        JButton button5 = GUI.createButton("Change Password", 150, 200, 200, 40, panelButton);
+        JButton button6 = GUI.createButton("Change Name", 150, 250, 200, 40, panelButton);
+        JButton button7 = GUI.createButton("Check Information", 150, 300, 200, 40, panelButton);
+        button7.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showInformation();
+            }
+        });
+        button5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changePassword();
+            }});
+
+        button6.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeName();
+            }});
 
         button1.addActionListener(new ActionListener() {
             @Override
@@ -183,11 +202,17 @@ public class Student extends User {
                 }
                 Database.GetDataFromUser();
                 String librarianReturnName = "";
+                int foundLibrarian = 0;
                 for (User user : Database.UserList) {
                     if(user.ID.equals(librarianid.getText())) {
                         librarianReturnName = user.Name;
+                        foundLibrarian = 1;
                         break;
                     }
+                }
+                if(foundLibrarian == 0) {
+                    JOptionPane.showMessageDialog(null, "Librarian not found!");
+                    return;
                 }
                 int IsReturned = 0;
                 for (HashMap<String, Object> b : Database.borrowList) {

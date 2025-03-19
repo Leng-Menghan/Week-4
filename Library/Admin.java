@@ -300,7 +300,7 @@ public class Admin extends Librarian {
                     public void actionPerformed(ActionEvent e) {
                         String Name = name.getText();
                         try {
-                            InputException exception1 = new InputException(Name.trim(), "^[A-Za-z]+$");
+                            InputException exception1 = new InputException(Name.trim(), "^[A-Za-z ]+$");
                         }catch (InputException ex) {
                             JOptionPane.showMessageDialog(null, ex.getMessage());
                             return;

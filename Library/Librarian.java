@@ -10,9 +10,9 @@ import Exception.NumberOnlyException;
 import Exception.EmailInputException;
 import Exception.InputException;
 public class Librarian extends User {
-    
+
     public void LibrarianFeatures() {
-        JFrame frame = GUI.createFrame("Librarian Feature", 500, 300);
+        JFrame frame = GUI.createFrame("Librarian Feature", 500, 450);
 
         GUI.createTitle(frame, 0, 10, 500, "Welcome to Librarian Features");
         
@@ -22,33 +22,17 @@ public class Librarian extends User {
         JButton button2 = GUI.createButton("Manage Book", 150, 50, 200, 40, panelButton);
         JButton button3 = GUI.createButton("Manage Borrow", 150, 100, 200, 40, panelButton);
         JButton button4 = GUI.createButton("Log out", 150, 150, 200, 40, panelButton);
+        JButton button5 = GUI.createButton("Change Password", 150, 200, 200, 40, panelButton);
+        JButton button6 = GUI.createButton("Change Name", 150, 250, 200, 40, panelButton);
+        JButton button7 = GUI.createButton("Check Information", 150, 300, 200, 40, panelButton);
 
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                manageStudent();
-            }
-        });
-        button2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                manageBook();
-            }
-        });
-
-        button3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                manageBorrow();
-            }
-        });
-
-        button4.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-            }
-        });
+        button7.addActionListener(e -> showInformation());
+        button5.addActionListener(e -> changePassword());
+        button6.addActionListener(e -> changeName());
+        button1.addActionListener(e -> manageStudent());
+        button2.addActionListener(e -> manageBook());
+        button3.addActionListener(e -> manageBorrow());
+        button4.addActionListener(e -> frame.dispose());
     }
 
     public void manageStudent() {
@@ -904,7 +888,6 @@ public class Librarian extends User {
 
         Back.addActionListener(e ->{
             frame.dispose();
-            LibrarianFeatures();
         });
 
         FilterBorrow.addActionListener(e -> {
