@@ -120,7 +120,6 @@ public class Admin extends Librarian {
 
     public void manageAllUser() {
         Database.GetDataFromUser();
-
         // Create frame
         JFrame frame = GUI.createFrame("Manage All User", 730, 400);
 

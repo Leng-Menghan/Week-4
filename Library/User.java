@@ -1,7 +1,5 @@
 package Library;
 
-import java.util.Scanner;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -21,7 +19,7 @@ public class User implements UserAction {
     public String PhoneNumber;
     public String Email;
     public String Password;
-    
+
     private boolean isAuthenticated = false; // Tracks login success
     // Constructor
     public User(String ID, String Name, String Address, String PhoneNumber, String Email, String password) {

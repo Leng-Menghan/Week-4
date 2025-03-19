@@ -23,9 +23,9 @@ public class Student extends User {
     public Student() {};
 
     public void StudentFeatures() {
-        JFrame frame = GUI.createFrame("Librarian Feature", 500, 300);
+        JFrame frame = GUI.createFrame("Student Feature", 500, 300);
 
-        GUI.createTitle(frame, 0, 10, 500, "Welcome to Librarian Features");
+        GUI.createTitle(frame, 0, 10, 500, "Welcome to Student Features");
         
         JPanel panelButton = GUI.createInputPanel(frame, 0, 60, 500, 650);
 
@@ -164,7 +164,7 @@ public class Student extends User {
         GUI.createLabel("Return Date : ", 20, 80, panelInput);
         JTextField returneddate = GUI.createTextField(160, 83, panelInput);
 
-        JButton ReturnButton = GUI.createButton("Borrow", 200, 123, 100, 30, panelInput); 
+        JButton ReturnButton = GUI.createButton("Return", 200, 123, 100, 30, panelInput); 
 
         ReturnButton.addActionListener(new ActionListener() {
             @Override

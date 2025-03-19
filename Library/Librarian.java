@@ -209,7 +209,7 @@ public class Librarian extends User {
                 Database.GetDataFromUser();
                 String Name = name.getText();
                 try {
-                    InputException exception1 = new InputException(Name.trim(), "^[A-Za-z]+$");
+                    InputException exception1 = new InputException(Name.trim(), "^[A-Za-z ]+$");
                 }catch (InputException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                     return;
@@ -296,6 +296,7 @@ public class Librarian extends User {
                             phone.setText(u.PhoneNumber);
                             email.setText(u.Email);
                             password.setText(u.getPassword());
+                            email.setEditable(false);
                             found = 1;
                             break;
                         }
@@ -314,7 +315,7 @@ public class Librarian extends User {
                         Database.GetDataFromUser();
                         String Name = name.getText();
                         try {
-                            InputException exception1 = new InputException(Name.trim(), "^[A-Za-z]+$");
+                            InputException exception1 = new InputException(Name.trim(), "^[A-Za-z ]+$");
                         }catch (InputException ex) {
                             JOptionPane.showMessageDialog(null, ex.getMessage());
                             return;
@@ -334,14 +335,6 @@ public class Librarian extends User {
                         if (Name.isEmpty() || Address.isEmpty() || Phone.isEmpty() || Email.isEmpty() || Password.isEmpty()) {
                             JOptionPane.showMessageDialog(frame, "Please fill in all fields.");
                         } else {
-                            for(User user : Database.UserList){
-                                if(user.ID.startsWith("S")){
-                                    if(user.Email.equals(Email) && user.getPassword().equals(Password)){
-                                        JOptionPane.showMessageDialog(frame, "Email already exists.");
-                                        return;
-                                    }
-                                }
-                            }
                             String insertQuery = String.format(
                                     "Update User SET Name = '%s', Address = '%s', PhoneNumber = '%s', Email = '%s', Password = '%s' WHERE concat(role, ID) = '%s'",
                                     Name, Address, Phone, Email, Password, studentid.getText());
@@ -590,16 +583,17 @@ public class Librarian extends User {
 
             UpdateButton.addActionListener(a -> {
                 Database.GetDataFromBook();
-                for(Book b : Database.bookList){
-                    if(b.bookname.equals(bookname.getText())){
-                        JOptionPane.showMessageDialog(frame, "Book already exists.");
-                        return;
-                    }
+                try {
+                    InputException exception1 = new InputException(author.getText().trim(), "^[A-Za-z ]+$");
+                    InputException exception2 = new InputException(bookname.getText().trim(), "^[A-Za-z ]+$");
+                }catch (InputException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
                 }
+                
                 String insertQuery = String.format(
                         "UPDATE Book SET Category = '%s', Name = '%s', Author = '%s', Price = '%s', Qty = '%s', Publisher = '%s' WHERE ID = '%s'",
-                        category.getText(), bookname.getText(), author.getText(), price.getText(), qty.getText(),
-                        publisher.getText(), bookid);
+                        category.getText(), bookname.getText(), author.getText(), price.getText(), qty.getText(),publisher.getText(), bookid.getText());
                 MySQLConnection.executeUpdate(insertQuery);
             });
 
@@ -634,10 +628,12 @@ public class Librarian extends User {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String bookname1 = bookname.getText();
+                
                 String category1 = category.getText();
                 String author1 = author.getText();
                 try {
-                    InputException exception1 = new InputException(author1.trim(), "^[A-Za-z]+$");
+                    InputException exception1 = new InputException(author1.trim(), "^[A-Za-z ]+$");
+                    InputException exception2 = new InputException(bookname1.trim(), "^[A-Za-z ]+$");
                 }catch (InputException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                     return;
