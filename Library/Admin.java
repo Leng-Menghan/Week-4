@@ -15,65 +15,41 @@ import java.awt.event.ActionEvent;
 public class Admin extends Librarian {
     private String adminUsername = "admin";
     private String adminPassword = "123";
-    Scanner scanner = new Scanner(System.in);
+    private boolean Authenticated = false;
 
     public boolean adminLogin() {
-        @FunctionalInterface
-        interface LoginAction {
-            boolean execute(String username, String password);
-        }
+        JDialog dialog = GUI.createdialog(500, 230); 
 
-        JFrame frame = new JFrame("Login Form");
-        frame.setSize(400, 250);
-        frame.setLayout(null);
+        GUI.createTitleDialog(dialog, 0, 10, 500, "Admin login");
 
-        // Title Label
-        JLabel label = new JLabel("Login Form", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 20));
-        label.setBounds(0, 10, 400, 30);
-        frame.add(label);
+        JButton Back = GUI.createButtonBackDialog(dialog);
+        Back.addActionListener(e -> dialog.dispose());
 
-        // Username Field
-        JLabel usernameLabel = new JLabel("Username:");
-        usernameLabel.setBounds(50, 60, 80, 25);
-        JTextField usernameField = new JTextField(20);
-        usernameField.setBounds(140, 60, 200, 25);
-        frame.add(usernameLabel);
-        frame.add(usernameField);
+        JPanel InputPanel = GUI.createInputPanelDialog(dialog, 0, 60, 500, 200);
+        
+        GUI.createLabelDialog("Username : ", 20, 0, InputPanel);
+        JTextField usernameField = GUI.createTextFieldDialog(160, 3, InputPanel);
+        
+        GUI.createLabelDialog("Password : ", 20, 40, InputPanel);
+        JTextField passwordField = GUI.createTextFieldDialog(160, 43, InputPanel);
 
-        // Password Field
-        JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setBounds(50, 100, 80, 25);
-        JPasswordField passwordField = new JPasswordField(20);
-        passwordField.setBounds(140, 100, 200, 25);
-        frame.add(passwordLabel);
-        frame.add(passwordField);
-
-        // Login Button
-        JButton loginButton = new JButton("Login");
-        loginButton.setBounds(140, 150, 100, 30);
-        frame.add(loginButton);
-
-        LoginAction loginAction = (username, password) -> {
-            return username.equals(adminUsername) && password.equals(adminPassword);
-        };
-
+        JButton loginButton = GUI.createButtonDialog("Login", 200, 83, 100, 30, InputPanel);
         loginButton.addActionListener(e -> {
             String username = usernameField.getText();
-            String password = new String(passwordField.getPassword());
-            if (loginAction.execute(username, password)) {
-                frame.dispose();
-            } else {
-                JOptionPane.showMessageDialog(frame, "Invalid credentials. Try again.");
+            String password = passwordField.getText();
+            if (adminUsername.equals(username) && adminPassword.equals(password)) {
+                Authenticated = true;
+                JOptionPane.showMessageDialog(dialog, "Login Successful!");
+                dialog.dispose(); 
+                return;
             }
+            JOptionPane.showMessageDialog(dialog, "Invalid credentials. Try again.");
         });
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
-
-        return loginAction.execute(usernameField.getText(), String.valueOf(passwordField.getPassword()));
+        dialog.setModal(true);   //Stops everything until the user closes the dialog
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); //Closes only the dialog, not the whole app
+        dialog.setLocationRelativeTo(null); //Centers the dialog on the screen
+        dialog.setVisible(true); // Shows the dialog and waits for user input
+        return Authenticated; 
     }
 
     public void AdminFeatures() {

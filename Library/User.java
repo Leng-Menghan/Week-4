@@ -40,53 +40,45 @@ public class User implements UserAction {
     }
 
     public boolean userLogin(String role){
-        JDialog dialog = new JDialog(); // Modal dialog to block execution
-        dialog.setModal(true);
-        dialog.setSize(400, 250);
-        dialog.setLayout(null);
+        JDialog dialog = GUI.createdialog(500, 230); 
 
-        JLabel emailLabel = new JLabel("Email:");
-        emailLabel.setBounds(50, 60, 80, 25);
-        JTextField emailField = new JTextField();
-        emailField.setBounds(140, 60, 200, 25);
-        dialog.add(emailLabel);
-        dialog.add(emailField);
+        GUI.createTitleDialog(dialog, 0, 10, 500, "User login");
 
-        JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setBounds(50, 100, 80, 25);
-        JPasswordField passwordField = new JPasswordField();
-        passwordField.setBounds(140, 100, 200, 25);
-        dialog.add(passwordLabel);
-        dialog.add(passwordField);
+        JButton Back = GUI.createButtonBackDialog(dialog);
+        Back.addActionListener(e -> dialog.dispose());
 
-        JButton loginButton = new JButton("Login");
-        loginButton.setBounds(140, 150, 100, 30);
-        dialog.add(loginButton);
+        JPanel InputPanel = GUI.createInputPanelDialog(dialog, 0, 60, 500, 200);
+        
+        GUI.createLabelDialog("Email : ", 20, 0, InputPanel);
+        JTextField emailField = GUI.createTextFieldDialog(160, 3, InputPanel);
+        
+        GUI.createLabelDialog("Password : ", 20, 40, InputPanel);
+        JTextField passwordField = GUI.createTextFieldDialog(160, 43, InputPanel);
+
+        JButton loginButton = GUI.createButtonDialog("Login", 200, 83, 100, 30, InputPanel);
 
         Database.GetDataFromUser();
-
         loginButton.addActionListener(e -> {
             String email = emailField.getText();
-            String password = new String(passwordField.getPassword());
+            String password = passwordField.getText();
 
             for (User user : Database.UserList) {
                 if (user.ID.startsWith(role) && user.Email.equals(email) && user.getPassword().equals(password)) {
                     ID = user.ID;
                     isAuthenticated = true;
                     JOptionPane.showMessageDialog(dialog, "Login Successful!");
-                    dialog.dispose(); // Close the login form
+                    dialog.dispose(); 
                     return;
                 }
             }
 
             JOptionPane.showMessageDialog(dialog, "Invalid credentials. Try again.");
         });
-
+        dialog.setModal(true);  // This makes the dialog block execution until closed
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true); // This blocks execution until the dialog closes
-
-        return isAuthenticated; // Return true if login was successful
+        dialog.setVisible(true);
+        return isAuthenticated; 
 }
 
     // Searh Book

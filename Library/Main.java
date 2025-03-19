@@ -20,7 +20,8 @@ public class Main {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(admin.adminLogin() ){
+                if(admin.adminLogin()){
+                    frame.dispose();
                     admin.AdminFeatures();
                 }
             }
@@ -30,6 +31,7 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(librarian.userLogin("L")){
+                    frame.dispose();
                     librarian.LibrarianFeatures();
                 }
             }
@@ -39,6 +41,7 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(student.userLogin("S")){
+                    frame.dispose();
                     student.StudentFeatures();
                 }
             }

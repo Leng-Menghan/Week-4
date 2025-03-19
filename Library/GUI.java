@@ -101,4 +101,62 @@ public class GUI {
 
         return table;
     }
+
+    protected static JDialog createdialog(int w, int h){
+        JDialog dialog = new JDialog();
+        dialog.setSize(w, h);
+        dialog.setLayout(null);
+        return dialog;
+    }
+
+    protected static JTextField createTextFieldDialog(int x, int y, JPanel panel) {
+        JTextField textField = new JTextField(20);
+        textField.setBounds(x, y, 300, 30);
+        textField.setFont(new Font("Arial", Font.PLAIN, 15));
+        textField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK),
+                BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+        panel.add(textField);
+        return textField;
+    }
+
+    protected static void createLabelDialog(String text,int x, int y, JPanel panel) {
+        JLabel label = new JLabel(text);
+        label.setBounds(x, y, 150, 30);
+        label.setFont(new Font("Arial", Font.BOLD, 15));
+        panel.add(label);
+    }
+
+    protected static JButton createButtonDialog(String text, int x, int y, int w, int h,JPanel panel) {
+        JButton button = new JButton(text);
+        button.setBounds(x, y, w, h);
+        button.setFont(new Font("Arial", Font.BOLD, 15));
+        panel.add(button);
+        return button;
+    }
+
+    protected static JButton createButtonBackDialog(JDialog dialog){
+        JButton Back = new JButton("Back");
+        Back.setFont(new Font("Arial", Font.BOLD, 15));
+        Back.setForeground(Color.WHITE);
+        Back.setBackground(Color.RED);
+        Back.setBounds(10, 10, 80, 30);
+        dialog.add(Back);
+        return Back;
+    }
+    protected static void createTitleDialog(JDialog dialog, int x , int y, int w, String title){ {
+        JPanel panelTitle = new JPanel();
+        panelTitle.setBounds(x, y, w, 40);
+        JLabel label = new JLabel(title);
+        label.setFont(new Font("Arial", Font.BOLD, 25));
+        panelTitle.add(label);
+        dialog.add(panelTitle);
+    }}
+
+    protected static JPanel createInputPanelDialog(JDialog dialog, int x, int y, int w, int h){
+        JPanel panelInput = new JPanel();
+        panelInput.setBounds(x, y, w, h);
+        panelInput.setLayout(null);
+        dialog.add(panelInput);
+        return panelInput;
+    }
 }
