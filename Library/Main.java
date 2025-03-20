@@ -9,6 +9,7 @@ public class Main {
         Admin admin = new Admin();
         Librarian librarian = new Librarian();
         Student student = new Student();
+        
         JFrame frame = GUI.createFrame("Library", 500, 300);
         GUI.createTitle(frame, 0, 10, 500, "Welcome to Library Systems");
         JPanel panelButton = GUI.createInputPanel(frame, 0, 60, 500, 650);

@@ -5,12 +5,12 @@ import javax.swing.table.DefaultTableModel;
 import Exception.EmailInputException;
 import Exception.InputException;
 public class User implements UserAction {
-    public String ID;
-    public String Name;
-    public String Address;
-    public String PhoneNumber;
-    public String Email;
-    public String Password;
+    protected String ID;
+    protected String Name;
+    protected String Address;
+    protected String PhoneNumber;
+    protected String Email;
+    protected String Password;
     private boolean isAuthenticated = false; // Tracks login success
     
     // Constructor
