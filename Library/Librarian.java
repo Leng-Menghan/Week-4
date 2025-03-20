@@ -580,7 +580,12 @@ public class Librarian extends User {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                     return;
                 }
-                
+                try {
+                    NumberOnlyException exception1 = new NumberOnlyException(qty.getText().trim(), "^[0-9]+$","Number positive interger only");
+                }catch (NumberOnlyException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
                 String insertQuery = String.format(
                         "UPDATE Book SET Category = '%s', Name = '%s', Author = '%s', Price = '%s', Qty = '%s', Publisher = '%s' WHERE ID = '%s'",
                         category.getText(), bookname.getText(), author.getText(), price.getText(), qty.getText(),publisher.getText(), bookid.getText());
@@ -802,8 +807,7 @@ public class Librarian extends User {
         JTable tableBorrow = GUI.createTable(frame, modelBorrow, 10, 145, 1370, 200);
         
         tableBorrow.setVisible(false);
-
-
+        tableAll.setVisible(true);
         addReturn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

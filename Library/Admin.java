@@ -9,6 +9,7 @@ import Exception.InputException;
 import Exception.NumberOnlyException;
 
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
 public class Admin extends Librarian {
@@ -404,4 +405,163 @@ public class Admin extends Librarian {
             return;
         }
     }
+
+    @Override
+    public void addBorrow(){
+// Create frame
+        JFrame frame = GUI.createFrame("Add Borrow", 500, 370);
+
+        // Create Button Back
+        JButton Back = GUI.createButtonBack(frame);
+        Back.addActionListener(e -> frame.dispose());
+
+        // Create Title
+        GUI.createTitle(frame, 0, 10, 500, "Add Borrow");
+        
+        // Create Input Panel
+        JPanel panelInput = GUI.createInputPanel(frame, 0, 60, 500, 300);
+
+        GUI.createLabel("Book ID : ", 20, 0, panelInput);
+        JTextField bookid = GUI.createTextField(160, 3, panelInput);
+        
+        GUI.createLabel("Student ID : ", 20, 40, panelInput);
+        JTextField studentid = GUI.createTextField(160, 43, panelInput);
+
+        GUI.createLabel("Borrow Date : ", 20, 80, panelInput);
+        JTextField borrowdate = GUI.createTextField(160, 83, panelInput);
+
+        GUI.createLabel("Return Date : ", 20, 120, panelInput);
+        JTextField returndate = GUI.createTextField(160, 123, panelInput);
+
+        JButton addButton = GUI.createButton("Add Borrow", 175, 207, 150, 30, panelInput);   
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Database.GetDataFromBook();
+                Database.GetDataFromUser();
+                frame.dispose();
+                String payment = "";
+                String bookname = "";
+                String studentname = "";
+                try {
+                    NumberOnlyException exception1 = new NumberOnlyException(bookid.getText().trim(), "^[0-9]+$","Number positive interger only");
+                }catch (NumberOnlyException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
+                //Check for exist
+                int foundBook = 0;
+                for (Book b : Database.bookList) {
+                    if (String.valueOf(b.bookid).equals(bookid.getText())) {
+                        bookname = b.bookname;
+                        payment = String.valueOf(b.price * 0.1);
+                        foundBook = 1;
+                        break;
+                    }
+                }
+                if (foundBook == 0) {
+                    JOptionPane.showMessageDialog(null, "Book not found!");
+                    return;
+                }
+                int foundStudent = 0;
+                for (User u : Database.UserList) {
+                    if (String.valueOf(u.ID).equals(studentid.getText())) {
+                        studentname = u.Name;
+                        foundStudent = 1;
+                    }
+                }
+
+                for (HashMap<String, Object> b : Database.borrowList) {
+                    if (String.valueOf(b.get("ReturnedDate")).equals("None")) {
+                        if (String.valueOf(b.get("bookId")).equals(bookid.getText()) && String.valueOf(b.get("studentId")).equals(studentid.getText())) {
+                            JOptionPane.showMessageDialog(null, "Student hasn't Return This book yet.", "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+                }
+                String format = "INSERT INTO borrowlist (BookId, BookName, StudentId, StudentName, LibrarianId, LibrarianName, BorrowDate, ReturnDate, payment,LibrarianReturnId, LibrarianReturnName, ReturnedDate) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')";
+                String insertQuery = String.format(format, bookid.getText(), bookname, studentid.getText(), studentname,
+                        "Admin", "Admin", borrowdate.getText(), returndate.getText(), payment,
+                        "None", "None", "None");
+                MySQLConnection.executeUpdate(insertQuery);
+
+                String updateQty = "UPDATE Book SET Qty = Qty - 1 WHERE ID = '" + bookid.getText() + "'";
+                MySQLConnection.executeUpdate(updateQty);
+            }
+        });
+    }
+
+    @Override
+    public void AddReturn(int BorrowID) {
+        // Create frame
+        JFrame frame = GUI.createFrame("Add Return", 500, 330);
+
+        // Create Button Back
+        JButton Back = GUI.createButtonBack(frame);
+        Back.addActionListener(e -> frame.dispose());
+
+        // Create Title
+        GUI.createTitle(frame, 0, 10, 500, "Add Return By ID");
+
+        // Create Input Panel
+        JPanel panelInput = GUI.createInputPanel(frame, 0, 60, 500, 220);
+
+        GUI.createLabel("Book ID : ", 20, 0, panelInput);
+        JTextField bookid = GUI.createTextField(160, 3, panelInput);
+
+        GUI.createLabel("Student ID : ", 20, 40, panelInput);
+        JTextField studentid = GUI.createTextField(160, 43, panelInput);
+
+        GUI.createLabel("Returned Date : ", 20, 80, panelInput);
+        JTextField returneddate = GUI.createTextField(160, 83, panelInput);
+
+        JButton UpdateButton = GUI.createButton("Add Return", 175, 170, 150, 30, panelInput);   
+        Database.GetDataFromBorrow();
+
+        int found = 0;
+        for (HashMap<String, Object> borrow : Database.borrowList) {
+            if (String.valueOf(borrow.get("ReturnedDate")).equals("None") && String.valueOf(borrow.get("librarianReturnId")).equals("None")) {
+                if (String.valueOf(borrow.get("borrowId")).equals(String.valueOf(BorrowID))) {
+                    bookid.setText(borrow.get("bookId").toString());
+                    studentid.setText(borrow.get("studentId").toString());
+                    returneddate.setText(borrow.get("ReturnedDate").toString());
+                    bookid.setEditable(false);
+                    studentid.setEditable(false);
+                    found =1;
+                    break;
+                }
+            }
+        }
+
+        if(found == 0){
+            frame.dispose();
+            JOptionPane.showMessageDialog(frame, "Borrow Not found!!");
+            return;
+        }
+
+        UpdateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Database.GetDataFromBook();
+                Database.GetDataFromUser();
+                Database.GetDataFromBorrow();
+                frame.dispose();
+                
+                //Change from Borrow to Return
+                if (!returneddate.equals("None")) {
+                    String updateQty = "UPDATE Book SET Qty = Qty + 1 WHERE ID = '" + bookid.getText() + "'";
+                    MySQLConnection.executeUpdate(updateQty);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Return not successfully");
+                    return;
+                }
+
+                String format = "UPDATE borrowlist SET LibrarianReturnId = '%s', LibrarianReturnName = '%s', ReturnedDate = '%s' WHERE borrowId = '%s'";
+                String UpdateQuery = String.format(format, "Admin", "Admin", returneddate.getText(), BorrowID);
+                MySQLConnection.executeUpdate(UpdateQuery);
+                JOptionPane.showMessageDialog(null, "Return successfully");
+            }
+        });
+    }
+
 }

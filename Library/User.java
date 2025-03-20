@@ -13,7 +13,7 @@ public class User implements UserAction {
     protected String Password;
     private boolean isAuthenticated = false; // Tracks login success
     
-    // Constructor
+    // Constructor for register
     public User(String ID, String Name, String Address, String PhoneNumber, String Email, String password) {
         this.Name = Name;
         this.Address = Address;

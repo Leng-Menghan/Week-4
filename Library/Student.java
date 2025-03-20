@@ -8,6 +8,7 @@ import Exception.NumberOnlyException;
 import java.awt.*;
 
 public class Student extends User {
+    
     public void StudentFeatures() {
         JFrame frame = GUI.createFrame("Student Feature", 500, 450);
 

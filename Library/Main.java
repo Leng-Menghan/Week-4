@@ -30,7 +30,6 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(librarian.userLogin("L")){
-
                     librarian.LibrarianFeatures();
                 }
             }
@@ -40,7 +39,6 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(student.userLogin("S")){
-
                     student.StudentFeatures();
                 }
             }

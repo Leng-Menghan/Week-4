@@ -21,11 +21,7 @@ public class Database {
                 String phoneNumber = rs.getString("PhoneNumber");
                 String email = rs.getString("Email");
                 String password = rs.getString("Password");
-                if (id.startsWith("S")) {
-                    Database.UserList.add(new User(id, name, address, phoneNumber, email, password));
-                } else {
-                    Database.UserList.add(new User(id, name, address, phoneNumber, email, password));
-                }
+                Database.UserList.add(new User(id, name, address, phoneNumber, email, password));
             }
         } catch (SQLException e) {
             e.printStackTrace();
