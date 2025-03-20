@@ -1,10 +1,8 @@
 package Library;
 
-import java.util.Scanner;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 
 import Exception.EmailInputException;
 import Exception.InputException;

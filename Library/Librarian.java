@@ -818,7 +818,6 @@ public class Librarian extends User {
                 JTextField borrowid = GUI.createTextField(160, 3, panelInput1);
 
                 JButton goButton = GUI.createButton("Go", 150, 43, 200, 30, panelInput1);
-
                 goButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -851,6 +850,7 @@ public class Librarian extends User {
                 // Create Button Back
                 JButton Back = GUI.createButtonBack(frame1);
                 Back.addActionListener(a -> frame1.dispose());
+                
                 JPanel panelInput1 = GUI.createInputPanel(frame1, 0, 60, 500, 250);
                 GUI.createLabel("Enter Borrow ID : ",20, 0, panelInput1);
                 JTextField borrowid = GUI.createTextField(160, 3, panelInput1);

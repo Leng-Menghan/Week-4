@@ -1,14 +1,9 @@
 package Library;
 
-import java.text.DecimalFormat;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-
-import Exception.InputException;
 import Exception.NumberOnlyException;
 import java.awt.*;
 

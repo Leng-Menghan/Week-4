@@ -52,6 +52,7 @@ public class User implements UserAction {
             if (currentPassword.getText().equals(this.Password)) {
                 String updatePassword = "UPDATE User SET Password = '" + newPassword.getText() + "' WHERE CONCAT(role, ID) = '" + this.ID + "'";
                 MySQLConnection.executeUpdate(updatePassword);
+                this.Password = newPassword.getText();
                 JOptionPane.showMessageDialog(frame, "Password changed successfully!");
                 frame.dispose();
             } else {
@@ -87,6 +88,7 @@ public class User implements UserAction {
                 }
                 String updateName = "UPDATE User SET Name = '" + newName.getText() + "' WHERE CONCAT(role, ID) = '" + this.ID + "'";
                 MySQLConnection.executeUpdate(updateName);
+                this.Name = newName.getText();
                 JOptionPane.showMessageDialog(frame, "Name changed successfully!");
                 frame.dispose();
             } else {
@@ -112,15 +114,6 @@ public class User implements UserAction {
         invoicePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         invoicePanel.setBackground(Color.WHITE);
         frame.add(invoicePanel);
-        Database.GetDataFromUser();
-        for(User u : Database.UserList){
-            if(u.ID.equals(this.ID)){
-                this.Name = u.Name;
-                this.Address = u.Address;
-                this.PhoneNumber = u.PhoneNumber;
-                this.Email = u.Email;
-            }
-        }
         // Labels for Invoice Details
         int yPosition = 10;
         JLabel StudentID = new JLabel("ID: " + this.ID);
@@ -187,6 +180,10 @@ public class User implements UserAction {
                 if (user.ID.startsWith(role) && user.Email.equals(email) && user.getPassword().equals(password)) {
                     this.ID = user.ID;
                     this.Password = user.Password;
+                    this.Name = user.Name;
+                    this.Address = user.Address;
+                    this.PhoneNumber = user.PhoneNumber;
+                    this.Email = user.Email;
                     isAuthenticated = true;
                     JOptionPane.showMessageDialog(dialog, "Login Successful!");
                     dialog.dispose(); 
