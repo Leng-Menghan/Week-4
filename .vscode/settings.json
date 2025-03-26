@@ -1,6 +1,8 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "d:\\CADT Year 2nd\\Term 2\\OOP (Java)\\Driver\\mysql-connector-j-9.2.0\\mysql-connector-j-9.2.0.jar"
-    ]
+        "d:\\CADT Year 2nd\\Term 2\\OOP (Java)\\Driver\\mysql-connector-j-9.2.0\\mysql-connector-j-9.2.0.jar",
+        "c:\\Users\\User\\Downloads\\swingx-all-1.6.4.jar"
+    ] 
+    
 }

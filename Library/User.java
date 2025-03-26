@@ -55,6 +55,7 @@ public class User implements UserAction {
                 this.Password = newPassword.getText();
                 JOptionPane.showMessageDialog(frame, "Password changed successfully!");
                 frame.dispose();
+                showInformation();
             } else {
                 JOptionPane.showMessageDialog(frame, "Current password is incorrect.");
             }
@@ -91,6 +92,7 @@ public class User implements UserAction {
                 this.Name = newName.getText();
                 JOptionPane.showMessageDialog(frame, "Name changed successfully!");
                 frame.dispose();
+                showInformation();
             } else {
                 JOptionPane.showMessageDialog(frame, "Your password is incorrect.");
             }
@@ -99,7 +101,7 @@ public class User implements UserAction {
 
     public void showInformation(){
         // Create frame
-        JFrame frame = GUI.createFrame("Display Information", 500, 350);
+        JFrame frame = GUI.createFrame("Display Information", 500, 430);
 
         GUI.createTitle(frame, 0, 10, 500, "Your Information");
 
@@ -145,6 +147,19 @@ public class User implements UserAction {
         Dates.setBounds(20, yPosition, 400, 30);
         invoicePanel.add(Dates);
         yPosition += 40;
+
+        JPanel buttonPanel = GUI.createInputPanel(frame, 0, 280, 500, 150);
+        JButton changeName = GUI.createButton("Change Name", 150, 10, 200, 40, buttonPanel);
+        changeName.addActionListener(e -> {
+            frame.dispose();
+            changeName();
+        });
+
+        JButton changePassword = GUI.createButton("Change Password", 150, 60, 200, 40, buttonPanel);
+        changePassword.addActionListener(e -> {
+            frame.dispose();
+            changePassword();
+        });
     }
 
     public boolean userLogin(String role){
@@ -153,7 +168,7 @@ public class User implements UserAction {
         GUI.createTitleDialog(dialog, 0, 10, 500, "User login");
 
         JButton Back = GUI.createButtonBackDialog(dialog);
-        Back.addActionListener(e -> dialog.dispose());
+        Back.addActionListener(e -> dialog.setVisible(false));
 
         JPanel InputPanel = GUI.createInputPanelDialog(dialog, 0, 60, 500, 200);
         
@@ -201,40 +216,37 @@ public class User implements UserAction {
 }
 
     public void searchBook(String keyword) {
-        Database.GetDataFromBook();
-
-        // Create frame
-        JFrame frame = GUI.createFrame("Search User", 730, 150);
-
-        GUI.createTitle(frame, 0, 0, 730, "Result of " + keyword);
-
-        //Create Button Back
-        JButton Back = GUI.createButtonBack(frame);
-        Back.addActionListener(e -> frame.dispose());
-
-        // Column names
-        String[] columnNames = { "ID", "Name", "Category", "Author", "Price", "Quantity", "Publisher" };
-
-        // Create table model
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-
         // Add rows directly from bookList
         int found = 0;
         for (Book book : Database.bookList) {
             if(String.valueOf(book.bookid).equals(keyword)) {
+                // Create frame
+                JFrame frame = GUI.createFrame("Search User", 730, 150);
+
+                GUI.createTitle(frame, 0, 0, 730, "Result of " + keyword);
+
+                //Create Button Back
+                JButton Back = GUI.createButtonBack(frame);
+                Back.addActionListener(e -> frame.dispose());
+
+                // Column names
+                String[] columnNames = { "ID", "Name", "Category", "Author", "Price", "Quantity", "Publisher" };
+
+                // Create table model
+                DefaultTableModel model = new DefaultTableModel(columnNames, 0);
                 Object[] row = { book.bookid, book.bookname, book.category, book.author, book.price, book.quantity, book.publisher };
                 model.addRow(row);
                 found = 1 ;
+                // Create JTable with model
+                JTable table = GUI.createTable(frame, model, 10, 50, 700, 50);
             }
         }
 
         if(found == 0){
-            frame.dispose();
-            JOptionPane.showMessageDialog(frame, "Book Not found!!");
+            JOptionPane.showMessageDialog(null, "Book Not found!!");
         }
 
-        // Create JTable with model
-        JTable table = GUI.createTable(frame, model, 10, 50, 700, 50);
+
     }
 
 }

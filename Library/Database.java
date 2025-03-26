@@ -69,6 +69,7 @@ public class Database {
                 String LibrarianReturnId = rs3.getString("LibrarianReturnId");
                 String LibrarianReturnName = rs3.getString("LibrarianReturnName");
                 String Returned = rs3.getString("ReturnedDate");
+                if(Returned == null) Returned = "None";
                 HashMap<String, Object> borrowRecord = new HashMap<>();
                 borrowRecord.put("borrowId", borrowId);
                 borrowRecord.put("bookId", BookId);
