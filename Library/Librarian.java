@@ -412,14 +412,6 @@ public class Librarian extends User {
         JButton Back = GUI.createButtonBack(frame);
         Back.addActionListener(e -> frame.dispose());
 
-        // Create Button Refresh
-        JButton Refresh = new JButton("Refresh");
-        Refresh.setFont(new Font("Arial", Font.BOLD, 15));
-        Refresh.setForeground(Color.WHITE);
-        Refresh.setBounds(610, 10, 100, 30);
-        Refresh.setBackground(Color.RED);
-        frame.add(Refresh);
-
         GUI.createTitle(frame,0,10,730,"Manage Book");
 
         JPanel ActionPanel = new JPanel();
@@ -469,11 +461,6 @@ public class Librarian extends User {
         }
 
         JTable table = GUI.createTable(frame, model, 10, 145, 700, 200);
-
-        Refresh.addActionListener(e -> {
-            frame.dispose();
-            manageBook();
-        });
 
         // Add action listeners
         Add.addActionListener(e -> {
@@ -965,16 +952,25 @@ public class Librarian extends User {
                 }
                 //Check for exist
                 int foundBook = 0;
+                int bookAvailable = 0;
                 for (Book b : Database.bookList) {
                     if (String.valueOf(b.bookid).equals(bookid.getText())) {
                         bookname = b.bookname;
                         payment = String.valueOf(b.price * 0.1);
                         foundBook = 1;
+                        if(b.quantity > 0) {
+                            bookAvailable = 1;
+                        }
                         break;
                     }
                 }
                 if (foundBook == 0) {
                     JOptionPane.showMessageDialog(null, "Book not found!");
+                    addBorrow();
+                    return;
+                }
+                if(bookAvailable == 0) {
+                    JOptionPane.showMessageDialog(null, "Book not available!");
                     addBorrow();
                     return;
                 }

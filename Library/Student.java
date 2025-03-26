@@ -94,43 +94,47 @@ public class Student extends User {
                         }
                     }
                 }
-
-                String studentName = "";
                 String librarianName = "";
                 String bookName = "";
                 String payment = "";
 
                 //Check for exist
                 int foundBook = 0;
+                int bookAvailable = 0;
                 for (Book b : Database.bookList) {
                     if (String.valueOf(b.bookid).equals(bookid.getText())) {
                         bookName = b.bookname;
-                        payment = String.valueOf(b.price * 0.1);
+                        payment = String.format("%.2f", b.price * 0.1);
                         foundBook = 1;
+                        if(b.quantity > 0) {
+                            bookAvailable = 1;
+                        }
                         break;
                     }
                 }
                 if (foundBook == 0) {
                     JOptionPane.showMessageDialog(null, "Book not found!");
+                    BorrowAction();
                     return;
                 }
-
+                if (bookAvailable == 0) {
+                    JOptionPane.showMessageDialog(null, "Book not available!");
+                    BorrowAction();
+                    return;
+                }
                 int foundLibrarian = 0;
                 for (User u : Database.UserList) {
-                    if (String.valueOf(u.ID).equals(ID)) {
-                        studentName = u.Name;
-                    }
                     if(String.valueOf(u.ID).equals(librarianid.getText())) {
                         librarianName = u.Name;
                         foundLibrarian = 1;
                     }
                 }
-                if(foundLibrarian == 0 || foundLibrarian ==0) {
+                if(foundLibrarian == 0) {
                     JOptionPane.showMessageDialog(null, "Librarian not found!");
                     return;
                 }
 
-                DisplayInvoice(bookid.getText(), bookName, ID, studentName, librarianid.getText(), librarianName, payment);
+                DisplayInvoice(bookid.getText(), bookName, ID, Name, librarianid.getText(), librarianName, payment);
                 frame.dispose();
             }
         });
@@ -384,9 +388,17 @@ public class Student extends User {
         frame.add(btnAccept);
 
         btnAccept.addActionListener(e -> {
-            String format = "INSERT INTO borrowlist (BookId, BookName, StudentId, StudentName, LibrarianId, LibrarianName, BorrowDate, ReturnDate, payment,LibrarianReturnId, LibrarianReturnName, ReturnedDate) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')";
-            String InsertQuery = String.format(format, bookId, bookName, studentId, studentName, librarianId,
-                    Librarianname, today, futureDate, payment,"None", "None", "None");
+            String InsertQuery = "INSERT INTO borrowlist (BookId, BookName, StudentId, StudentName, LibrarianId, LibrarianName, BorrowDate, ReturnDate, payment, LibrarianReturnId, LibrarianReturnName, ReturnedDate) VALUES ('" 
+                + bookId + "', '" 
+                + bookName + "', '" 
+                + studentId + "', '" 
+                + studentName + "', '" 
+                + librarianId + "', '" 
+                + Librarianname + "', '" 
+                + today + "', '" 
+                + futureDate + "', '" 
+                + payment + "', 'None', 'None', NULL)";
+
             MySQLConnection.executeUpdate(InsertQuery);
             String updateQty = "UPDATE Book SET Qty = Qty - 1 WHERE ID = '" + bookId + "'";
             MySQLConnection.executeUpdate(updateQty);

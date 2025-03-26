@@ -535,16 +535,25 @@ public class Admin extends Librarian {
                 }
                 //Check for exist
                 int foundBook = 0;
+                int bookAvailable = 0;
                 for (Book b : Database.bookList) {
                     if (String.valueOf(b.bookid).equals(bookid.getText())) {
                         bookname = b.bookname;
                         payment = String.valueOf(b.price * 0.1);
                         foundBook = 1;
+                        if(b.quantity > 0) {
+                            bookAvailable = 1;
+                        }
                         break;
                     }
                 }
                 if (foundBook == 0) {
                     JOptionPane.showMessageDialog(null, "Book not found!");
+                    addBorrow();
+                    return;
+                }
+                if (bookAvailable == 0) {
+                    JOptionPane.showMessageDialog(null, "Book not available!");
                     addBorrow();
                     return;
                 }
