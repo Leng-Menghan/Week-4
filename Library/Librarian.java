@@ -519,6 +519,7 @@ public class Librarian extends User {
                 NumberOnlyException exception1 = new NumberOnlyException(bookid.getText().trim(), "^[1-9]+$","Number positive interger only");
             }catch (NumberOnlyException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
+                manageBook();
                 return;
             }
             JFrame frame = GUI.createFrame("Update Book", 500, 420);
@@ -683,10 +684,12 @@ public class Librarian extends User {
         goButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                frame1.dispose();
                 try {
                     NumberOnlyException exception1 = new NumberOnlyException(bookid.getText().trim(), "^[1-9]+$","Number positive interger only");
                 }catch (NumberOnlyException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
+                    manageBook();
                     return;
                 }
                 for(Book b : Database.bookList){
@@ -802,6 +805,7 @@ public class Librarian extends User {
                             AddReturn(Integer.parseInt(borrowid.getText()));
                         }catch (NumberOnlyException ex) {
                             JOptionPane.showMessageDialog(null, ex.getMessage());
+                            manageBorrow();
                             return;
                         }
                     }
@@ -846,6 +850,7 @@ public class Librarian extends User {
                             deleteReturned(Integer.parseInt(borrowid.getText()));
                         }catch (NumberOnlyException ex) {
                             JOptionPane.showMessageDialog(null, ex.getMessage());
+                            manageBorrow();
                             return;
                         }
                     }
