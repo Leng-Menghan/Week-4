@@ -37,7 +37,10 @@ public class User implements UserAction {
         GUI.createTitle(frame, 0, 10, 520,"Change Password");
         // Create Button Back
         JButton Back = GUI.createButtonBack(frame);
-        Back.addActionListener(e -> frame.dispose());
+        Back.addActionListener(e -> {
+            frame.dispose();
+            showInformation();
+        });
 
         JPanel panelInput = GUI.createInputPanel(frame, 0, 60, 530, 250);
 
@@ -68,7 +71,10 @@ public class User implements UserAction {
         GUI.createTitle(frame, 0, 10, 520,"Change Name");
         // Create Button Back
         JButton Back = GUI.createButtonBack(frame);
-        Back.addActionListener(e -> frame.dispose());
+        Back.addActionListener(e -> {
+            frame.dispose();
+            showInformation();
+        });
 
         JPanel panelInput = GUI.createInputPanel(frame, 0, 60, 530, 250);
 

@@ -2,6 +2,7 @@ package Library;
 
 import java.util.HashMap;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -751,14 +752,6 @@ public class Librarian extends User {
         Delete.setFont(new Font("Arial", Font.BOLD, 15));
         ActionPanel.add(Delete);
 
-        JButton FilterBorrow = new JButton("Filter Borrow");
-        FilterBorrow.setFont(new Font("Arial", Font.BOLD, 15));
-        ActionPanel.add(FilterBorrow);
-
-        JButton ShowAll = new JButton("Show All");
-        ShowAll.setFont(new Font("Arial", Font.BOLD, 15));
-        ActionPanel.add(ShowAll);
-
         frame.add(ActionPanel);
 
         // Column names
@@ -778,23 +771,9 @@ public class Librarian extends User {
             modelAll.addRow(row);
         }
         JTable tableAll = GUI.createTable(frame, modelAll, 10, 145, 1370, 200);
-        
-        //Only borrow hasn't returned yet
-        DefaultTableModel modelBorrow = new DefaultTableModel(columnNames, 0);
-        for (HashMap<String, Object> p : Database.borrowList) {
-            if (String.valueOf(p.get("librarianReturnId")).equals("None")
-                            && String.valueOf(p.get("ReturnedDate")).equals("None")){
-            Object[] row = {p.get("borrowId").toString(), p.get("bookId").toString(), p.get("bookName").toString()
-            ,p.get("studentId").toString(), p.get("studentName").toString(), p.get("librarianId").toString()
-            ,p.get("librarianName").toString(), p.get("borrowDate").toString(), p.get("returnDate").toString()  
-            ,p.get("payment").toString(), p.get("librarianReturnId").toString(), p.get("librarianReturnName").toString()
-            ,p.get("ReturnedDate").toString()};
-            modelBorrow.addRow(row);}
-        }
-        JTable tableBorrow = GUI.createTable(frame, modelBorrow, 10, 145, 1370, 200);
-        
-        tableBorrow.setVisible(false);
-        tableAll.setVisible(true);
+
+        // Set a custom renderer for the rows
+        tableAll.setDefaultRenderer(Object.class, new CustomTableCellRenderer());
 
         addReturn.addActionListener(new ActionListener() {
             @Override
@@ -890,16 +869,6 @@ public class Librarian extends User {
         Back.addActionListener(e ->{
             frame.dispose();
         });
-
-        FilterBorrow.addActionListener(e -> {
-            tableAll.setVisible(false);
-            tableBorrow.setVisible(true);
-        });
-        
-        ShowAll.addActionListener(e -> {
-            tableAll.setVisible(true);
-            tableBorrow.setVisible(false);}
-        ); 
 
     }
 
@@ -1076,12 +1045,12 @@ public class Librarian extends User {
                 break;
             }
         }
-
+    }
         if(found == 0){
             JOptionPane.showMessageDialog(null, "Borrow Not found!!");
             manageBorrow();
             return;
-        }}
+        }
     }
 
     public void deleteReturned(int BorrowID) {
@@ -1142,4 +1111,25 @@ public class Librarian extends User {
             JOptionPane.showMessageDialog(null, "Not found", "Error", JOptionPane.ERROR_MESSAGE);
         }
     };
+
+    // Custom TableCellRenderer
+    static class CustomTableCellRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            
+            // Get the value of the "ReturnedDate" column (index 12)
+            String returnedDate = (String) table.getValueAt(row, 12); // Column index for "ReturnedDate"
+
+            // Set the background color based on the "ReturnedDate"
+            if ("None".equals(returnedDate)) {
+                c.setBackground(Color.YELLOW);  // Set yellow for "None"
+            } else {
+                c.setBackground(Color.WHITE);   // Set white for other values
+            }
+
+            return c;
+        }
+    }
+    
 }
